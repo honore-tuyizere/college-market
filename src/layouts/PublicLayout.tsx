@@ -1,12 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./navigation/NavBar";
-const GuestLayout = () => {
+const PublicLayout = () => {
   return (
     <>
-      <div>Guest</div>
       <Navbar />
       <Outlet />
     </>
   );
 };
-export default GuestLayout;
+export default PublicLayout;

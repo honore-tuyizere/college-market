@@ -19,7 +19,7 @@
     "@tanstack/react-query-devtools": "^5.4.3",
     "axios": "^1.6.0",
     "react": "^18.2.0",
-    "react-auth-kit": "3.0.0-alpha.27",
+    "react-auth-kit": "^2.12.6",
     "react-dom": "^18.2.0",
     "react-router": "^6.17.0",
     "react-router-dom": "^6.17.0"
