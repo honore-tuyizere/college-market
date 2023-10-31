@@ -1,34 +1,39 @@
-import { Navigate, createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthGuard from "../utils/AuthGuard";
-import DashboardLayout from "../layouts/DashboardLayout";
-import PublicLayout from "../layouts/PublicLayout";
-import HomePage from "../pages/home/Home";
-import LoginPage from "../pages/auth/Login";
-import DashboardPage from "../pages/dashboard/Dashboard";
+import DashboardLayout from "../components/layouts/DashboardLayout";
+import PublicLayout from "../components/layouts/PublicLayout";
+import { useContext, useEffect } from "react";
+import { useIsAuthenticated } from "react-auth-kit";
+import { AuthContext } from "../context/Auth";
+import dashboardRoutes from "../routes/dashboard.routes";
+import publicRoutes from "../routes/public.routes"
+
 
 const browserRouter = createBrowserRouter([
   {
     path: "/dashboard",
-    element: (
-      <AuthGuard>
-        <DashboardLayout />
-      </AuthGuard>
-    ),
+    element: <DashboardLayout />,
     children: [
-      { path: "admin", element: <Navigate to='/dashboard' /> },
-      { path: "dashboard", element: <DashboardPage /> },
-      { path: "*", element: <Navigate to='/404' /> },
+      ...dashboardRoutes.map((route) => ({
+        path: route.path,
+        element: <AuthGuard>{<route.element />}</AuthGuard>,
+      })),
     ],
   },
   {
     path: "/",
     element: <PublicLayout />,
-    children: [
-      { path: "/home", element: <HomePage /> },
-      { path: "login", element: <LoginPage /> },
-      { path: "*", element: <Navigate to='/404' /> },
-    ],
+    children: [...publicRoutes.map(route => ({ path: route.path, element: <route.element /> }))],
   },
 ]);
-
-export default <RouterProvider router={browserRouter} />;
+const RoutesProvider = () => {
+  const authCotext = useContext(AuthContext);
+  const isAuthenticated = useIsAuthenticated();
+  useEffect(() => {
+    if (isAuthenticated()) {
+      authCotext?.setIsLoggedIn(true);
+    }
+  }, [authCotext, isAuthenticated]);
+  return <RouterProvider router={browserRouter} />;
+};
+export default RoutesProvider;
