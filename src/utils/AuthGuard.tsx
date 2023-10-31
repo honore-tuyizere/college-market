@@ -1,22 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, ReactNode } from "react";
+import { useEffect, ReactNode, useContext } from "react";
+import { AuthContext } from "../context/Auth";
+
 
 interface Props {
   children: ReactNode;
 }
 
-const UserAuth = ({ children }: Props) => {
+const AuthGuard = ({ children }: Props) => {
+  const authContext = useContext(AuthContext);
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-
-  // useEffect(() => {
-  //   if (!token || token === "undefined") {
-  //     console.log("You're not logged in.");
-  //     navigate("/login");
-  //   }
-  // }, [navigate, token]);
-
+  useEffect(() => {
+    if (!authContext?.isLoggedIn) {
+      navigate("/login");
+    }
+  }, [authContext, navigate]);
   return <>{children}</>;
 };
 
-export default UserAuth;
+export default AuthGuard;
