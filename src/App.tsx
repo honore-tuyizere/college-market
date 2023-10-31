@@ -1,13 +1,8 @@
-import './App.css';
+import React from "react";
+import AppRouter from "./routes";
 
-function App() {
-  return (
-    <>
-      <div className='text-3xl text-blue-700 text-center'>
-        <h1>Hello World!</h1>
-      </div>
-    </>
-  );
-}
+const App = () => {
+  return <>{AppRouter}</>;
+};
 
 export default App;
