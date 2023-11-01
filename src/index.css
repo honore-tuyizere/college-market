@@ -20,3 +20,11 @@ body {
 .category-strip .active {
     font-weight: 600;
 }
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    @apply bg-action-color-500
+}
+
+.swiper-pagination-bullet {
+    @apply bg-white h-3 w-3 rounded-full
+}
