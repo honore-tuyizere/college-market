@@ -2,7 +2,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import image1 from "../../assets/istockphoto-1445195721-1024x1024.jpg";
 import image2 from "../../assets/pexels-karolina-grabowska-5632398.jpg";
 const Slider = () => {
   return (
