@@ -17,6 +17,10 @@ body {
     font-weight: 300;
 }
 
+.font-500 {
+    font-weight: 500;
+}
+
 .category-strip .active {
     font-weight: 600;
 }

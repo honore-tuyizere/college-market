@@ -15,7 +15,7 @@ const Slider = () => {
       loop={true}
     >
       <SwiperSlide>
-        <div className='w-full h-52 md:h-96  lg:h-[500px] bg-red-600'>
+        <div className='w-full h-52 md:h-96  lg:h-[500px]'>
           <img
             src={
               "https://res.cloudinary.com/umuhire-heritier/image/upload/w_1666,h_400,c_fill/Home-image_1_pvyrks.png"
@@ -26,7 +26,7 @@ const Slider = () => {
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div className='w-full h-52 md:h-96  lg:h-[500px] bg-green-600'>
+        <div className='w-full h-52 md:h-96  lg:h-[500px]'>
           <img src={image2} alt='' className='w-full h-full object-cover' />
         </div>
       </SwiperSlide>
