@@ -1,7 +1,9 @@
+import Slider from "../../components/slider/Slider"
+
 
 const LandingPage = () => {
     return (
-        <div>LandingPage</div>
+        <Slider />
     )
 }
 
