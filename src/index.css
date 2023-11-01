@@ -1,3 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;700&family=Roboto:wght@100;300;400&display=swap');
+
+* {
+    box-sizing: border-box
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    font-family: 'roboto';
+    font-weight: 400;
+}
+
+.category-strip {
+    font-weight: 300;
+}
+
+.category-strip .active {
+    font-weight: 600;
+}
