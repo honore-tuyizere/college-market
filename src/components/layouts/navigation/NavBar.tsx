@@ -1,19 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import Header from "./Header";
+
 
 const Navbar = () => {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to='/'>Home</Link>
-        </li>
-        <li>
-          <Link to='/login'>Login</Link>
-        </li>
-        {/* more links */}
-      </ul>
-    </nav>
+    <Header />
   );
 };
 
