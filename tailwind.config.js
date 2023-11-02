@@ -9,6 +9,10 @@ export default {
       colors: {
         "action-color-500": "#003D29",
       },
+      screens: {
+        xs: "380px",
+        xxs: "300px",
+      },
     },
   },
   plugins: [],

@@ -18,3 +18,7 @@ export interface ProductListProps {
   filtersComponent?: ReactNode;
   title?: string;
 }
+
+export interface FiltersComponentProps {
+  label: string;
+}
