@@ -11,11 +11,12 @@ const ProductsList: FC<ProductListProps> = ({ title, filtersComponent }) => {
   return (
     <div className='w-full'>
       {title && !filtersComponent && (
-        <div className=' py-5'>
+        <div className='py-5'>
           <span className=' font-semibold text-md'>{title}</span>
         </div>
       )}
-      <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 bg-red-500 py-3'>
+      {filtersComponent && <div className='py-4'>{filtersComponent}</div>}
+      <div className='grid grid-cols1 xxs:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4  py-3'>
         {[
           "https://via.placeholder.com/150",
           "https://via.placeholder.com/150",
