@@ -1,20 +1,20 @@
-import ShopCartLog from "../../assets/shopCartlogo.png";
-import Amazon from "../../assets/amazon.png";
-import Apple from "../../assets/apple.png";
-import Google from "../../assets/google.png";
-import Klarna from "../../assets/klarna.png";
+// import ShopCartLog from "../../assets/shopCartlogo.png";
+// import Amazon from "../../assets/amazon.png";
+// import Apple from "../../assets/apple.png";
+// import Google from "../../assets/google.png";
+// import Klarna from "../../assets/klarna.png";
 import Icons from "../../assets/bottom-footer-item-icons.png";
-import Stripe from "../../assets/stripe.png";
-import Visa from "../../assets/visa.png";
-import Master from "../../assets/master-card.png";
-import Paypal from "../../assets/paypal.png";
+// import Stripe from "../../assets/stripe.png";
+// import Visa from "../../assets/visa.png";
+// import Master from "../../assets/master-card.png";
+// import Paypal from "../../assets/paypal.png";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer className='bg-white py-1'>
-      <div className='mx-auto w-full sm:max-w-screen-xl md:max-w-screen-2xl border-gray-200 border-t-[1px] py-1'>
-        <div className='flex flex-wrap justify-between p-4 md:justify-start'>
+      <div className='mx-auto w-full sm:max-w-screen-xl md:max-w-screen-2xl py-1'>
+        {/* <div className='flex flex-wrap justify-between p-4 md:justify-start'>
           <div className=' w-full md:w-1/3 p-4  text-gray-500'>
             <img src={ShopCartLog} alt='logo' className=' w-[133px] h-[33px]' />
             <p className=' text-[14px] font-[400] p-[10px]'>
@@ -118,7 +118,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
 
         <div className='flex flex-wrap justify-between md:justify-start border-gray-200 border-t-[1px]'>
           <div className=' w-full md:w-1/3 p-6 flex '>

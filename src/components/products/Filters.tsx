@@ -5,12 +5,12 @@ import { FiltersComponentProps } from "../../types";
 
 const Filters: FC<FiltersComponentProps> = ({ label }) => {
   return (
-    <Popover className='relative w-full'>
+    <Popover className='relative w-full xs:w-auto'>
       {({ open }) => (
         <>
           <Popover.Button
             className={`
-                group inline-flex w-full items-center px-4 py-2 text-sm sm:text-base font-medium border rounded-full outline-none `}
+                group inline-flex w-full items-center px-4 py-2 justify-between text-sm sm:text-base font-medium border rounded-full outline-none `}
           >
             <span>{label}</span>
             <ChevronDownIcon
