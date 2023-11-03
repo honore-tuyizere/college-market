@@ -5,11 +5,12 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import Logo from "../../../assets/logo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import CategoryHeader from "./CategoryHeader";
 import Headroom from "react-headroom";
 
 const Header = () => {
+  const location = useLocation();
   return (
     <>
       <Headroom style={{ zIndex: 999 }}>
@@ -18,16 +19,19 @@ const Header = () => {
             <img src={Logo} alt='logo' className='h-full w-full object-cover' />
           </div>
           <div className='flex gap-3 lg:gap-24'>
-            <div className='search-input hidden md:block'>
-              <input
-                type='text'
-                className=' h-10 rounded-full w-72 px-7  border outline-none'
-                placeholder='Search product'
-              />
-            </div>
+            {location.pathname !== "/notice" && location.pathname !== "/login" && (
+              <div className='search-input hidden md:block'>
+                <input
+                  type='text'
+                  className='h-10 rounded-full w-72 px-7 border outline-none'
+                  placeholder='Search product'
+                />
+              </div>
+            )}
+
             <div className='nav-icons flex gap-5 sm:gap-3 lg:gap-7 text-sm items-center'>
               <div className='flex gap-2 md:hidden'>
-                <MagnifyingGlassIcon className='text-black w-5' />{" "}
+                <MagnifyingGlassIcon className='text-black w-5' />
                 <span className='hidden sm:block'>Search</span>
               </div>
 
@@ -49,7 +53,7 @@ const Header = () => {
           </div>
         </nav>
       </Headroom>
-      <CategoryHeader />
+      {location.pathname === "/" && <CategoryHeader />}
     </>
   );
 };
