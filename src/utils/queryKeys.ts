@@ -5,4 +5,5 @@ export const queryKeys = {
   productsInDashboard: ["productsInDashboard"],
   getProfile: ["getUserProfile"],
   getColleges: ["getColleges"],
+  getAllProducts: ["getAllproducts"],
 };

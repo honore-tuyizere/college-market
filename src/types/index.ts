@@ -29,7 +29,6 @@ export interface IProduct {
   category: Icategory;
   description: string;
 }
-
 export interface IProductRequest {
   id?: string;
   name: string;
@@ -44,6 +43,8 @@ export interface IProductRequest {
 export interface ProductListProps {
   filtersComponent?: ReactNode;
   title?: string;
+  isLoading: boolean;
+  products: IProduct[] | undefined;
 }
 
 export interface FiltersComponentProps {
