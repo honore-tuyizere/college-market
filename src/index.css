@@ -8,9 +8,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+}
+
 body {
     font-family: 'roboto';
     font-weight: 400;
+    background: #efefef;
+}
+
+body.open-sidebar .sidebar {
+    left: 0;
 }
 
 .category-strip {

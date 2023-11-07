@@ -1,12 +1,26 @@
-export const Button = () => {
+import { FC } from "react";
+import SyncLoader from "react-spinners/PulseLoader";
+
+interface puttonProps {
+  label: string;
+  onClick?: () => void;
+  isLoading?: boolean;
+  type?: "button" | "submit" | "reset";
+}
+const Button: FC<puttonProps> = (props) => {
   return (
     <>
       <div>
         <button
-          type='button'
-          className='rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+          type={props.type ? props.type : "button"}
+          onClick={() => props.onClick && props.onClick()}
+          className='rounded-md px-4 py-2.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-teal-800 bg-teal-800 hover:bg-teal-900'
         >
-          Button text
+          {props.isLoading ? (
+            <SyncLoader size={8} color='#fff' />
+          ) : (
+            <>{props.label}</>
+          )}
         </button>
       </div>
     </>

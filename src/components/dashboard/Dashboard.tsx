@@ -1,9 +1,9 @@
+import DashboardTopBar from "../layouts/navigation/TopBar"
+
 export const Dashboard = () => {
   return (
     <>
-      <div>
-       <h2>This is a dashboard</h2>
-      </div>
+      <DashboardTopBar title="My page"><>Hello</></DashboardTopBar>
     </>
   );
 };

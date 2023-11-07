@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         sansation: ["Sansation", "sans"],
+        'sans': ['Calibri', 'Helvetica', 'Arial', 'sans-serif'],
       },
       colors: {
         "action-color-500": "#003D29",
