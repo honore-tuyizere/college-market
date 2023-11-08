@@ -1,3 +1,4 @@
+import CategoryPage from "../pages/category/CategoryPage";
 import DashboardPage from "../pages/dashboard/Dashboard";
 import ProductsPage from "../pages/products/ProductsPage";
 
@@ -11,6 +12,10 @@ const dashboardRoutes: IRoute[] = [
   {
     path: "/dashboard/products",
     element: ProductsPage,
+  },
+  {
+    path: "/dashboard/category",
+    element: CategoryPage,
   },
 ];
 

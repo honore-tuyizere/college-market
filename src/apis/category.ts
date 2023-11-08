@@ -1,6 +1,10 @@
 import httpClient from "../utils/httpClient";
-import { Icategory as ICategory } from "../types";
+import {ICategory, ICategoryRequest} from "../types";
 
 export const getCategories = async (): Promise<ICategory[]> => {
   return (await httpClient.get(`/categories`)).data;
 };
+
+export const createCategory = async (data: ICategoryRequest): Promise<ICategory> => {
+  return (await httpClient.post("/categories", data)).data;
+}

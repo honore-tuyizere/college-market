@@ -5,8 +5,13 @@ export interface IRoute {
   element: ComponentType<unknown>;
 }
 
-export interface Icategory {
+export interface ICategory {
   _id: string;
+  name: string;
+}
+
+export interface ICategoryRequest {
+  id?: string;
   name: string;
 }
 
@@ -26,7 +31,7 @@ export interface IProduct {
   gallery: Array<Image>;
   price: number;
   condition: ICondition;
-  category: Icategory;
+  category: ICategory;
   description: string;
 }
 
