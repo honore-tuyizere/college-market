@@ -38,7 +38,6 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
     register,
     handleSubmit,
     reset,
-    setError,
     setValue,
     getValues,
     formState: { errors },
@@ -52,6 +51,9 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
       description: product.description,
     },
   });
+
+  const oldThumbnail = product.thumbnail,
+    [oldGallery, setOldGallery] = useState(product.gallery);
 
   const { data: conditions } = useQuery({
     queryFn: () => getConditions(),
@@ -75,26 +77,34 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
   const previewGallery = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = e.target.files;
+
       const previews: { url: string; index: number; img: File }[] = [];
 
       for (let i = 0; i < files.length; i++) {
         const link = URL.createObjectURL(files[i]),
           imageIndex = Math.random();
+
         previews.push({ url: link, index: imageIndex, img: files[i] });
       }
       setGalleryPreview([...galleryPreview, ...previews]);
+      console.log(galleryPreview);
       galleryImages();
     }
   };
 
-  const removeFromGallery = (index: number) => {
-    const newGallery = galleryPreview.filter((_, i) => i !== index);
-    setGalleryPreview(newGallery);
-    setValue(
-      "gallery",
-      getValues().gallery.filter((_: File, i: number) => i !== index),
-    );
-    galleryImages();
+  const removeFromGallery = (index: number, fromOldGallery: boolean = false) => {
+    if (fromOldGallery) {
+      const newGallery = oldGallery.filter((_, i) => i !== index);
+      setOldGallery(newGallery);
+    } else {
+      const newGallery = galleryPreview.filter((_, i) => i !== index);
+      setGalleryPreview(newGallery);
+      setValue(
+        "gallery",
+        getValues().gallery.filter((_: File, i: number) => i !== index),
+      );
+      galleryImages();
+    }
   };
 
   const previewThumbnail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -107,51 +117,53 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
   };
 
   const submit = (data: createProductSchemaType) => {
-    const ValidResult = createProductSchema.safeParse(data);
-    if (ValidResult.success) {
-      if (data.thumbnail?.length == 0) {
-        setError("thumbnail", {
-          type: "manual",
-          message: "Thumbnail is required for a product",
-        });
-      } else {
-        const form = document.querySelector("#productForm") as HTMLFormElement;
-        if (form) {
-          const thumbnailData = new FormData();
+    const form = document.querySelector("#productForm") as HTMLFormElement,
+      files = galleryImages();
+    if (form) {
+      const thumbnailData = new FormData(),
+        galleryData = new FormData();
+      if (data.thumbnail) {
+        thumbnailData.append("assets", getValues().thumbnail);
+      }
 
-          thumbnailData.append("assets", getValues().thumbnail);
-          uploadAssets.mutate(thumbnailData, {
-            onSuccess(thumbnailResult: Array<string>) {
-              const galleryData = new FormData(),
-                files = galleryImages();
-              for (let i = 0; i < files.length; i++) {
-                galleryData.append("assets", files[i]);
-              }
-              uploadAssets.mutate(galleryData, {
-                onSuccess(galleryResult) {
-                  const formData = {
-                    ...data,
-                    gallery: galleryResult,
-                    thumbnail: thumbnailResult,
-                    id: product._id,
-                  };
+      if (files.length > 0) {
+        for (let i = 0; i < files.length; i++) {
+          galleryData.append("assets", files[i]);
+        }
+      }
 
-                  productMutation.mutate(formData, {
-                    onSuccess() {
-                      setIsOpen(false);
-                      toast.success("Product updated!");
-                      queryClient.invalidateQueries({
-                        queryKey: queryKeys.productsInDashboard,
-                      });
-                      reset();
-                    },
+      uploadAssets.mutate(thumbnailData, {
+        onSuccess(thumbnailResult: Array<string>) {
+          uploadAssets.mutate(galleryData, {
+            onSuccess(galleryResult) {
+              const oldGalleryArray = oldGallery.map((img) => img.url);
+              const newGallery = [...new Set(oldGalleryArray.concat(galleryResult))];
+              console.log(
+                (thumbnailResult[0] ? thumbnailResult : oldThumbnail) as string[],
+              );
+              const formData = {
+                ...data,
+                gallery: newGallery,
+                thumbnail: thumbnailResult.length ? thumbnailResult : [oldThumbnail],
+                id: product._id,
+              };
+
+              console.log(thumbnailResult, oldThumbnail, formData);
+
+              productMutation.mutate(formData, {
+                onSuccess() {
+                  setIsOpen(true);
+                  toast.success("Product updated!");
+                  queryClient.invalidateQueries({
+                    queryKey: queryKeys.productsInDashboard,
                   });
+                  reset();
                 },
               });
             },
           });
-        }
-      }
+        },
+      });
     }
   };
   return (
@@ -190,9 +202,9 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
                   },
                 })}
               />
-              {thumbnailPreview && (
+              {(oldThumbnail || thumbnailPreview) && (
                 <img
-                  src={thumbnailPreview}
+                  src={thumbnailPreview || oldThumbnail}
                   alt='Image preview'
                   className='w-24 h-24 rounded-md my-2'
                 />
@@ -243,18 +255,18 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
               },
             })}
           />
-          {galleryPreview.length > 0 && (
+          {oldGallery.length > 0 && (
             <>
-              {galleryPreview.map((preview, index) => (
-                <div className='relative' id={`image-${index}`} key={preview.index}>
+              {oldGallery.map((img, index) => (
+                <div className='relative' id={`image-${index}`} key={index}>
                   <img
-                    src={preview.url}
+                    src={img.url}
                     alt='Image preview'
                     className='w-24 h-24 rounded-md my-2'
                   />
                   <span
                     className='absolute -top-1.5 -right-3 bg-white rounded-full p-1 cursor-pointer border border-gray-300'
-                    onClick={() => removeFromGallery(index)}
+                    onClick={() => removeFromGallery(index, true)}
                   >
                     <XMarkIcon className='w-4 h-4' />
                   </span>
@@ -262,6 +274,21 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
               ))}
             </>
           )}
+          {galleryPreview.map((preview, index) => (
+            <div className='relative' id={`image-${index}`} key={preview.index}>
+              <img
+                src={preview.url}
+                alt='Image preview'
+                className='w-24 h-24 rounded-md my-2'
+              />
+              <span
+                className='absolute -top-1.5 -right-3 bg-white rounded-full p-1 cursor-pointer border border-gray-300'
+                onClick={() => removeFromGallery(index)}
+              >
+                <XMarkIcon className='w-4 h-4' />
+              </span>
+            </div>
+          ))}
         </div>
         <div className='w-full'>
           <TextArea
