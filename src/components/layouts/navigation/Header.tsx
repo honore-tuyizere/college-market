@@ -3,6 +3,7 @@ import {
   GiftIcon,
   UserIcon,
   MagnifyingGlassIcon,
+  TicketIcon,
 } from "@heroicons/react/24/outline";
 import Logo from "../../../assets/logo.png";
 import { NavLink, useLocation } from "react-router-dom";
@@ -53,6 +54,11 @@ const Header = () => {
               <NavLink to={"/donations"} className='flex gap-2'>
                 <GiftIcon className='text-black w-5' />{" "}
                 <span className='hidden sm:block'>Donations</span>
+              </NavLink>
+
+              <NavLink to={"/rent-products"} className='flex gap-2'>
+                <TicketIcon className='text-black w-5' />{" "}
+                <span className='hidden sm:block'>Rent</span>
               </NavLink>
 
               <NavLink to={"/dashboard"} className='flex gap-2'>
