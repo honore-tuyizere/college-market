@@ -1,11 +1,21 @@
 import { Outlet } from "react-router-dom";
-import DashboardMenu from "./navigation/DashboardMenu";
+import DashboardSidebarMenu from "./navigation/DashboardSidebarMenu";
+import DashboardTopMenu from "./navigation/DashboardTopMenu";
 
 const DashboardLayout = () => {
   return (
     <>
-      <DashboardMenu />
-      <Outlet />
+    <div className="wrapper md:pl-64">
+      <DashboardSidebarMenu />
+      <div className="w-full">
+        <DashboardTopMenu />
+        <div className="p-5">
+        <Outlet />
+
+        </div>
+      </div>
+    </div>
+      
     </>
   );
 };

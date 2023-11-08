@@ -1,19 +1,21 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, ReactNode } from "react";
-import { useIsAuthenticated } from "react-auth-kit";
+// import { useNavigate } from "react-router-dom";
+// import { useEffect, ReactNode, useContext } from "react";
+// import { AuthContext } from "../context/Auth";
+import { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
 }
 
 const AuthGuard = ({ children }: Props) => {
-  const isAuthenticated = useIsAuthenticated();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!isAuthenticated()) {
-      navigate("/login");
-    }
-  }, [isAuthenticated, navigate]);
+  // const authContext = useContext(AuthContext);
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (!authContext?.isLoggedIn) {
+  //     navigate("/login");
+  //   }
+  // }, [authContext, navigate]);
+
   return <>{children}</>;
 };
 
