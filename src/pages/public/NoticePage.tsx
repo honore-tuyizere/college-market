@@ -1,4 +1,4 @@
-import NoticeList from "../../components/notices/noticeList";
+import NoticeList from "../../components/notices/NoticeList";
 
 export const NoticePage = () => {
   return (
