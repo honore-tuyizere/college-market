@@ -1,6 +1,7 @@
 import LoginPage from "../pages/auth/Login";
 import LandingPage from "../pages/public/LandingPage";
 import NoticePage from "../pages/public/NoticePage";
+import ProductDetailsPage from "../pages/public/ProductDetailsPage";
 import { IRoute } from "../types";
 
 const publicRoutes: IRoute[] = [
@@ -15,6 +16,10 @@ const publicRoutes: IRoute[] = [
   {
     path: "notice",
     element: NoticePage,
+  },
+  {
+    path: "product/:id",
+    element: ProductDetailsPage,
   },
 ];
 

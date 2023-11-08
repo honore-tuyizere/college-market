@@ -16,3 +16,7 @@ export const deleteProduct = async (id: string): Promise<string> => {
 export const updateProduct = async (data: IProductRequest): Promise<IProduct> => {
   return (await httpClient.put(`/products/${data.id}`, data)).data;
 };
+
+export const getAllProducts = async (): Promise<IProduct[]> => {
+  return (await httpClient.get(`/products`)).data;
+};

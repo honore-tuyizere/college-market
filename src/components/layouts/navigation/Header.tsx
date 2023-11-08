@@ -24,7 +24,9 @@ const Header = () => {
       <Headroom style={{ zIndex: 999 }}>
         <nav className='flex px-6 md:px-12 lg:px-24 py-2 md:py-4 h-14 md:h-20 items-center justify-between border-b z-50 bg-white'>
           <div className='logo h-full'>
-            <img src={Logo} alt='logo' className='h-full w-full object-cover' />
+            <NavLink to={"/"}>
+              <img src={Logo} alt='logo' className='h-full w-full object-cover' />
+            </NavLink>
           </div>
           <div className='flex gap-3 lg:gap-24'>
             {location.pathname !== "/notice" && location.pathname !== "/login" && (
