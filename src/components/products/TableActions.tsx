@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { EyeIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { IProduct } from "../../types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -29,9 +29,6 @@ const TableActions: FC<ITableActions> = ({ product }) => {
   };
   return (
     <div className='flex space-1'>
-      <a href='#' className='text-gray-400 hover:text-gray-100 mr-2'>
-        <EyeIcon className='w-6 h-6 text-blue-500' />
-      </a>
       <div
         className='text-gray-400 hover:text-gray-100  mx-2 cursor-pointer'
         onClick={() => setUpdate(true)}

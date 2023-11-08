@@ -43,7 +43,7 @@ export const ProductsTable = () => {
                   <td className='py-3 px-6 rounded-l-xl'>
                     <div className='flex align-items-center w-60 min-w-full'>
                       <img
-                        className='rounded-md h-12 w-12  object-cover'
+                        className='rounded-md h-14 w-14  object-cover'
                         src={product.thumbnail}
                         alt={product.name}
                       />
@@ -58,14 +58,18 @@ export const ProductsTable = () => {
                   <td className='py-3 px-6'>{product.category.name}</td>
                   <td className='py-3 px-6 font-bold'>{product.price}$</td>
                   <td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-                    <div className='flex'>
+                    <div className='flex w-32 min-w-full'>
                       {product.gallery.map((img, index) => (
-                        <img
-                          key={index}
-                          src={img.url}
-                          alt={`${product.name} - Gallery ${index + 1}`}
-                          className='w-12 h-12 rounded-md border-2 border-gray-50 shadow -ml-4'
-                        />
+                        <>
+                          {index < 5 && (
+                            <img
+                              key={index}
+                              src={img.url}
+                              alt={`${product.name} - Gallery ${index + 1}`}
+                              className='w-14 h-14 rounded-md border-2 border-gray-200 shadow shadow-gray-300 shadow-xl -ml-4'
+                            />
+                          )}
+                        </>
                       ))}
                     </div>
                   </td>
