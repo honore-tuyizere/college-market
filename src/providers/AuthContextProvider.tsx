@@ -10,7 +10,6 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   };
   const setUserProfile = (profile: IUser) => {
     setUser(profile);
-    console.log(profile);
   };
   const contextValue = useMemo(
     () => ({
@@ -19,7 +18,7 @@ const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
       user: user,
       setUser: setUserProfile,
     }),
-    [],
+    [login, user],
   );
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

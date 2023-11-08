@@ -2,12 +2,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthGuard from "../utils/AuthGuard";
 import DashboardLayout from "../components/layouts/DashboardLayout";
 import PublicLayout from "../components/layouts/PublicLayout";
-import { useContext, useEffect } from "react";
-import { useIsAuthenticated } from "react-auth-kit";
-import { AuthContext } from "../context/Auth";
+import { useEffect, useState, useContext } from "react";
+import { useAuthUser } from "react-auth-kit";
 import dashboardRoutes from "../routes/dashboard.routes";
 import publicRoutes from "../routes/public.routes";
 import ProcessAuth from "../pages/auth/ProcessAuth";
+import CollegeModal from "../components/auth/CollegeModal";
+import { IUser } from "../types";
+import { AuthContext } from "../context/Auth";
 
 const browserRouter = createBrowserRouter([
   {
@@ -36,13 +38,26 @@ const browserRouter = createBrowserRouter([
   },
 ]);
 const RoutesProvider = () => {
-  const authCotext = useContext(AuthContext);
-  const isAuthenticated = useIsAuthenticated();
+  const [open, setOpen] = useState<boolean>(false);
+  const context = useContext(AuthContext);
+  const auth = useAuthUser();
   useEffect(() => {
-    if (isAuthenticated()) {
-      authCotext?.setIsLoggedIn(true);
+    const authUser = auth() as IUser;
+    authUser && context?.setUser(authUser);
+    authUser && context?.setIsLoggedIn(true);
+    if (authUser && !authUser.college?._id) {
+      setOpen(true);
+    } else {
+      setOpen(false);
     }
-  }, [authCotext, isAuthenticated]);
-  return <RouterProvider router={browserRouter} />;
+    console.log(context);
+  }, [auth, context]);
+
+  return (
+    <>
+      <CollegeModal isOpen={open} setIsOpen={setOpen} />
+      <RouterProvider router={browserRouter} />
+    </>
+  );
 };
 export default RoutesProvider;
