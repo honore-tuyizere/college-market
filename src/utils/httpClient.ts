@@ -5,7 +5,7 @@ const ApiClient = () => {
   instance.interceptors.request.use(async (request) => {
     const accessToken = localStorage.getItem("auth");
     if (accessToken) {
-      request.headers.Authorization = accessToken;
+      request.headers.Authorization = `Bearer ${accessToken}`;
     }
     request.baseURL = import.meta.env.VITE_API_URL;
     return request;

@@ -1,6 +1,6 @@
 import LoginPage from "../pages/auth/Login";
 import LandingPage from "../pages/public/LandingPage";
-import NoticePage from "../pages/public/noticePage";
+import NoticePage from "../pages/public/NoticePage";
 import { IRoute } from "../types";
 
 const publicRoutes: IRoute[] = [

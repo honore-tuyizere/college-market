@@ -22,3 +22,18 @@ export interface ProductListProps {
 export interface FiltersComponentProps {
   label: string;
 }
+
+export interface IUser {
+  _id: string;
+  id: string;
+  provider: string;
+  displayName: string;
+  name?: {
+    familyName: string;
+    givenName: string;
+    middleName?: string;
+  };
+  email: string;
+  emails?: Array<string>;
+  photos?: Array<string>;
+}

@@ -6,8 +6,8 @@ import { useContext, useEffect } from "react";
 import { useIsAuthenticated } from "react-auth-kit";
 import { AuthContext } from "../context/Auth";
 import dashboardRoutes from "../routes/dashboard.routes";
-import publicRoutes from "../routes/public.routes"
-
+import publicRoutes from "../routes/public.routes";
+import ProcessAuth from "../pages/auth/ProcessAuth";
 
 const browserRouter = createBrowserRouter([
   {
@@ -21,9 +21,18 @@ const browserRouter = createBrowserRouter([
     ],
   },
   {
+    path: "/auth/redirect",
+    element: <ProcessAuth />,
+  },
+  {
     path: "/",
     element: <PublicLayout />,
-    children: [...publicRoutes.map(route => ({ path: route.path, element: <route.element /> }))],
+    children: [
+      ...publicRoutes.map((route) => ({
+        path: route.path,
+        element: <route.element />,
+      })),
+    ],
   },
 ]);
 const RoutesProvider = () => {
