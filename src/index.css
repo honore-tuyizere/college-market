@@ -32,11 +32,12 @@
 body {
   font-family: "roboto";
   font-weight: 400;
-  background: #efefef;
 }
+
 body::before {
   transition: background 0.5s;
 }
+
 .sidebar {
   transition: left 0.5s;
 }
@@ -53,6 +54,7 @@ body::before {
     z-index: 10;
   }
 }
+
 body.open-sidebar .sidebar {
   left: 0;
 }
