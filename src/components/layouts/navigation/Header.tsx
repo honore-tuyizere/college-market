@@ -8,9 +8,17 @@ import Logo from "../../../assets/logo.png";
 import { NavLink, useLocation } from "react-router-dom";
 import CategoryHeader from "./CategoryHeader";
 import Headroom from "react-headroom";
+import { useEffect } from "react";
 
 const Header = () => {
   const location = useLocation();
+  useEffect(() => {
+    if (location.pathname.includes("dashboard")) {
+      document.querySelector("body")!.style.backgroundColor = "#ddd";
+    } else {
+      document.querySelector("body")!.style.backgroundColor = "#fff";
+    }
+  }, [location]);
   return (
     <>
       <Headroom style={{ zIndex: 999 }}>
