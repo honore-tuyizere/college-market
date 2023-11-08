@@ -63,4 +63,12 @@ export interface IUser {
   email: string;
   emails?: Array<string>;
   photos?: Array<string>;
+  college?: {
+    _id: string;
+    name: string;
+  };
+}
+export interface ICollege {
+  _id: string;
+  name: string;
 }

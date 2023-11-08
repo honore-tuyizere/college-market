@@ -4,19 +4,15 @@ import DashboardTopMenu from "./navigation/DashboardTopMenu";
 
 const DashboardLayout = () => {
   return (
-    <>
-    <div className="wrapper md:pl-64">
+    <div className='wrapper md:pl-64'>
       <DashboardSidebarMenu />
-      <div className="w-full">
+      <div className='w-full'>
         <DashboardTopMenu />
-        <div className="p-5">
-        <Outlet />
-
+        <div className='p-5'>
+          <Outlet />
         </div>
       </div>
     </div>
-      
-    </>
   );
 };
 

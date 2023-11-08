@@ -4,4 +4,5 @@ export const queryKeys = {
   categoriesInForm: ["categoriesInForm"],
   productsInDashboard: ["productsInDashboard"],
   getProfile: ["getUserProfile"],
+  getColleges: ["getColleges"],
 };
