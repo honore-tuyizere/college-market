@@ -3,7 +3,6 @@
 // import { AuthContext } from "../context/Auth";
 import { ReactNode } from "react";
 
-
 interface Props {
   children: ReactNode;
 }
@@ -16,6 +15,7 @@ const AuthGuard = ({ children }: Props) => {
   //     navigate("/login");
   //   }
   // }, [authContext, navigate]);
+
   return <>{children}</>;
 };
 
