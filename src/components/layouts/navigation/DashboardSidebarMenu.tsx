@@ -11,6 +11,7 @@ import {
   HeartIcon,
   ArrowRightOnRectangleIcon,
   XCircleIcon,
+  MegaphoneIcon,
 } from "@heroicons/react/24/outline";
 
 const DashboardSidebarMenu = () => {
@@ -57,6 +58,15 @@ const DashboardSidebarMenu = () => {
             >
               <Square3Stack3DIcon className='w-5 h-5 text-teal-600 stroke-2' />
               <span className='text-md ml-4 font-medium'>Products</span>
+            </Link>
+          </li>
+          <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+            <Link
+              to={"notice"}
+              className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+            >
+              <MegaphoneIcon className='w-5 h-5 text-teal-600 stroke-2' />
+              <span className='text-md ml-4 font-medium'>Notices</span>
             </Link>
           </li>
           <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>

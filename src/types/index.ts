@@ -48,8 +48,14 @@ export interface IProduct {
   gallery: Array<Image>;
   price: number;
   condition: ICondition;
-  category: Icategory;
+  category: ICategory;
   college?: ICollege;
+  description: string;
+}
+
+export interface INotice {
+  name: string;
+  photo: string;
   description: string;
 }
 export interface IProductRequest {
@@ -65,6 +71,13 @@ export interface IProductRequest {
 
 export interface ISingleProduct extends IProduct {
   similar: IProduct[];
+}
+
+export interface INoticeRequest {
+  id?: string;
+  name: string;
+  photo?: string;
+  description: string;
 }
 
 export interface ProductListProps {

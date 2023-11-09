@@ -1,3 +1,4 @@
+import NoticesDashboard from "../components/notices/NoticesDashboard";
 import CategoryPage from "../pages/category/CategoryPage";
 import ConditionPage from "../pages/condition/ConditionPage";
 import DashboardPage from "../pages/dashboard/Dashboard";
@@ -26,6 +27,10 @@ const dashboardRoutes: IRoute[] = [
   {
     path: "/dashboard/purposes",
     element: PurposesPage,
+  },
+  {
+    path: "/dashboard/notice",
+    element: NoticesDashboard,
   },
 ];
 
