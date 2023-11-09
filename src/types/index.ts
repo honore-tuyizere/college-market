@@ -20,6 +20,10 @@ export interface ICondition {
   name: string;
 }
 
+export interface IConditionRequest {
+  _id?: string;
+  name: string;
+}
 export interface Image {
   url: string;
 }
