@@ -16,7 +16,7 @@ import Button from "../common/Button";
 import toast from "react-hot-toast";
 import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
 import { queryKeys } from "../../utils/queryKeys";
-import { ICondition, IProduct, Icategory } from "../../types";
+import { ICondition, IProduct, ICategory } from "../../types";
 import TextArea from "../common/inputs/TextArea";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
@@ -235,7 +235,7 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
                 error={errors.category?.message}
                 register={register("category")}
                 label='Category'
-                options={categories.map((category: Icategory) => ({
+                options={categories.map((category: ICategory) => ({
                   value: category._id,
                   label: category.name,
                 }))}

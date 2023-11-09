@@ -8,4 +8,5 @@ export const queryKeys = {
   getAllProducts: ["getAllproducts"],
   singleProduct: ["singleProduct"],
   orders: ["orders"],
+  purposesInForm: ["purposesInForm"],
 };
