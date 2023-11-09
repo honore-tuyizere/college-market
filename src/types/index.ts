@@ -24,6 +24,18 @@ export interface IConditionRequest {
   _id?: string;
   name: string;
 }
+
+export interface IPurpose {
+  _id: string;
+  name: string;
+  slug: string;
+}
+
+export interface IPurposeRequest {
+  id?: string;
+  name: string;
+  slug: string;
+}
 export interface Image {
   url: string;
 }

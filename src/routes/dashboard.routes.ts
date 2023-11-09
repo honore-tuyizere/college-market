@@ -2,6 +2,7 @@ import CategoryPage from "../pages/category/CategoryPage";
 import ConditionPage from "../pages/condition/ConditionPage";
 import DashboardPage from "../pages/dashboard/Dashboard";
 import ProductsPage from "../pages/products/ProductsPage";
+import PurposesPage from "../pages/purpose/PurposesPage";
 
 import { IRoute } from "../types";
 
@@ -21,6 +22,10 @@ const dashboardRoutes: IRoute[] = [
   {
     path: "/dashboard/conditions",
     element: ConditionPage,
+  },
+  {
+    path: "/dashboard/purposes",
+    element: PurposesPage,
   },
 ];
 
