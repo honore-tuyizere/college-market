@@ -3,6 +3,7 @@ import { ComponentType, ReactNode } from "react";
 export interface IRoute {
   path: string;
   element: ComponentType<unknown>;
+  isProtected?: boolean;
 }
 
 export interface Icategory {
@@ -27,6 +28,7 @@ export interface IProduct {
   price: number;
   condition: ICondition;
   category: Icategory;
+  college?: ICollege;
   description: string;
 }
 export interface IProductRequest {
@@ -38,6 +40,10 @@ export interface IProductRequest {
   condition: string;
   category: string;
   description: string;
+}
+
+export interface ISingleProduct extends IProduct {
+  similar: IProduct[];
 }
 
 export interface ProductListProps {
@@ -72,4 +78,17 @@ export interface IUser {
 export interface ICollege {
   _id: string;
   name: string;
+}
+
+export interface IOrder {
+  _id: string;
+  product: IProduct;
+  orderer: IUser;
+  phone: string;
+}
+
+export interface IOrderRequest {
+  id?: string;
+  product?: string;
+  phone: string;
 }

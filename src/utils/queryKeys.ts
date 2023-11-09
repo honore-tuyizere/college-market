@@ -6,4 +6,6 @@ export const queryKeys = {
   getProfile: ["getUserProfile"],
   getColleges: ["getColleges"],
   getAllProducts: ["getAllproducts"],
+  singleProduct: ["singleProduct"],
+  orders: ["orders"],
 };

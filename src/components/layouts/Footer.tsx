@@ -126,23 +126,23 @@ const Footer = () => {
           <div className='flex flex-wrap justify-between md:justify-start'>
             <div className=' w-full md:w-1/3 p-6 flex '>
               <img src={Icons} alt='logo' className=' w-[30px] h-[31px]' />
-              <Link to='#'>
+              <Link to='help'>
                 <span className='pl-4'>help center</span>
               </Link>
             </div>
             <div className='bg-white w-full  text-[18px] flex md:justify-center md:w-1/4   pl-4 md:p-4'>
-              <Link to='#'>
+              <Link to='terms'>
                 <p className='font-[400] text-[14px] p-4'>Terms & Service</p>
               </Link>
             </div>
 
             <div className='bg-white w-full  text-[18px] flex md:justify-center md:w-1/5 pl-4 md:p-4'>
-              <Link to='#'>
+              <Link to='privacy-policy'>
                 <p className='font-[400] text-[14px] p-4'>Privacy & Policy</p>
               </Link>
             </div>
             <div className='bg-white w-full  text-[18px] md:w-1/5 pl-4 md:pt-[26px] '>
-              <Link to='#'>
+              <Link to='https://etite.tech'>
                 <p className='font-[400] text-[13px] py-'>
                   All Right reserved by ETITE | 2023
                 </p>

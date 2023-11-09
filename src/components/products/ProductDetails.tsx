@@ -1,61 +1,107 @@
 import Container from "../common/Container";
-import Colorsample1 from "../../assets/color-sample1.png";
-
-import ColorSamples from "../../assets/color-samples.png";
-
-import ColorSamples88 from "../../assets/color-samples88.png";
-
-import ColorSamples2 from "../../assets/color-samples2.png";
-import FrameOrange from "../../assets/FrameOrange.png";
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "../../utils/queryKeys";
+import { getProduct } from "../../apis/products";
+import { useParams } from "react-router-dom";
+import ProductsList from "./ProductsList";
+import Loading from "../common/Loading";
+import Button from "../common/Button";
+import Modal from "../common/Modal";
+import OrderForm from "../orders/OrderForm";
+import { useState } from "react";
+import AuthGuard from "../../utils/AuthGuard";
 
 export const ProductDetails = () => {
+  const [orderForm, setOrderForm] = useState(false);
+  const { id } = useParams();
+
+  const { isLoading, data: product } = useQuery({
+    queryKey: [queryKeys.singleProduct, id],
+    queryFn: () => getProduct(id || ""),
+  });
+
   return (
     <Container>
-      <div className=' flex flex-wrap justify-center w-full py-[50px] px-[100px]'>
-        <div className=' w-[500px] mr-[100px]'>
-          <div className=' bg-[#F4F4F4] rounded-[10px] mb-[20px] flex justify-center'>
-            <img src={FrameOrange} alt='logo' className=' w-[400px] h-[544px]' />
-          </div>
-          <div className='bg-[#F4F4F4] flex justify-between rounded-sm'>
-            <img src={Colorsample1} alt='logo' className='w-[100px] h-[100px]' />
-            <img src={ColorSamples2} alt='logo' className=' w-[100px] h-[100px]' />
-            <img src={ColorSamples88} alt='logo' className=' w-[100px] h-[100px]' />
-            <img src={ColorSamples} alt='logo' className=' w-[100px] h-[100px]' />
-          </div>
-        </div>
-        <div className='w-[500px]'>
-          <div className='border-b-[1px] border-gray-300'>
-            <span className='bold text-[18px]'>AirPods Max</span>
-            <p className='py-[10px] text-[12px]'>
-              A perfect balance of high-fidelity audio and effortless magic of
-              AirPods
-            </p>
-          </div>
+      {isLoading && <Loading />}
+      {product && (
+        <>
+          <div className='flex flex-col py-12 px-8 items-center'>
+            <div className=' flex flex-wrap w-full pb-3 xl:space-x-28 justify-center'>
+              <div className='w-full max-w-[400px] flex flex-col'>
+                <div className='bg-gray-100 rounded-xl shadow-2xl flex justify-center'>
+                  <img
+                    src={product.thumbnail}
+                    alt={product.name}
+                    className='w-full h-full rounded-xl'
+                  />
+                </div>
+                <div className='flex flex-wrap space-x-6 rounded-sm'>
+                  {product.gallery.map((img) => (
+                    <img
+                      src={img.url}
+                      alt={product.name}
+                      className='w-[100px] h-[100px] rounded-md my-6'
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className='w-full max-w-[500px]'>
+                <div className=''>
+                  <div className='font-medium text-md text-gray-500 uppercase'>
+                    {product.category.name}
+                  </div>
+                  <div className='font-bold text-3xl capitalize'>{product.name}</div>
+                  <p className='py-8 text-gray-500'>{product.description}</p>
+                </div>
 
-          <div className='border-b-[1px] border-gray-300'>
-            <span className='bold text-[18px]'>AirPods Max</span>
-            <p className='py-[10px] text-[12px]'>
-              A perfect balance of high-fidelity audio and effortless magic of
-              AirPods
-            </p>
-          </div>
+                <div className='flex w-full justify-between py-3'>
+                  <div className='w-full'>
+                    <div className='text-md font-base text-gray-500'>CONDITION</div>
+                    <div className='text-lg uppercase font-medium'>
+                      {product.condition.name}
+                    </div>
+                  </div>
+                  <div className='w-full'>
+                    <div className='text-md font-base text-gray-500'>COLLEGE</div>
+                    <div className='text-lg uppercase font-medium'>
+                      {product.college?.name}
+                    </div>
+                  </div>
+                </div>
 
-          <div className='border-b-[1px] border-gray-300'>
-            <p className='py-[10px] text-[12px]'>Only 12 items Items Left!</p>
-            <button
-              type='button'
-              className='focus:outline-none text-white bg-[#003D29] hover:bg-[#003D29] focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 '
-            >
-              Make an offer
-            </button>
-            <button className='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800'>
-              <span className='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
-                Green to blue
-              </span>
-            </button>
+                <div className='sm:flex w-full justify-between py-3'>
+                  <div className='w-full'>
+                    <div className='text-teal-600 font-extra-bold text-5xl w-full block'>
+                      ${product.price}
+                    </div>
+                  </div>
+                  <div className='w-full flex space-x-2'>
+                    <Button label='Order now' onClick={() => setOrderForm(true)} />
+                    <Button label='Make an offer' outline={true} />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+          <ProductsList
+            title='Similar products'
+            products={product.similar}
+            isLoading={isLoading}
+          />
+
+          {orderForm && (
+            <AuthGuard>
+              <Modal
+                title='Order details'
+                onClose={() => setOrderForm(false)}
+                isOpen={orderForm}
+              >
+                <OrderForm setIsOpen={setOrderForm} product={product} />
+              </Modal>
+            </AuthGuard>
+          )}
+        </>
+      )}
     </Container>
   );
 };
