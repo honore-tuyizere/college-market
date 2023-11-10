@@ -22,7 +22,7 @@ const Productcard: FC<Props> = ({
           <img className='w-full' src={resizeImage(thumbnail)} alt='' />
           <div className='p-4 space-y-3'>
             <div>
-              <p className=' font-semibold text-sm line-clamp-1'>{name}</p>
+              <p className=' font-bold text-md line-clamp-1'>{name}</p>
               <p>${price}</p>
             </div>
             <div className='text-sm'>

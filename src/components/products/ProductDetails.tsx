@@ -25,10 +25,10 @@ export const ProductDetails = () => {
       {isLoading && <Loading />}
       {product && (
         <>
-          <div className='flex flex-col py-12 px-8 items-center'>
-            <div className=' flex flex-wrap w-full pb-3 xl:space-x-28 justify-center'>
-              <div className='w-full max-w-[400px] flex flex-col'>
-                <div className='bg-gray-100 rounded-xl shadow-2xl flex justify-center'>
+          <div className='flex flex-col py-12 items-center'>
+            <div className=' flex flex-wrap w-full pb-3 xs:justify-center xs:space-y-10 sm:space-y-0 sm:justify-left sm:space-x-10 lg:space-x-10 xl:space-x-28 lg:justify-center'>
+              <div className='xs:max-w-[400px] w-full sm:w-90 lg:w-full lg:max-w-[380px] flex flex-col'>
+                <div className='bg-gray-100 rounded-xl shadow-2xl flex justify-center aspect-square'>
                   <img
                     src={product.thumbnail}
                     alt={product.name}
@@ -45,7 +45,7 @@ export const ProductDetails = () => {
                   ))}
                 </div>
               </div>
-              <div className='w-full max-w-[500px]'>
+              <div className='max-w-[400px] md:w-2/3 lg:max-w-[400px] xl:max-w-[500px]'>
                 <div className=''>
                   <div className='font-medium text-md text-gray-500 uppercase'>
                     {product.category.name}
@@ -70,12 +70,12 @@ export const ProductDetails = () => {
                 </div>
 
                 <div className='sm:flex w-full justify-between py-3'>
-                  <div className='w-full'>
+                  <div className='w-20'>
                     <div className='text-teal-600 font-extra-bold text-5xl w-full block'>
                       ${product.price}
                     </div>
                   </div>
-                  <div className='w-full flex space-x-2'>
+                  <div className='flex space-x-2'>
                     <Button label='Order now' onClick={() => setOrderForm(true)} />
                     <Button label='Make an offer' outline={true} />
                   </div>
