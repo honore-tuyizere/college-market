@@ -124,5 +124,4 @@ export interface IOrder {
 export interface IOrderRequest {
   id?: string;
   product?: string;
-  phone: string;
 }

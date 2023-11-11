@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const orderSchema = z.object({
-  phone: z.string().min(1, "Enter price"),
+  product: z.string().min(1, "Product is required"),
 });
 
 export type orderSchemaType = z.infer<typeof orderSchema>;
