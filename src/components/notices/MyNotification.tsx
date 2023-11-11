@@ -1,17 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { INotice } from "../../types";
 import Container from "../common/Container";
-import { getAllNotices } from "../../apis/notice";
+import { getMyNotices } from "../../apis/notice";
 import { queryKeys } from "../../utils/queryKeys";
-import Modal from "../common/Modal";
 import { useState } from "react";
+import Modal from "../common/Modal";
 
-export const NoticeList = () => {
+export const MyNoticeList = () => {
   const { isLoading, data: notices } = useQuery({
-    queryFn: () => getAllNotices(),
-    queryKey: queryKeys.getAllNotices,
+    queryFn: () => getMyNotices(),
+    queryKey: queryKeys.noticesInDashboard,
   });
-
   const [action, setAction] = useState({
     show: false,
     data: { name: "", description: "", photo: "" },
@@ -51,32 +50,30 @@ export const NoticeList = () => {
             </table>
           </div>
         )}
-        <div className='mt-[100px]'>
-          <Modal
-            centered={true}
-            title='Notice details'
-            onClose={() =>
-              setAction({
-                show: false,
-                data: { name: "", description: "", photo: "" },
-              })
-            }
-            isOpen={action.show}
-          >
-            <div className='flex'>
-              <div className='block '>
-                <span className='bold text-[18px]'>{action.data.name}</span>
-                <p className='pt-[4px] text-[12px]'>{action.data.description}</p>
-              </div>
-              <div className='p-3 w-[500px]'>
-                {action.data.photo && <img src={action.data.photo} />}
-              </div>
+
+        <Modal
+          title='Notice details'
+          onClose={() =>
+            setAction({
+              show: false,
+              data: { name: "", description: "", photo: "" },
+            })
+          }
+          isOpen={action.show}
+        >
+          <div className='flex'>
+            <div className='block '>
+              <span className='bold text-[18px]'>{action.data.name}</span>
+              <p className='pt-[4px] text-[12px]'>{action.data.description}</p>
             </div>
-          </Modal>
-        </div>
+            <div className='p-3 w-[500px]'>
+              {action.data.photo && <img src={action.data.photo} />}
+            </div>
+          </div>
+        </Modal>
       </>
     </Container>
   );
 };
 
-export default NoticeList;
+export default MyNoticeList;
