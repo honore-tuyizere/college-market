@@ -1,9 +1,14 @@
 import axios from "axios";
-
+const getCookie = (name: string) => {
+  const cookie = document.cookie
+    .split("; ")
+    .find((cookie) => cookie.startsWith(name + "="));
+  return cookie ? cookie.split("=")[1] : null;
+};
 const ApiClient = () => {
   const instance = axios.create();
   instance.interceptors.request.use(async (request) => {
-    const accessToken = localStorage.getItem("auth");
+    const accessToken = getCookie("auth");
     if (accessToken) {
       request.headers.Authorization = `Bearer ${accessToken}`;
     }

@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;700&family=Roboto:wght@100;300;400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap");
+
 * {
   box-sizing: border-box;
 }
@@ -7,29 +8,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 /* width */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 5px;
-}
+} */
 
 /* Track */
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   background: #f1f1f1;
-}
+} */
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   background: #aaa;
   border-radius: 5px;
-}
+} */
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+/* ::-webkit-scrollbar-thumb:hover {
   background: #ccc;
-}
-
-html {
+} */
+* html {
   height: 100%;
 }
 
@@ -39,6 +39,7 @@ body {
   height: 100%;
   font-size: medium;
 }
+
 #root {
   height: 100% !important;
 }

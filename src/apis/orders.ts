@@ -1,7 +1,7 @@
 import httpClient from "../utils/httpClient";
 import { IOrder, IOrderRequest } from "../types";
 
-export const createOrder = async (data: IOrderRequest): Promise<IOrder> => {
+export const createOrder = async (data: IOrderRequest): Promise<string> => {
   return (await httpClient.post("/orders", data)).data;
 };
 

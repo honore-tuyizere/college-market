@@ -25,7 +25,7 @@ const ProcessAuth = () => {
       signIn({
         token: token,
         tokenType: "Bearer",
-        expiresIn: 60 * 60,
+        expiresIn: 60,
         authState: data,
       });
       navigate("/");
