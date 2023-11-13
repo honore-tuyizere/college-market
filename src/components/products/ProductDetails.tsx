@@ -9,7 +9,6 @@ import Modal from "../common/Modal";
 import OrderForm from "../orders/OrderForm";
 import { useState, useEffect } from "react";
 import AuthGuard from "../../utils/AuthGuard";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper/core";
 import { Navigation, Pagination } from "swiper/modules";

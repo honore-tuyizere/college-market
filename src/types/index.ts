@@ -85,6 +85,7 @@ export interface ProductListProps {
   title?: string;
   isLoading: boolean;
   products: IProduct[] | undefined;
+  orders?: IOrderedProduct[];
 }
 
 export interface FiltersComponentProps {
@@ -118,7 +119,7 @@ export interface IOrder {
   _id: string;
   product: IProduct;
   orderer: IUser;
-  phone: string;
+  phone?: string;
 }
 
 export interface IOrderRequest {
@@ -129,4 +130,8 @@ export interface IOrderRequest {
 export interface IProductFilter {
   categories?: string[];
   colleges?: string[];
+}
+export interface IOrderedProduct extends IOrder {
+  paymentStatus: string;
+  deliveryStatus: string;
 }
