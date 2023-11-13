@@ -1,5 +1,5 @@
 import httpClient from "../utils/httpClient";
-import { IProduct, IProductRequest, ISingleProduct } from "../types";
+import { IProduct, IProductFilter, IProductRequest, ISingleProduct } from "../types";
 
 export const createProduct = async (data: IProductRequest): Promise<IProduct> => {
   return (await httpClient.post("/products", data)).data;
@@ -23,4 +23,8 @@ export const updateProduct = async (data: IProductRequest): Promise<IProduct> =>
 
 export const getAllProducts = async (): Promise<IProduct[]> => {
   return (await httpClient.get(`/products`)).data;
+};
+
+export const filterProducts = async (data: IProductFilter): Promise<IProduct[]> => {
+  return (await httpClient.post(`/products/filter`, data)).data;
 };

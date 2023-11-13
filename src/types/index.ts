@@ -125,3 +125,8 @@ export interface IOrderRequest {
   id?: string;
   product?: string;
 }
+
+export interface IProductFilter {
+  categories?: string[];
+  colleges?: string[];
+}

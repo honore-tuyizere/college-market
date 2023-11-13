@@ -88,3 +88,63 @@ body.open-sidebar .sidebar {
 .swiper-pagination-bullet {
   @apply bg-white h-3 w-3 rounded-full;
 }
+.checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 2px solid #003d29;
+  border-radius: 4px;
+  transition: background-color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+
+.custom:checked {
+  background-color: #003d29;
+  border-color: #003d29;
+}
+
+.checkbox:checked::before {
+  content: "\2713";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #003d29;
+  font-size: 1rem;
+}
+.checkbox.custom:checked::before {
+  color: #fff;
+}
+
+.radio {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 2px solid #003d29;
+  border-radius: 50%;
+  transition: background-color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+
+.radio:checked {
+  background: #003d29;
+  color: #fff;
+}
+
+.radio:checked::before {
+  content: "\2713";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
