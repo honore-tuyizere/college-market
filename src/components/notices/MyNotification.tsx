@@ -61,14 +61,12 @@ export const MyNoticeList = () => {
           }
           isOpen={action.show}
         >
-          <div className='flex'>
-            <div className='block '>
-              <span className='bold text-[18px]'>{action.data.name}</span>
-              <p className='pt-[4px] text-[12px]'>{action.data.description}</p>
-            </div>
-            <div className='p-3 w-[500px]'>
-              {action.data.photo && <img src={action.data.photo} />}
-            </div>
+          <div className='block '>
+            <span className='bold text-[18px]'>{action.data.name}</span>
+            <p className='pt-[4px] text-[12px]'>{action.data.description}</p>
+          </div>
+          <div className='py-2'>
+            {action.data.photo && <img src={action.data.photo} />}
           </div>
         </Modal>
       </>
