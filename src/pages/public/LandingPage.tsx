@@ -5,12 +5,22 @@ import ProductsList from "../../components/products/ProductsList";
 import Slider from "../../components/slider/Slider";
 import { queryKeys } from "../../utils/queryKeys";
 import { getAllProducts } from "../../apis/products";
+import { IProduct } from "../../types";
+import { useEffect, useState } from "react";
 
 const LandingPage = () => {
-  const { data, isLoading } = useQuery({
+  const [data, setData] = useState<IProduct[] | undefined>(undefined);
+  const { data: queryData, isLoading } = useQuery({
     queryKey: queryKeys.getAllProducts,
     queryFn: getAllProducts,
   });
+
+  useEffect(() => {
+    if (queryData) {
+      setData(queryData);
+    }
+  }, [queryData]);
+
   return (
     <>
       <Slider />
@@ -21,8 +31,7 @@ const LandingPage = () => {
           title='Most selling Products'
           filtersComponent={
             <div className='flex gap-2 flex-wrap xs:flex-nowrap'>
-              <Filters label='Category' />
-              <Filters label='College' />
+              <Filters setData={setData} />
             </div>
           }
         />

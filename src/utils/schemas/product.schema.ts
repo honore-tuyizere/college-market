@@ -10,4 +10,10 @@ export const createProductSchema = z.object({
   description: z.string().min(1, "Description is required"),
 });
 
+export const filterProductSchema = z.object({
+  categories: z.array(z.string()),
+  colleges: z.array(z.string()),
+});
+
 export type createProductSchemaType = z.infer<typeof createProductSchema>;
+export type filterProductSchemaType = z.infer<typeof filterProductSchema>;
