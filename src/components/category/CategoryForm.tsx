@@ -9,13 +9,15 @@ import {
 } from "../../utils/schemas/category.schema";
 import Button from "../common/Button";
 import toast from "react-hot-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "../../utils/queryKeys";
 
 interface ICategoryForm {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const CategoryForm: FC<ICategoryForm> = ({ setIsOpen }) => {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -29,12 +31,17 @@ const CategoryForm: FC<ICategoryForm> = ({ setIsOpen }) => {
 
   const submit = async (data: createCategorySchemaType) => {
     try {
-      const category = await categoryMutation.mutateAsync(data);
-      toast.success(`Category ${category.name} created`);
-      console.log(`Category ${category.name} created`);
-
-      reset();
-      setIsOpen(false);
+      await categoryMutation.mutateAsync(data, {
+        onSuccess(category) {
+          setIsOpen(false);
+          toast.success(`Category ${category.name} created`);
+          console.log(`Category ${category.name} created`);
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.categoriesInForm,
+          });
+          reset();
+        },
+      });
     } catch (error) {
       toast.error((error as Error).message);
     }

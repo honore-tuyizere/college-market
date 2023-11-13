@@ -12,6 +12,9 @@ import {
   ArrowRightOnRectangleIcon,
   XCircleIcon,
   MegaphoneIcon,
+  RectangleGroupIcon,
+  RectangleStackIcon,
+  QueueListIcon,
 } from "@heroicons/react/24/outline";
 
 const DashboardSidebarMenu = () => {
@@ -58,6 +61,33 @@ const DashboardSidebarMenu = () => {
             >
               <Square3Stack3DIcon className='w-5 h-5 text-teal-600 stroke-2' />
               <span className='text-md ml-4 font-medium'>Products</span>
+            </Link>
+          </li>
+          <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+            <Link
+              to={"category"}
+              className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+            >
+              <RectangleGroupIcon className='w-5 h-5 text-teal-600 stroke-2' />
+              <span className='text-md ml-4 font-medium'>Categories</span>
+            </Link>
+          </li>
+          <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+            <Link
+              to={"purposes"}
+              className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+            >
+              <RectangleStackIcon className='w-5 h-5 text-teal-600 stroke-2' />
+              <span className='text-md ml-4 font-medium'>Purposes</span>
+            </Link>
+          </li>
+          <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+            <Link
+              to={"conditions"}
+              className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+            >
+              <QueueListIcon className='w-5 h-5 text-teal-600 stroke-2' />
+              <span className='text-md ml-4 font-medium'>Conditions</span>
             </Link>
           </li>
           <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>

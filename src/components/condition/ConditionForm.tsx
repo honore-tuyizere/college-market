@@ -9,13 +9,15 @@ import {
 } from "../../utils/schemas/condition.schema";
 import Button from "../common/Button";
 import toast from "react-hot-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "../../utils/queryKeys";
 
 interface IConditionForm {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const ConditionForm: FC<IConditionForm> = ({ setIsOpen }) => {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -29,12 +31,17 @@ const ConditionForm: FC<IConditionForm> = ({ setIsOpen }) => {
 
   const submit = async (data: createConditionSchemaType) => {
     try {
-      const condition = await conditionMutation.mutateAsync(data);
-      toast.success(`Condition ${condition.name} created`);
-      console.log(`Condition ${condition.name} created`);
-
-      reset();
-      setIsOpen(false);
+      await conditionMutation.mutateAsync(data, {
+        onSuccess: (condition) => {
+          setIsOpen(false);
+          toast.success(`Condition ${condition.name} created`);
+          console.log(`Condition ${condition.name} created`);
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.conditionsInForm,
+          });
+          reset();
+        },
+      });
     } catch (error) {
       toast.error((error as Error).message);
     }

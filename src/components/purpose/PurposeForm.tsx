@@ -9,13 +9,15 @@ import {
 } from "../../utils/schemas/purpose.schema";
 import Button from "../common/Button";
 import toast from "react-hot-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "../../utils/queryKeys";
 
 interface IPurposeForm {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const PurposeForm: FC<IPurposeForm> = ({ setIsOpen }) => {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -33,13 +35,17 @@ const PurposeForm: FC<IPurposeForm> = ({ setIsOpen }) => {
         ...data,
         slug: data.name.toLowerCase().replace(/\s+/g, "-"),
       };
-
-      const purpose = await purposeMutation.mutateAsync(purposeData);
-      toast.success(`Purpose ${purpose.name} created`);
-      console.log(`Purpose ${purpose.name} created`);
-
-      reset();
-      setIsOpen(false);
+      purposeMutation.mutateAsync(purposeData, {
+        onSuccess() {
+          setIsOpen(false);
+          toast.success(`Purpose ${purposeData.name} created`);
+          console.log(`Purpose ${purposeData.name} created`);
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.purposesInForm,
+          });
+          reset();
+        },
+      });
     } catch (error) {
       toast.error((error as Error).message);
     }
