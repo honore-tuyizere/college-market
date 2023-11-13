@@ -168,7 +168,11 @@ const NoticeForm: FC<IPRoductForm> = ({ setIsOpen }) => {
           />
         </div>
 
-        <Button label='Save' isLoading={noticeMutation.isPending} type='submit' />
+        <Button
+          label='Save'
+          isLoading={uploadAssets.isPending || noticeMutation.isPending}
+          type='submit'
+        />
       </form>
     </>
   );
