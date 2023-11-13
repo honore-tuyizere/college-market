@@ -16,10 +16,12 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import { Image } from "../../types";
 import ProductDetailsSkeleton from "../skeletons/ProductDetailsSkeleton";
+import Chat from "../chat/ChatModel";
 SwiperCore.use([Navigation, Pagination]);
 
 export const ProductDetails = () => {
   const [orderForm, setOrderForm] = useState(false);
+  const [offerPage, setOfferPage] = useState(false);
   const [productImages, setProductImages] = useState<Image[]>([]);
   const { id } = useParams();
 
@@ -88,7 +90,11 @@ export const ProductDetails = () => {
                   <div className='sm:flex w-full items-center gap-6 py-3'>
                     <div className='flex flex-wrap sm:flex-col md:flex-row space-x-2 sm:space-x-0 sm:space-y-2 md:space-y-0 md:space-x-2'>
                       <Button label='Order now' onClick={() => setOrderForm(true)} />
-                      <Button label='Make an offer' outline={true} />
+                      <Button
+                        label='Make an offer'
+                        outline={true}
+                        onClick={() => setOfferPage(true)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -123,6 +129,20 @@ export const ProductDetails = () => {
                 isOpen={true}
               >
                 <OrderForm setIsOpen={setOrderForm} product={product} />
+              </Modal>
+            </AuthGuard>
+          )}
+
+          {offerPage && (
+            <AuthGuard>
+              <Modal
+                centered
+                title='Make an offer'
+                onClose={() => setOfferPage(false)}
+                isOpen={true}
+                modalType='chat'
+              >
+                <Chat setIsOpen={setOfferPage} product={product} />
               </Modal>
             </AuthGuard>
           )}

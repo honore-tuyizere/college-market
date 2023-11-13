@@ -131,6 +131,42 @@ export interface IProductFilter {
   categories?: string[];
   colleges?: string[];
 }
+
+export interface IChat {
+  _id: string;
+  buyer: string;
+  owner: string;
+  product: string;
+  acceptedPrice: number;
+}
+
+export interface IAcceptPrice {
+  _id?: string;
+  price: number;
+}
+
+export interface IChatDTO {
+  _id: string;
+  buyer: IUser;
+  product: IProduct;
+  acceptedPrice?: number;
+  owner: IUser;
+  messages?: IMessage[];
+}
+
+export interface IMessage {
+  _id: string;
+  chat: IChat;
+  sender: IUser;
+  text: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+}
+
+export interface IMessageRequest {
+  _id?: string;
+  text: string;
+}
 export interface IOrderedProduct extends IOrder {
   paymentStatus: string;
   deliveryStatus: string;

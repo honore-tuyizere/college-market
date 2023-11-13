@@ -8,6 +8,7 @@ import {
   Square3Stack3DIcon,
   MagnifyingGlassIcon,
   HeartIcon,
+  ChatBubbleLeftEllipsisIcon,
   ArrowRightOnRectangleIcon,
   XCircleIcon,
   MegaphoneIcon,
@@ -100,6 +101,18 @@ const DashboardSidebarMenu = () => {
           </li>
           <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
             <Link
+              to={"chats"}
+              className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+            >
+              <ChatBubbleLeftEllipsisIcon className='w-5 h-5 text-teal-600 stroke-2 stroke-2' />
+              <span className='text-md ml-4 font-medium'>Chats</span>
+            </Link>
+            <div className='py-1 px-2.5 bg-teal-600 rounded text-gray-50 flex items-center justify-center text-xs'>
+              5
+            </div>
+          </li>
+          <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+            <Link
               to={"/dashboard/orders"}
               className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
             >
@@ -107,6 +120,19 @@ const DashboardSidebarMenu = () => {
               <span className='text-md ml-4 font-medium'>Orders</span>
             </Link>
           </li>
+          <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+            <Link
+              to={"chats"}
+              className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+            >
+              <ChatBubbleLeftEllipsisIcon className='w-5 h-5 text-teal-600 stroke-2 stroke-2' />
+              <span className='text-md ml-4 font-medium'>Chats</span>
+            </Link>
+            <div className='py-1 px-2.5 bg-teal-600 rounded text-gray-50 flex items-center justify-center text-xs'>
+              5
+            </div>
+          </li>
+
           <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
             <Link
               to={""}

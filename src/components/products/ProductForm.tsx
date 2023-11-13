@@ -266,7 +266,11 @@ const ProductForm: FC<IPRoductForm> = ({ setIsOpen }) => {
           />
         </div>
 
-        <Button label='Submit' isLoading={productMutation.isPending} type='submit' />
+        <Button
+          label='Submit'
+          isLoading={uploadAssets.isPending || productMutation.isPending}
+          type='submit'
+        />
       </form>
     </>
   );

@@ -13,4 +13,6 @@ export const queryKeys = {
   purposesInForm: ["purposesInForm"],
   getAllNotices: ["getAllNotices"],
   sellerOrders: ["sellersOrders"],
+  chat: ["chat"],
+  chats: ["chats"],
 };
