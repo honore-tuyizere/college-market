@@ -7,7 +7,6 @@ import {
   BellAlertIcon,
   Square3Stack3DIcon,
   MagnifyingGlassIcon,
-  ShoppingCartIcon,
   HeartIcon,
   ArrowRightOnRectangleIcon,
   XCircleIcon,
@@ -101,15 +100,12 @@ const DashboardSidebarMenu = () => {
           </li>
           <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
             <Link
-              to={""}
+              to={"/dashboard/orders"}
               className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
             >
-              <ShoppingCartIcon className='w-5 h-5 text-teal-600 stroke-2 stroke-2' />
-              <span className='text-md ml-4 font-medium'>Cart</span>
+              <QueueListIcon className='w-5 h-5 text-teal-600 stroke-2' />
+              <span className='text-md ml-4 font-medium'>Orders</span>
             </Link>
-            <div className='py-1 px-2.5 bg-teal-600 rounded text-gray-50 flex items-center justify-center text-xs'>
-              5
-            </div>
           </li>
           <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
             <Link

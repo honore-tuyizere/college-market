@@ -1,12 +1,15 @@
 import { FC } from "react";
-import { IProduct } from "../../types";
+import { IOrderedProduct, IProduct } from "../../types";
 import { Link } from "react-router-dom";
+import { ChatBubbleLeftIcon, PencilIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   product: IProduct;
+  order?: IOrderedProduct;
 }
 const Productcard: FC<Props> = ({
   product: { thumbnail, name, price, condition, _id },
+  order,
 }) => {
   const resizeImage = (imageUrl: string) => {
     const keyword = "upload";
@@ -16,7 +19,7 @@ const Productcard: FC<Props> = ({
     return beforeKeyword + "/h_211,w_211/" + afterKeyword;
   };
   return (
-    <Link to={`/product/${_id}`} target='_blank'>
+    <Link to={order ? "#" : `/product/${_id}`} target={order ? "" : "_blank"}>
       <div className='bg-white shadow-md rounded-md'>
         <img className='w-full' src={resizeImage(thumbnail)} alt='' />
         <div className='p-4 space-y-3'>
@@ -25,9 +28,17 @@ const Productcard: FC<Props> = ({
             <p>${price}</p>
           </div>
           <div className='text-sm'>
-            <div className='bg-[rgba(0,77,77,0.58)] text-white px-2 py-1 rounded inline-block text-xs mt-1'>
-              {condition?.name}
-            </div>
+            {!order && (
+              <div className='bg-[rgba(0,77,77,0.58)] text-white px-2 py-1 rounded inline-block text-xs mt-1'>
+                {condition?.name}
+              </div>
+            )}
+            {order && (
+              <div className='flex gap-3'>
+                <PencilIcon className='w-5 text-indigo-600' />
+                <ChatBubbleLeftIcon className='w-5 text-action-color-500' />
+              </div>
+            )}
           </div>
         </div>
       </div>
