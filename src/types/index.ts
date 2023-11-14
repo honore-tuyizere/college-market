@@ -54,6 +54,7 @@ export interface IProduct {
 }
 
 export interface INotice {
+  _id?: string;
   name: string;
   photo: string;
   description: string;
