@@ -76,7 +76,7 @@ const SearchComponent: React.FC = () => {
 
   return (
     <div className='fixed top-4 ' ref={ref}>
-      <div className='mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all'>
+      <div className='mx-auto max-w-xl bg-gray-200 transform border-none overflow-hidden rounded-xl bg-transparent shadow-2xl   transition-all'>
         <Combobox
           onChange={(value) => {
             const product = products.find((product) => product.name === value);
@@ -89,7 +89,7 @@ const SearchComponent: React.FC = () => {
               aria-hidden='true'
             />
             <Combobox.Input
-              className='h-12 w-96 border-2 rounded-full border-gray-400 bg-teal-50 pl-11 pr-4 text-gray-900 placeholder:text-gray-500 focus:ring-1 focus:ring-gray-700 sm:text-sm'
+              className='h-12 w-96 border rounded-full outline-none  pl-11 pr-4 text-gray-900 placeholder:text-gray-500  sm:text-sm'
               placeholder='Search...'
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
@@ -99,13 +99,13 @@ const SearchComponent: React.FC = () => {
           {filteredProducts.length > 0 && (
             <Combobox.Options
               static
-              className='max-h-96 scroll-py-3 overflow-y-auto p-3'
+              className='max-h-96 bg-white scroll-py-3 overflow-y-auto p-3'
             >
               {filteredProducts.map((product) => (
                 <Combobox.Option
                   key={product._id}
-                  value={product.name} 
-                  onClick={() => setSelectedProduct(product)} 
+                  value={product.name}
+                  onClick={() => setSelectedProduct(product)}
                   className={({ active }) =>
                     classNames(
                       "flex cursor-default select-none rounded-xl p-3",
@@ -151,19 +151,18 @@ const SearchComponent: React.FC = () => {
             </Combobox.Options>
           )}
 
-          {searchQuery !== "" && filteredProducts.length === 0 && (
-            <div className='px-6 py-14 text-center text-sm sm:px-14'>
-              <ExclamationCircleIcon
-                type='outline'
-                name='exclamation-circle'
-                className='mx-auto h-6 w-6 text-gray-400'
-              />
-              <p className='mt-4 font-semibold text-gray-900'>No results found</p>
-              <p className='mt-2 text-gray-500'>
-                No products found for this search term. Please try again.
-              </p>
-            </div>
-          )}
+          {searchQuery !== "" &&
+            searchQuery.length > 1 &&
+            filteredProducts.length === 0 && (
+              <div className='px-6 py-14 text-center text-sm sm:px-14'>
+                <ExclamationCircleIcon
+                  type='outline'
+                  name='exclamation-circle'
+                  className='mx-auto h-6 w-6 text-gray-400'
+                />
+                <p className='mt-4 font-semibold text-gray-900'>No results found</p>
+              </div>
+            )}
         </Combobox>
       </div>
     </div>

@@ -29,3 +29,9 @@ export const getSellersOrders = async (
 ): Promise<IOrderedProduct[]> => {
   return (await httpClient.get("/orders/seller/" + sellerId)).data;
 };
+
+export const getBuyersOrders = async (
+  buyerId: string,
+): Promise<IOrderedProduct[]> => {
+  return (await httpClient.get("/orders/buyer/" + buyerId)).data;
+};
