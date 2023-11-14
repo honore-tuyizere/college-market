@@ -10,6 +10,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import CategoryHeader from "./CategoryHeader";
 import Headroom from "react-headroom";
 import { useEffect } from "react";
+import SearchComponent from "../../search/SearchComponent";
 
 const Header = () => {
   const location = useLocation();
@@ -29,17 +30,10 @@ const Header = () => {
               <img src={Logo} alt='logo' className='h-full w-full object-cover' />
             </NavLink>
           </div>
+          <div className='search-input hidden md:block'>
+            <SearchComponent />
+          </div>
           <div className='flex gap-3 lg:gap-24'>
-            {location.pathname !== "/notice" && location.pathname !== "/login" && (
-              <div className='search-input hidden md:block'>
-                <input
-                  type='text'
-                  className='h-10 rounded-full w-72 px-7 border outline-none'
-                  placeholder='Search product'
-                />
-              </div>
-            )}
-
             <div className='nav-icons flex gap-5 sm:gap-3 lg:gap-7 text-sm items-center'>
               <div className='flex gap-2 md:hidden'>
                 <MagnifyingGlassIcon className='text-black w-5' />
