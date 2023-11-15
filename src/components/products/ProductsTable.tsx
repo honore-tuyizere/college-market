@@ -75,7 +75,7 @@ export const ProductsTable = () => {
                   </td>
                   <td className='py-3 px-6'>
                     <span className='bg-green-400 text-gray-50 rounded-md px-2'>
-                      available
+                      {product.isAvailable ? "available" : "not available"}
                     </span>
                   </td>
                   <td className='py-3 px-6 rounded-r-xl'>

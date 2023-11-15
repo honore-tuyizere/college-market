@@ -5,12 +5,12 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { IProduct } from "../../types";
 import { searchProducts } from "../../apis/search";
+import classNames from "classnames";
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+interface ISearchComponentProps {
+  closeMobileMenu?: () => void;
 }
-
-const SearchComponent: React.FC = () => {
+const SearchComponent: React.FC<ISearchComponentProps> = ({ closeMobileMenu }) => {
   const history = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -39,8 +39,11 @@ const SearchComponent: React.FC = () => {
     if (selectedProduct) {
       history(`/product/${selectedProduct._id}`);
       setSearchQuery("");
+      if (closeMobileMenu) {
+        closeMobileMenu();
+      }
     }
-  }, [selectedProduct, history]);
+  }, [selectedProduct, history, closeMobileMenu]);
 
   const filteredProducts =
     searchQuery === ""
@@ -75,8 +78,8 @@ const SearchComponent: React.FC = () => {
   useOnClickOutside(ref, () => setSearchQuery(""));
 
   return (
-    <div className='fixed top-4 ' ref={ref}>
-      <div className='mx-auto max-w-xl bg-gray-200 transform border-none overflow-hidden rounded-xl bg-transparent shadow-2xl   transition-all'>
+    <div className='relative' ref={ref}>
+      <div className='mx-auto top-4 fixed max-w-xl  transform border-none overflow-hidden rounded-xl bg-transparent shadow-2xl   transition-all'>
         <Combobox
           onChange={(value) => {
             const product = products.find((product) => product.name === value);
@@ -89,7 +92,7 @@ const SearchComponent: React.FC = () => {
               aria-hidden='true'
             />
             <Combobox.Input
-              className='h-12 w-96 border rounded-full outline-none  pl-11 pr-4 text-gray-900 placeholder:text-gray-500  sm:text-sm'
+              className='h-12 w-full border rounded-full outline-none  pl-11 pr-4 text-gray-900 placeholder:text-gray-500  sm:text-sm'
               placeholder='Search...'
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}

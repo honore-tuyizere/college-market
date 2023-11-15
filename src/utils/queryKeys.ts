@@ -14,4 +14,5 @@ export const queryKeys = {
   getAllNotices: ["getAllNotices"],
   sellerOrders: ["sellersOrders"],
   buyerOrders: ["buyerOrders"],
+  productPurposes: ["productPurposes"],
 };

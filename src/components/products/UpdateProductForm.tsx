@@ -16,9 +16,10 @@ import Button from "../common/Button";
 import toast from "react-hot-toast";
 import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
 import { queryKeys } from "../../utils/queryKeys";
-import { ICondition, IProduct, ICategory } from "../../types";
+import { ICondition, IProduct, ICategory, IPurpose } from "../../types";
 import TextArea from "../common/inputs/TextArea";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { getPurposes } from "../../apis/purpose";
 
 interface IPRoductForm {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -63,6 +64,11 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
   const { data: categories } = useQuery({
     queryFn: () => getCategories(),
     queryKey: queryKeys.categoriesInForm,
+  });
+
+  const { data: productPurpose } = useQuery({
+    queryFn: getPurposes,
+    queryKey: queryKeys.productPurposes,
   });
 
   const productMutation = useMutation({ mutationFn: updateProduct });
@@ -167,140 +173,151 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
     }
   };
   return (
-    <>
-      <form
-        onSubmit={handleSubmit(submit)}
-        id='productForm'
-        className='w-full space-y-3'
-        encType='multipart/form,-data'
-      >
-        <div className='w-full space-y-4 sm:space-y-0 sm:flex sm:space-x-5'>
-          <TextBox
-            label='Product name'
-            type='text'
-            error={errors.name?.message}
-            register={register("name")}
-          />
-          <TextBox
-            label='Product price ($)'
-            type='number'
-            error={errors.price?.message}
-            register={register("price")}
-          />
-        </div>
+    <form
+      onSubmit={handleSubmit(submit)}
+      id='productForm'
+      className='w-full space-y-3'
+      encType='multipart/form,-data'
+    >
+      <div className='w-full space-y-4 sm:space-y-0 sm:flex sm:space-x-5'>
+        <TextBox
+          label='Product name'
+          type='text'
+          error={errors.name?.message}
+          register={register("name")}
+        />
+        <TextBox
+          label='Product price ($)'
+          type='number'
+          error={errors.price?.message}
+          register={register("price")}
+        />
+      </div>
 
-        <div className='w-full space-y-4 sm:space-y-0 sm:flex sm:space-x-5'>
-          <div className='image-previews relative border border-gray-300 border-dashed rounded-xl w-full flex flex-col space-y-2'>
-            <div className='p-4 w-full flex flex-wrap space-x-3'>
-              <FileInput
-                label='Thumbnail'
-                id='thumbnail'
-                withPreview={true}
-                register={register("thumbnail", {
-                  onChange: (e) => {
-                    previewThumbnail(e);
-                  },
-                })}
-              />
-              {(oldThumbnail || thumbnailPreview) && (
-                <img
-                  src={thumbnailPreview || oldThumbnail}
-                  alt='Image preview'
-                  className='w-24 h-24 rounded-md my-2'
-                />
-              )}
-            </div>
-            <div className='block w-full px-3 pt-0 absolute bottom-0 left-0'>
-              {errors.thumbnail?.message && (
-                <div className='block text-sm leading-6 text-red-500'>
-                  {errors.thumbnail.message as string}
-                </div>
-              )}
-            </div>
-          </div>
-          <div className='w-full flex flex-col space-y-2'>
-            {conditions && (
-              <SelectOption
-                error={errors.condition?.message}
-                register={register("condition")}
-                label='Condition'
-                options={conditions.map((condition: ICondition) => ({
-                  value: condition._id,
-                  label: condition.name,
-                }))}
-              />
-            )}
-            {categories && (
-              <SelectOption
-                error={errors.category?.message}
-                register={register("category")}
-                label='Category'
-                options={categories.map((category: ICategory) => ({
-                  value: category._id,
-                  label: category.name,
-                }))}
-              />
-            )}
-          </div>
-        </div>
-        <div className='image-previews flex flex-wrap space-x-5 border border-gray-300 border-dashed rounded-xl p-4'>
-          <FileInput
-            label='Gallery'
-            id='gallery'
-            withPreview={true}
-            allowMultiple={true}
-            register={register("gallery", {
-              onChange: (e) => {
-                previewGallery(e);
-              },
-            })}
-          />
-          {oldGallery.length > 0 && (
-            <>
-              {oldGallery.map((img, index) => (
-                <div className='relative' id={`image-${index}`} key={index}>
-                  <img
-                    src={img.url}
-                    alt='Image preview'
-                    className='w-24 h-24 rounded-md my-2'
-                  />
-                  <span
-                    className='absolute -top-1.5 -right-3 bg-white rounded-full p-1 cursor-pointer border border-gray-300'
-                    onClick={() => removeFromGallery(index, true)}
-                  >
-                    <XMarkIcon className='w-4 h-4' />
-                  </span>
-                </div>
-              ))}
-            </>
-          )}
-          {galleryPreview.map((preview, index) => (
-            <div className='relative' id={`image-${index}`} key={preview.index}>
+      <div className='w-full space-y-4 sm:space-y-0 sm:flex sm:space-x-5'>
+        <div className='image-previews relative border border-gray-300 border-dashed rounded-xl w-full flex flex-col space-y-2'>
+          <div className='p-4 w-full flex flex-wrap space-x-3'>
+            <FileInput
+              label='Thumbnail'
+              id='thumbnail'
+              withPreview={true}
+              register={register("thumbnail", {
+                onChange: (e) => {
+                  previewThumbnail(e);
+                },
+              })}
+            />
+            {(oldThumbnail || thumbnailPreview) && (
               <img
-                src={preview.url}
+                src={thumbnailPreview || oldThumbnail}
                 alt='Image preview'
                 className='w-24 h-24 rounded-md my-2'
               />
-              <span
-                className='absolute -top-1.5 -right-3 bg-white rounded-full p-1 cursor-pointer border border-gray-300'
-                onClick={() => removeFromGallery(index)}
-              >
-                <XMarkIcon className='w-4 h-4' />
-              </span>
-            </div>
-          ))}
+            )}
+          </div>
+          <div className='block w-full px-3 pt-0 absolute bottom-0 left-0'>
+            {errors.thumbnail?.message && (
+              <div className='block text-sm leading-6 text-red-500'>
+                {errors.thumbnail.message as string}
+              </div>
+            )}
+          </div>
         </div>
-        <div className='w-full'>
-          <TextArea
-            label='Description'
-            error={errors.description?.message}
-            register={register("description")}
-          />
-        </div>
+        <div className='w-full flex flex-col space-y-2'>
+          {conditions && (
+            <SelectOption
+              error={errors.condition?.message}
+              register={register("condition")}
+              label='Condition'
+              options={conditions.map((condition: ICondition) => ({
+                value: condition._id,
+                label: condition.name,
+              }))}
+            />
+          )}
+          {categories && (
+            <SelectOption
+              error={errors.category?.message}
+              register={register("category")}
+              label='Category'
+              options={categories.map((category: ICategory) => ({
+                value: category._id,
+                label: category.name,
+              }))}
+            />
+          )}
 
-        <Button label='Submit' isLoading={productMutation.isPending} type='submit' />
-      </form>
-    </>
+          {productPurpose && (
+            <SelectOption
+              defaultValue={product.purpose}
+              error={errors.purpose?.message}
+              register={register("purpose")}
+              label='Purpose'
+              options={productPurpose.map((purpose: IPurpose) => ({
+                value: purpose._id,
+                label: purpose.name,
+              }))}
+            />
+          )}
+        </div>
+      </div>
+      <div className='image-previews flex flex-wrap space-x-5 border border-gray-300 border-dashed rounded-xl p-4'>
+        <FileInput
+          label='Gallery'
+          id='gallery'
+          withPreview={true}
+          allowMultiple={true}
+          register={register("gallery", {
+            onChange: (e) => {
+              previewGallery(e);
+            },
+          })}
+        />
+        {oldGallery.length > 0 && (
+          <>
+            {oldGallery.map((img, index) => (
+              <div className='relative' id={`image-${index}`} key={index}>
+                <img
+                  src={img.url}
+                  alt='Image preview'
+                  className='w-24 h-24 rounded-md my-2'
+                />
+                <span
+                  className='absolute -top-1.5 -right-3 bg-white rounded-full p-1 cursor-pointer border border-gray-300'
+                  onClick={() => removeFromGallery(index, true)}
+                >
+                  <XMarkIcon className='w-4 h-4' />
+                </span>
+              </div>
+            ))}
+          </>
+        )}
+        {galleryPreview.map((preview, index) => (
+          <div className='relative' id={`image-${index}`} key={preview.index}>
+            <img
+              src={preview.url}
+              alt='Image preview'
+              className='w-24 h-24 rounded-md my-2'
+            />
+            <span
+              className='absolute -top-1.5 -right-3 bg-white rounded-full p-1 cursor-pointer border border-gray-300'
+              onClick={() => removeFromGallery(index)}
+            >
+              <XMarkIcon className='w-4 h-4' />
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className='w-full'>
+        <TextArea
+          label='Description'
+          error={errors.description?.message}
+          register={register("description")}
+        />
+      </div>
+
+      <Button label='Submit' isLoading={productMutation.isPending} type='submit' />
+    </form>
   );
 };
 
