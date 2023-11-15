@@ -63,6 +63,23 @@ export interface INotice {
   photo: string;
   description: string;
 }
+
+export interface ISlider {
+  _id?: string;
+  title?: string;
+  photo?: string;
+  description?: string;
+  type?: string;
+  sliderStatus?: string
+}
+
+export interface ISliders {
+  title: string;
+  photo: string;
+  description: string;
+  category: string;
+}
+
 export interface IProductRequest {
   id?: string;
   name: string;
@@ -85,6 +102,14 @@ export interface INoticeRequest {
   name: string;
   photo?: string;
   description: string;
+}
+export interface ISliderRequest {
+  id?: string;
+  title?: string;
+  photo?: string;
+  description?: string;
+  type?: string;
+  sliderStatus?: string;
 }
 
 export interface ProductListProps {

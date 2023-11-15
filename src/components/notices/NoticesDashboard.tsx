@@ -3,7 +3,7 @@ import Button from "../common/Button";
 import Modal from "../common/Modal";
 import { useState } from "react";
 import NoticeForm from "./NoticeForm";
-import MyNoticeList from "./MyNotification";
+import MyNoticeList from "./MyNotice";
 
 export const NoticesDashboard = () => {
   const [formOpen, setFormOpen] = useState(false);

@@ -20,4 +20,7 @@ export const queryKeys = {
   rentProducts: ["rentProducts"],
   donatedProducts: ["donatedProducts"],
   transactions: ["transactios"],
+  getAllAdsSliders: ["getAllAdsSliders"],
+  getAllHeroSliders: ["getAllHeroSliders"],
+  slidersInDashboard: ["slidersInDashboard"],
 };

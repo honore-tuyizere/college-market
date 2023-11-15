@@ -1,5 +1,6 @@
 import AllChats from "../components/chat/AllChatsPage";
 import NoticesDashboard from "../components/notices/NoticesDashboard";
+import SliderDashboard from "../components/slider/SliderDashboard";
 import CategoryPage from "../pages/category/CategoryPage";
 import ConditionPage from "../pages/condition/ConditionPage";
 import DashboardPage from "../pages/dashboard/Dashboard";
@@ -47,6 +48,10 @@ const dashboardRoutes: IRoute[] = [
     path: "/dashboard/transactions",
     element: TransactionsPage,
   },
+  {
+    path: "/dashboard/slider",
+    element: SliderDashboard,
+  }
 ];
 
 export default dashboardRoutes;
