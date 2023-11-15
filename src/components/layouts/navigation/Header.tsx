@@ -30,12 +30,12 @@ const Header = () => {
               <img src={Logo} alt='logo' className='h-full w-full object-cover' />
             </NavLink>
           </div>
-          <div className='search-input hidden md:block'>
+          <div className='search-input hidden lg:block'>
             <SearchComponent />
           </div>
           <div className='flex gap-3 lg:gap-24'>
             <div className='nav-icons flex gap-5 sm:gap-3 lg:gap-7 text-sm items-center'>
-              <div>
+              <div className='block lg:hidden'>
                 <MobileSearch />
               </div>
               <NavLink to={"/notice"} className='flex gap-2'>

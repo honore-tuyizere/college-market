@@ -51,6 +51,8 @@ export interface IProduct {
   category: ICategory;
   college?: ICollege;
   description: string;
+  isAvailable: boolean;
+  purpose: string;
 }
 
 export interface INotice {

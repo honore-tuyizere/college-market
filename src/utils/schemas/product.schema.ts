@@ -4,6 +4,7 @@ export const createProductSchema = z.object({
   name: z.string().min(1, "Innvalid name"),
   condition: z.string().min(24, "Select condition"),
   category: z.string().min(24, "Select category"),
+  purpose: z.string().min(24, "Select purpose"),
   thumbnail: z.any(),
   gallery: z.any(),
   price: z.coerce.number().min(1, "Enter price"),
