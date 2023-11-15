@@ -5,6 +5,7 @@ import { getMyNotices } from "../../apis/notice";
 import { queryKeys } from "../../utils/queryKeys";
 import { useState } from "react";
 import Modal from "../common/Modal";
+import ActionNotice from "./ActionNotice";
 
 export const MyNoticeList = () => {
   const { isLoading, data: notices } = useQuery({
@@ -29,20 +30,24 @@ export const MyNoticeList = () => {
             <table className='w-full text-sm text-left text-black bg-[#F4F4F4] '>
               <tbody>
                 {notices.map((notice: INotice) => (
-                  <tr
-                    className='border-b  hover:bg-gray-50'
-                    onClick={() => setAction({ show: true, data: notice })}
-                  >
+                  <tr className='border-b  hover:bg-gray-50'>
                     <th
                       scope='row'
                       className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap block'
                     >
-                      <span className='bold text-[18px]'>{notice.name}</span>
-                      <p className='pt-[4px] text-[12px]'>
-                        {notice.description.length > 150
-                          ? `${notice.description.slice(0, 150)}...`
-                          : notice.description}
-                      </p>
+                      <div className='flex justify-between'>
+                        <div onClick={() => setAction({ show: true, data: notice })}>
+                          <span className='bold text-[18px]'>{notice.name}</span>
+                          <p className='pt-[4px] text-[12px]'>
+                            {notice.description.length > 120
+                              ? `${notice.description.slice(0, 120)}...`
+                              : notice.description}
+                          </p>
+                        </div>
+                        <div className='flex'>
+                          <ActionNotice notice={notice} />
+                        </div>
+                      </div>
                     </th>
                   </tr>
                 ))}

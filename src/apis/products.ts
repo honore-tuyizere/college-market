@@ -13,6 +13,7 @@ export const deleteProduct = async (id: string): Promise<string> => {
   return (await httpClient.delete(`/products/${id}`)).data;
 };
 
+
 export const getProduct = async (id: string): Promise<ISingleProduct> => {
   return (await httpClient.get(`/products/${id}`)).data;
 };
