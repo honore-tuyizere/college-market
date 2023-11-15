@@ -1,11 +1,15 @@
 /** @type {import('tailwindcss').Config} */
+import defaultTheme from "tailwindcss/defaultTheme";
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    fontFamily: {
+      sans: ["ui-sans-serif", "Nunito Sans", ...defaultTheme.fontFamily.sans],
+      serif: ["ui-serif", "Nunito"],
+    },
     extend: {
       fontFamily: {
-        sansation: ["Sansation", "sans"],
-        'sans': ['Calibri', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: ['"Nunito Sans"', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         "action-color-500": "#003D29",
