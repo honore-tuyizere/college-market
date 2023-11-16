@@ -103,6 +103,7 @@ const ProductForm: FC<IPRoductForm> = ({ setIsOpen }) => {
       setValue("thumbnail", file);
     }
   };
+  console.log(errors);
 
   const submit = (data: createProductSchemaType) => {
     const ValidResult = createProductSchema.safeParse(data);
@@ -226,7 +227,6 @@ const ProductForm: FC<IPRoductForm> = ({ setIsOpen }) => {
               }))}
             />
           )}
-
           {productPurpose && (
             <SelectOption
               error={errors.purpose?.message}
@@ -240,6 +240,7 @@ const ProductForm: FC<IPRoductForm> = ({ setIsOpen }) => {
           )}
         </div>
       </div>
+
       <div className='image-previews flex flex-wrap space-x-5 border border-gray-300 border-dashed rounded-xl p-4'>
         <FileInput
           label='Gallery'
