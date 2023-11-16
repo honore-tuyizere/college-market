@@ -18,12 +18,7 @@ interface Props {
 }
 
 const ChatForm: FC<Props> = ({ chatId, IOSendMessage }) => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    // formState: { errors },
-  } = useForm<messageSchemaType>({
+  const { register, handleSubmit, reset } = useForm<messageSchemaType>({
     resolver: zodResolver(messageSchema),
   });
   const messageMutation = useMutation({ mutationFn: sendMessage });
@@ -47,7 +42,6 @@ const ChatForm: FC<Props> = ({ chatId, IOSendMessage }) => {
     >
       <TextBox
         type='text'
-        // error={errors.text?.message}
         register={register("text")}
         customStyles={
           "py-3 px-4 w-full rounded-l-md rounded-r-none border-none ring-0 focus:ring-0 bg-white"

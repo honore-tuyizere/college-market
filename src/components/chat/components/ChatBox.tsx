@@ -1,14 +1,18 @@
 import ChatHeader from "./ChatHeader";
 import Messages from "./Messages";
 import ChatForm from "./ChatForm";
-import { useContext, useEffect } from "react";
+import { FC, ReactNode, useContext, useEffect } from "react";
 import { ChatContext, IChatContext } from "../../../context/Chat";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "../../../utils/queryKeys";
 import { getChatById } from "../../../apis/chats";
 import { AuthContext } from "../../../context/Auth";
 
-const ChatBox = () => {
+interface Props {
+  all?: boolean;
+  leftPanelIcon?: ReactNode;
+}
+const ChatBox: FC<Props> = ({ all = false, leftPanelIcon }) => {
   const { selectedChat, setSelectedChat, sendMessage, joinRoom } = useContext(
     ChatContext,
   ) as IChatContext;
@@ -36,8 +40,10 @@ const ChatBox = () => {
 
   return (
     <>
-      <div className='h-[80vh] flex flex-col bg-gray-100'>
-        <div className='shadow-xl'>
+      <div className='h-[80vh] flex flex-col bg-gray-100 w-full'>
+        <div className='shadow-xl flex space-x-1 items-center bg-white'>
+          {all && leftPanelIcon && leftPanelIcon}
+
           <ChatHeader
             chat={selectedChat}
             isLoading={isLoading}

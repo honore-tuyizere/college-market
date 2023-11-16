@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import DashboardSidebarMenu from "./navigation/DashboardSidebarMenu";
 import DashboardTopMenu from "./navigation/DashboardTopMenu";
 import { useContext, useEffect } from "react";
@@ -10,6 +10,7 @@ const DashboardLayout = () => {
   const location = useLocation();
   const context = useContext(AuthContext);
   const auth = useAuthUser();
+  const navigate = useNavigate();
   useEffect(() => {
     if (location.pathname.includes("dashboard")) {
       document.querySelector("body")!.style.backgroundColor = "#ddd";
@@ -21,7 +22,10 @@ const DashboardLayout = () => {
     const authUser = auth() as IUser;
     authUser && context?.setUser(authUser);
     authUser && context?.setIsLoggedIn(true);
-  }, [auth, context]);
+    if (!authUser) {
+      navigate("/login");
+    }
+  }, [auth, context, navigate]);
   return (
     <div className='wrapper md:pl-64'>
       {context?.isLoggedIn && (

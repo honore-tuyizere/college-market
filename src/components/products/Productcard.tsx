@@ -20,7 +20,7 @@ const Productcard: FC<Props> = ({
   };
   return (
     <Link to={order ? "#" : `/product/${_id}`} target={order ? "" : "_blank"}>
-      <div className='bg-white shadow-md rounded-md'>
+      <div className='bg-white overflow-auto shadow-md rounded-md'>
         <img className='w-full' src={resizeImage(thumbnail)} alt='' />
         <div className='p-4 space-y-3'>
           <div>

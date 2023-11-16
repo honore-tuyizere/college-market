@@ -52,9 +52,12 @@ export interface IProduct {
   college?: ICollege;
   description: string;
   owner: IUser;
+  isAvailable: boolean;
+  purpose: string;
 }
 
 export interface INotice {
+  _id?: string;
   name: string;
   photo: string;
   description: string;

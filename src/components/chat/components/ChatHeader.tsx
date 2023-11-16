@@ -8,7 +8,7 @@ type props = {
 };
 const ChatHeader = ({ chat, isLoading, isOwner }: props) => {
   return (
-    <div className='h-16 bg-white flex items-center px-4 space-x-2'>
+    <div className='h-16 bg-white flex items-center px-4 space-x-2 w-full'>
       {!isLoading && <Skeleton className='flex-1' />}
       {chat && (
         <>
