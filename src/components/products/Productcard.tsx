@@ -10,6 +10,8 @@ import { AuthContext } from "../../context/Auth";
 import Modal from "../common/Modal";
 import { getOrderCode } from "../../apis/orders";
 import { BeatLoader } from "react-spinners";
+import { ChatProvider } from "../../providers/ChatContextProvider";
+import ChatModel from "../chat/ChatModel";
 
 interface Props {
   product: IProduct;
@@ -19,6 +21,8 @@ const Productcard: FC<Props> = ({
   product: { thumbnail, name, price, condition, _id },
   order,
 }) => {
+  const [chatModal, setChatModal] = useState(false);
+
   const [orderCode, setOrderCode] = useState<string>();
   const [orderDeliveryModalOpen, setOrderDeliveryModalOpen] = useState(false);
 
@@ -71,13 +75,29 @@ const Productcard: FC<Props> = ({
               )}
               {order && (
                 <div className='flex gap-3'>
-                  {order.orderer !== context?.user?._id && (
+                  {order.orderer._id !== context?.user?._id && (
                     <PencilIcon className='w-5 text-indigo-600 cursor-pointer' />
                   )}
 
-                  <ChatBubbleLeftIcon className='w-5 text-action-color-500' />
+                  <ChatBubbleLeftIcon
+                    className='w-5 text-action-color-500'
+                    onClick={() => setChatModal(true)}
+                  />
+                  {chatModal && (
+                    <ChatProvider>
+                      <Modal
+                        centered
+                        title='Chat with owner'
+                        onClose={() => setChatModal(false)}
+                        isOpen={true}
+                        modalType='chat'
+                      >
+                        <ChatModel product={order.product} />
+                      </Modal>
+                    </ChatProvider>
+                  )}
 
-                  {order.orderer == context?.user?._id && (
+                  {order.orderer._id == context?.user?._id && (
                     <div
                       className=' cursor-pointer'
                       onClick={() => setOrderDeliveryModalOpen(true)}

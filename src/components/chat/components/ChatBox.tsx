@@ -11,8 +11,13 @@ import { AuthContext } from "../../../context/Auth";
 interface Props {
   all?: boolean;
   leftPanelIcon?: ReactNode;
+  modalLoading?: boolean;
 }
-const ChatBox: FC<Props> = ({ all = false, leftPanelIcon }) => {
+const ChatBox: FC<Props> = ({
+  all = false,
+  leftPanelIcon,
+  modalLoading = false,
+}) => {
   const { selectedChat, setSelectedChat, sendMessage, joinRoom } = useContext(
     ChatContext,
   ) as IChatContext;
@@ -46,13 +51,13 @@ const ChatBox: FC<Props> = ({ all = false, leftPanelIcon }) => {
 
           <ChatHeader
             chat={selectedChat}
-            isLoading={isLoading}
+            isLoading={isLoading || modalLoading}
             isOwner={isOwner()}
           />
         </div>
         <div className='flex-grow shadow-inner overflow-y-auto messages-box'>
           <Messages
-            isLoading={isLoading}
+            isLoading={isLoading || modalLoading}
             messages={selectedChat?.messages}
             isOwner={isOwner()}
             userId={user?._id || ""}

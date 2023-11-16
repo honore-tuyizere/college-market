@@ -21,7 +21,7 @@ const UserChatHeader: FC<Props> = ({ leftPanel }) => {
             <div className='text-xl font-medium'>My chats</div>
           </div>
         </div>
-        <div onClick={() => leftPanel(false)}>
+        <div onClick={() => leftPanel(false)} className='md:hidden'>
           <XCircleIcon className='w-7 h-7' />
         </div>
       </div>
