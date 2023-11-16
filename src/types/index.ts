@@ -175,3 +175,12 @@ export interface IOrderedProduct extends IOrder {
   paymentStatus: string;
   deliveryStatus: string;
 }
+
+export interface IRentProductNumber {
+  message: string;
+  number: number;
+}
+export interface IDonateProductNumber {
+  message: string;
+  number: number;
+}
