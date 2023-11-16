@@ -38,7 +38,7 @@ export const ProductsTable = () => {
               {products.map((product: IProduct) => (
                 <tr
                   className='bg-white rounded-xl py-2 text-base font-md'
-                  key={product.name}
+                  key={product._id}
                 >
                   <td className='py-3 px-6 rounded-l-xl'>
                     <div className='flex align-items-center w-60 min-w-full'>

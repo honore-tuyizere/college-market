@@ -8,41 +8,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
+
 /* width */
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 5px;
-} */
+}
 
 /* Track */
-/* ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: #f1f1f1;
-} */
+}
 
 /* Handle */
-/* ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: #aaa;
   border-radius: 5px;
-} */
+}
 
 /* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   background: #ccc;
-} */
-* html {
+}
+html {
   height: 100%;
 }
 
 body {
-  font-family: "Rubik";
+  font-family: "Poppins";
   font-weight: 400;
   height: 100%;
-  font-size: medium;
 }
 
-#root {
-  height: 100% !important;
-}
+/* #root {
+  min-height: 100% !important;
+  height: auto;
+} */
 
 body::before {
   transition: background 0.5s;

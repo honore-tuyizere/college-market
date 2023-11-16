@@ -7,7 +7,7 @@ import ProductsList from "./ProductsList";
 import Button from "../common/Button";
 import Modal from "../common/Modal";
 import OrderForm from "../orders/OrderForm";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import AuthGuard from "../../utils/AuthGuard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper/core";
@@ -16,10 +16,14 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import { Image } from "../../types";
 import ProductDetailsSkeleton from "../skeletons/ProductDetailsSkeleton";
+import ChatModel from "../chat/ChatModel";
+import { ChatProvider } from "../../providers/ChatContextProvider";
+import { AuthContext } from "../../context/Auth";
 SwiperCore.use([Navigation, Pagination]);
 
 export const ProductDetails = () => {
   const [orderForm, setOrderForm] = useState(false);
+  const [offerPage, setOfferPage] = useState(false);
   const [productImages, setProductImages] = useState<Image[]>([]);
   const { id } = useParams();
 
@@ -27,6 +31,8 @@ export const ProductDetails = () => {
     queryKey: [queryKeys.singleProduct, id],
     queryFn: () => getProduct(id || ""),
   });
+
+  const user = useContext(AuthContext)?.user;
 
   useEffect(() => {
     if (productImages.length == 0 && product) {
@@ -87,8 +93,20 @@ export const ProductDetails = () => {
 
                   <div className='sm:flex w-full items-center gap-6 py-3'>
                     <div className='flex flex-wrap sm:flex-col md:flex-row space-x-2 sm:space-x-0 sm:space-y-2 md:space-y-0 md:space-x-2'>
-                      <Button label='Order now' onClick={() => setOrderForm(true)} />
-                      <Button label='Make an offer' outline={true} />
+                      {!(user?._id === product.owner?._id) && (
+                        <>
+                          <Button
+                            label='Order now'
+                            onClick={() => setOrderForm(true)}
+                          />
+
+                          <Button
+                            label='Make an offer'
+                            outline={true}
+                            onClick={() => setOfferPage(true)}
+                          />
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -124,6 +142,22 @@ export const ProductDetails = () => {
               >
                 <OrderForm setIsOpen={setOrderForm} product={product} />
               </Modal>
+            </AuthGuard>
+          )}
+
+          {offerPage && (
+            <AuthGuard>
+              <ChatProvider>
+                <Modal
+                  centered
+                  title='Make an offer'
+                  onClose={() => setOfferPage(false)}
+                  isOpen={true}
+                  modalType='chat'
+                >
+                  <ChatModel product={product} />
+                </Modal>
+              </ChatProvider>
             </AuthGuard>
           )}
 

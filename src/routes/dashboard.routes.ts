@@ -1,3 +1,4 @@
+import AllChats from "../components/chat/AllChatsPage";
 import NoticesDashboard from "../components/notices/NoticesDashboard";
 import CategoryPage from "../pages/category/CategoryPage";
 import ConditionPage from "../pages/condition/ConditionPage";
@@ -36,6 +37,10 @@ const dashboardRoutes: IRoute[] = [
   {
     path: "/dashboard/orders",
     element: OrdersPage,
+  },
+  {
+    path: "/dashboard/chats",
+    element: AllChats,
   },
 ];
 
