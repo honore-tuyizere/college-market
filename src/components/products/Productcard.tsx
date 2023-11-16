@@ -36,8 +36,8 @@ const Productcard: FC<Props> = ({
   };
 
   useEffect(() => {
-    if (context?.user?._id == order?.orderer) {
-      getOrderCode(order!._id).then((response) => {
+    if (order && context?.user?._id == order?.orderer) {
+      getOrderCode(order?._id).then((response) => {
         setOrderCode(response);
       });
     }

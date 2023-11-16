@@ -1,73 +1,69 @@
 import ChatHeader from "./ChatHeader";
 import Messages from "./Messages";
 import ChatForm from "./ChatForm";
-import { FC, ReactNode, useContext, useEffect } from "react";
+import { FC, ReactNode, useContext, useEffect, useState } from "react";
 import { ChatContext, IChatContext } from "../../../context/Chat";
-import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "../../../utils/queryKeys";
-import { getChatById } from "../../../apis/chats";
 import { AuthContext } from "../../../context/Auth";
+import { socket } from "../../../utils/socket";
+import { IChatDTO, IMessage } from "../../../types";
 
 interface Props {
   all?: boolean;
   leftPanelIcon?: ReactNode;
-  modalLoading?: boolean;
+  threadId: string;
 }
-const ChatBox: FC<Props> = ({
-  all = false,
-  leftPanelIcon,
-  modalLoading = false,
-}) => {
-  const { selectedChat, setSelectedChat, sendMessage, joinRoom } = useContext(
-    ChatContext,
-  ) as IChatContext;
+const ChatBox: FC<Props> = ({ all = false, leftPanelIcon, threadId }) => {
+  const { selectedChat } = useContext(ChatContext) as IChatContext;
+  const [loadingChatHistory, setLoadingChatHistory] = useState(true);
+  const [messages, setMessages] = useState<IMessage[]>();
+  const [chat, setChat] = useState<IChatDTO>();
   const user = useContext(AuthContext)?.user;
-
   const isOwner = () => {
     return selectedChat?.owner._id === user?._id;
   };
-  const {
-    isLoading,
-    isFetched,
-    data: queryChat,
-  } = useQuery({
-    queryKey: [queryKeys.chat, selectedChat?._id],
-    queryFn: () => getChatById(selectedChat?._id || ""),
-    enabled: selectedChat?._id !== undefined,
-  });
+  useEffect(() => {
+    if (threadId !== "") {
+      socket.emit("join-room", threadId);
+      setLoadingChatHistory(true);
+    }
+  }, [threadId]);
 
   useEffect(() => {
-    if (isFetched && queryChat) {
-      setSelectedChat(queryChat);
-    }
-    joinRoom(selectedChat?._id || "");
-  }, [isFetched, queryChat, setSelectedChat, selectedChat, joinRoom]);
+    socket.on("chatHistory", (chatHistory: IChatDTO) => {
+      setLoadingChatHistory(false);
+      setMessages(chatHistory.messages);
+      setChat(chatHistory);
+    });
+    socket.on("getMessage", (data: IMessage) => {
+      if (data.chat._id === threadId) {
+        if (messages) {
+          const latestMessages = [...messages, data];
+          setMessages(latestMessages);
+        } else {
+          setMessages([data]);
+        }
+      }
+    });
+  }, [messages, threadId]);
 
   return (
-    <>
-      <div className='h-[80vh] flex flex-col bg-gray-100 w-full'>
-        <div className='shadow-xl flex space-x-1 items-center bg-white'>
-          {all && leftPanelIcon && leftPanelIcon}
-
-          <ChatHeader
-            chat={selectedChat}
-            isLoading={isLoading || modalLoading}
-            isOwner={isOwner()}
-          />
-        </div>
-        <div className='flex-grow shadow-inner overflow-y-auto messages-box'>
-          <Messages
-            isLoading={isLoading || modalLoading}
-            messages={selectedChat?.messages}
-            isOwner={isOwner()}
-            userId={user?._id || ""}
-          />
-        </div>
-        <div className='pb-4 px-6'>
-          <ChatForm chatId={selectedChat?._id} IOSendMessage={sendMessage} />
-        </div>
+    <div className='h-[80vh] flex flex-col bg-gray-100 w-full'>
+      <div className='shadow-xl flex space-x-1 items-center bg-white'>
+        {all && leftPanelIcon && leftPanelIcon}
+        <ChatHeader chat={chat} isLoading={loadingChatHistory} isOwner={isOwner()} />
       </div>
-    </>
+      <div className='flex-grow shadow-inner overflow-y-auto messages-box'>
+        <Messages
+          isLoading={loadingChatHistory}
+          messages={messages}
+          isOwner={isOwner()}
+          userId={user?._id || ""}
+        />
+      </div>
+      <div className='pb-4 px-6'>
+        <ChatForm chatId={threadId} />
+      </div>
+    </div>
   );
 };
 export default ChatBox;

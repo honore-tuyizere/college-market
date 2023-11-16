@@ -1,25 +1,24 @@
 // ChatContext.js
-import { FC, PropsWithChildren, useState, useEffect, useRef } from "react";
+import { FC, PropsWithChildren, useState, useEffect } from "react";
 import { ChatContext } from "../context/Chat";
 import { IChatDTO, IMessage } from "../types";
-import { io, Socket } from "socket.io-client";
+import { socket } from "../utils/socket";
+import { messagesMap } from "../utils/messagesMap";
 
 const ChatProvider: FC<PropsWithChildren> = ({ children }) => {
-  const socket = useRef<Socket>();
   const [allChats, setAllChats] = useState<IChatDTO[]>([]);
   const [singleChat, setSingleChat] = useState<IChatDTO>();
-  const joinedRooms = useRef(new Set<string>()); // Keep track of joined rooms
+  const [messages, setMessages] = useState<IMessage[]>([]);
+  // const joinedRooms = useRef(new Set<string>());
+  const [chatHistory, setChatHistory] = useState<IChatDTO[]>([]);
 
   const join = (room: string) => {
-    if (!joinedRooms.current.has(room)) {
-      socket?.current?.emit("join-room", room);
-      joinedRooms.current.add(room);
-    }
+    socket?.emit("join-room", room);
   };
 
   const send = (message: IMessage) => {
     console.log("socket message");
-    socket?.current?.emit("sendMessage", message);
+    socket?.emit("sendMessage", message);
   };
 
   const setChatData = (chat: IChatDTO) => {
@@ -33,25 +32,28 @@ const ChatProvider: FC<PropsWithChildren> = ({ children }) => {
   const setChatsData = (chats: IChatDTO[]) => {
     setAllChats(chats);
   };
-
+  const showMessages = (messages: IMessage[]) => {
+    // console.log("show messages", messages);
+    setMessages(messages);
+  };
   const getMessage = (message: IMessage) => {
     console.log(message);
-    if (message.chat._id === singleChat?._id) {
-      const prev = { ...singleChat };
-      prev.messages = prev.messages ? [...prev.messages, message] : [message];
-      setSingleChat(prev);
-    }
+    // if (message.chat._id === singleChat?._id) {
+    //   const prev = { ...singleChat };
+    //   prev.messages = prev.messages ? [...prev.messages, message] : [message];
+    //   setSingleChat(prev);
+    // }
 
-    setAllChats((prevChats) => {
-      return prevChats.map((chat) => {
-        if (chat._id === message.chat?._id) {
-          const prev = { ...chat };
-          prev.messages = prev.messages ? [...prev.messages, message] : [message];
-          return prev as IChatDTO; // Add the type assertion here
-        }
-        return chat;
-      });
-    });
+    // setAllChats((prevChats) => {
+    //   return prevChats.map((chat) => {
+    //     if (chat._id === message.chat?._id) {
+    //       const prev = { ...chat };
+    //       prev.messages = prev.messages ? [...prev.messages, message] : [message];
+    //       return prev as IChatDTO; // Add the type assertion here
+    //     }
+    //     return chat;
+    //   });
+    // });
   };
 
   const value = {
@@ -62,24 +64,21 @@ const ChatProvider: FC<PropsWithChildren> = ({ children }) => {
     joinRoom: join,
     sendMessage: send,
     getMessage,
+    messages,
+    setMessages: showMessages,
+    chatHistory,
   };
 
   useEffect(() => {
-    socket.current = io("http://localhost:4321");
-
-    return () => {
-      // Disconnect the socket when the component unmounts
-      // socket?.current?.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (socket.current) {
-      socket.current.on("welcome", (data) => {
+    if (socket) {
+      socket.on("welcome", (data) => {
         console.log(data);
       });
-      socket.current.on("getMessage", (data) => {
+      socket.on("chatHistory", (data: IChatDTO) => {
         console.log(data);
+        setChatHistory([...chatHistory, data]);
+        messagesMap.set(data._id, data);
+        console.log(messagesMap);
       });
     }
   }, [socket]);

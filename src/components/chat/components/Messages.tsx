@@ -21,25 +21,25 @@ const Messages: FC<props> = ({ isLoading, messages, userId }) => {
       ref={messagesBoxRef}
       className='flex flex-col w-full h-full overflow-y-auto inset px-6'
     >
-      {isLoading && !messages && (
-        <div className='flex items-center h-full text-xs justify-center'>
-          Loading messages...
-        </div>
+      {isLoading && (
+        <div className='flex items-center h-full text-xs'>Loading messages...</div>
       )}
-      {messages && (
+
+      {!isLoading && (
         <>
-          {messages.length == 0 && (
-            <div className='flex items-center justify-center h-full text-xs'>
+          {!messages && (
+            <div className='flex items-center h-full text-xs'>
               Messages will display here
             </div>
           )}
-          {messages.map((message: IMessage) => (
-            <Message
-              message={message}
-              key={message._id}
-              own={message.sender === userId}
-            />
-          ))}
+          {messages &&
+            messages.map((message: IMessage) => (
+              <Message
+                message={message}
+                key={message._id}
+                own={message.sender === userId}
+              />
+            ))}
         </>
       )}
     </div>

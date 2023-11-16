@@ -5,11 +5,10 @@ type props = {
   own?: boolean;
 };
 const Message: FC<props> = ({ message, own = false }) => {
-  // console.log(message);
   return (
     <div className={`flex my-1.5 ${own ? "flex-row justify-end" : ""}`}>
       <div
-        className={` relative w-4/5 rounded-md px-3 py-1.5 ${
+        className={` relative rounded-md px-3 py-1.5 ${
           own ? "bg-teal-600 text-white" : "bg-white text-gray-700"
         }`}
       >

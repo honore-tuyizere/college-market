@@ -1,39 +1,36 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useForm } from "react-hook-form";
 import {
   messageSchema,
   messageSchemaType,
 } from "../../../utils/schemas/chat.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { sendMessage } from "../../../apis/message";
-// import { IMessage } from "../../../types";
 import TextBox from "../../common/inputs/TextBox";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { IMessage } from "../../../types";
+import { socket } from "../../../utils/socket";
+import { AuthContext } from "../../../context/Auth";
 
 interface Props {
   chatId?: string;
-  IOSendMessage: (message: IMessage) => void;
 }
 
-const ChatForm: FC<Props> = ({ chatId, IOSendMessage }) => {
+const ChatForm: FC<Props> = ({ chatId }) => {
   const { register, handleSubmit, reset } = useForm<messageSchemaType>({
     resolver: zodResolver(messageSchema),
   });
-  const messageMutation = useMutation({ mutationFn: sendMessage });
-  const submit = (data: messageSchemaType) => {
-    if (chatId) {
-      messageMutation.mutate(
-        { ...data, chat: chatId },
-        {
-          onSuccess(result: IMessage) {
-            IOSendMessage(result);
-          },
+  const authCtx = useContext(AuthContext);
+  const submit = async (data: messageSchemaType): Promise<IMessage> => {
+    return new Promise((resolve) => {
+      socket.emit(
+        "send-message",
+        { chat: chatId, ...data, sender: authCtx!.user!._id },
+        (message: IMessage) => {
+          reset();
+          resolve(message);
         },
       );
-      reset();
-    }
+    });
   };
   return (
     <form
