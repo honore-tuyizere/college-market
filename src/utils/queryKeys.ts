@@ -15,4 +15,6 @@ export const queryKeys = {
   sellerOrders: ["sellersOrders"],
   buyerOrders: ["buyerOrders"],
   productPurposes: ["productPurposes"],
+  rentProducts: ["rentProducts"],
+  donatedProducts: ["donatedProducts"],
 };

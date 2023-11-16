@@ -13,7 +13,6 @@ export const deleteProduct = async (id: string): Promise<string> => {
   return (await httpClient.delete(`/products/${id}`)).data;
 };
 
-
 export const getProduct = async (id: string): Promise<ISingleProduct> => {
   return (await httpClient.get(`/products/${id}`)).data;
 };
@@ -28,4 +27,8 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
 
 export const filterProducts = async (data: IProductFilter): Promise<IProduct[]> => {
   return (await httpClient.post(`/products/filter`, data)).data;
+};
+
+export const getProductsByPurpose = async (slug: string): Promise<IProduct[]> => {
+  return (await httpClient.get(`/products/purpose/${slug}`)).data;
 };

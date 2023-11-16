@@ -4,6 +4,7 @@ import NoticePage from "../pages/public/NoticePage";
 import ProductDetailsPage from "../pages/public/ProductDetailsPage";
 import RentProductsPage from "../pages/products/RentProductsPage";
 import { IRoute } from "../types";
+import DonatedProductsPage from "../pages/products/DonatedProductsPage";
 
 const publicRoutes: IRoute[] = [
   {
@@ -25,6 +26,10 @@ const publicRoutes: IRoute[] = [
   {
     path: "rent-products",
     element: RentProductsPage,
+  },
+  {
+    path: "donations",
+    element: DonatedProductsPage,
   },
 ];
 
