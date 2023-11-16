@@ -17,14 +17,13 @@ export const AllChatsPage = () => {
     setLeftPanel(!leftPanel);
   };
 
-  console.log(leftPanel);
   return (
     <>
       <ChatProvider>
         <div className='h-[80vh] w-full rounded-md flex relative overflow-hidden'>
           <div
-            className={`flex flex-col w-72 h-full shadow-xl bg-white xs:absolute md:static top-0 ${
-              leftPanel ? "left-0" : "-left-72"
+            className={`flex flex-col w-[20rem] min-w-[15rem] h-full shadow-xl bg-white xs:absolute md:static top-0 ${
+              leftPanel ? "left-0" : "-left-[20rem]"
             } z-50`}
           >
             <div className=''>
@@ -38,7 +37,7 @@ export const AllChatsPage = () => {
             <ChatBox
               all={true}
               leftPanelIcon={
-                <div className='py-2 pl-5 pr-0 z-10'>
+                <div className='py-2 pl-5 pr-0 z-10 md:hidden'>
                   <Bars3BottomLeftIcon
                     className='w-6 h-6'
                     onClick={() => toggleLeftPanel()}

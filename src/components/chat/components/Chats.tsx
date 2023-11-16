@@ -7,7 +7,7 @@ import { queryKeys } from "../../../utils/queryKeys";
 import { IChatDTO } from "../../../types";
 
 const Chats = () => {
-  const { setChats, chats, setSelectedChat } = useContext(
+  const { setChats, chats, setSelectedChat, selectedChat } = useContext(
     ChatContext,
   ) as IChatContext;
   const {
@@ -27,11 +27,19 @@ const Chats = () => {
 
   return (
     <>
-      {isLoading && <>Loading.. </>}
+      {isLoading && (
+        <div className='h-full w-full flex items-center justify-center'>
+          Loading...
+        </div>
+      )}
       {chats && (
-        <div className='h-full w-full flex flex-col space-y-2'>
+        <div className='h-full w-full flex flex-col'>
           {chats.map((chat: IChatDTO) => (
-            <div className='' onClick={() => setSelectedChat(chat)} key={chat._id}>
+            <div
+              className={chat._id == selectedChat?._id ? "bg-gray-100" : ""}
+              onClick={() => setSelectedChat(chat)}
+              key={chat._id}
+            >
               <Chat chat={chat} />
             </div>
           ))}

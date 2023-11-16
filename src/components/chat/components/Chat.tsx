@@ -24,7 +24,7 @@ const Chat: FC<props> = ({ chat }) => {
         </div>
         <div className='chat-detail'>
           <div className='text-sm font-bold text-gray-900'>{chat.product.name}</div>
-          <div className='text-sm font-md text-gray-400'>
+          <div className='text-xs text-gray-400'>
             {isOwner() ? chat.buyer.displayName : chat.owner.displayName}
           </div>
         </div>
