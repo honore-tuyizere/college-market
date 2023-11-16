@@ -12,6 +12,8 @@ import Headroom from "react-headroom";
 import { useEffect } from "react";
 import SearchComponent from "../../search/SearchComponent";
 import MobileSearch from "../../search/MobileSearch";
+import { RentProductsNumber } from "../../badge/RentProductsNumber";
+import { DonateProductsNumber } from "../../badge/DonateProductsNumber";
 
 const Header = () => {
   const location = useLocation();
@@ -34,6 +36,7 @@ const Header = () => {
           <div className='hidden md:block'>
             <SearchComponent />
           </div>
+
           <div className='flex gap-3 lg:gap-24 right-0'>
             <div className='nav-icons flex gap-5 sm:gap-3 lg:gap-7 items-center'>
               <div>
@@ -46,12 +49,20 @@ const Header = () => {
 
               <NavLink to={"/donations"} className='flex gap-2'>
                 <GiftIcon className='text-black w-6' />{" "}
-                <span className='hidden sm:block font-semibold'>Donations</span>
+                <span className='hidden sm:block font-semibold'>
+                  <span className='flex'>
+                    <p className='p-1'>Donate</p> <DonateProductsNumber />
+                  </span>
+                </span>
               </NavLink>
 
               <NavLink to={"/rent-products"} className='flex gap-2'>
                 <TicketIcon className='text-black w-6' />{" "}
-                <span className='hidden sm:block font-semibold'>Rent</span>
+                <span className='hidden sm:block font-semibold'>
+                  <span className='flex'>
+                    <p className='p-1'>Rent</p> <RentProductsNumber />
+                  </span>
+                </span>
               </NavLink>
               <NavLink
                 to={"/dashboard"}
