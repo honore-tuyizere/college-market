@@ -80,21 +80,21 @@ const SearchComponent: React.FC<ISearchComponentProps> = ({ closeMobileMenu }) =
   useOnClickOutside(ref, () => setSearchQuery(""));
 
   return (
-    <div className='relative' ref={ref}>
-      <div className='mx-auto top-4 fixed max-w-xl  transform border-none overflow-hidden rounded-xl bg-transparent shadow-2xl   transition-all'>
+    <div className='fixed top-4 shadow-inner ' ref={ref}>
+      <div className='mx-auto max-w-xl bg-gray-200 transform border-none overflow-hidden rounded-xl bg-transparent shadow-2xl   transition-all'>
         <Combobox
           onChange={(value) => {
             const product = products.find((product) => product.name === value);
             setSelectedProduct(product || null);
           }}
         >
-          <div className='relative'>
+          <div className='flex items-center justify-center'>
             <MagnifyingGlassIcon
-              className='pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-400'
+              className='pointer-events-none absolute  right-4 h-8 w-8 text-gray-400'
               aria-hidden='true'
             />
             <Combobox.Input
-              className='h-12 w-full border rounded-full outline-none  pl-11 pr-4 text-gray-900 placeholder:text-gray-500  sm:text-sm'
+              className='h-12 border rounded-full border-gray-500  pl-8 pr-4 text-gray-900 placeholder:text-gray-500'
               placeholder='Search...'
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
