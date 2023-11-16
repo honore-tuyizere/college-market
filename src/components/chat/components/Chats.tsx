@@ -1,48 +1,43 @@
 import Chat from "./Chat";
-import { useContext, useEffect } from "react";
-import { ChatContext, IChatContext } from "../../../context/Chat";
-import { useQuery } from "@tanstack/react-query";
-import { getMyChats } from "../../../apis/chats";
-import { queryKeys } from "../../../utils/queryKeys";
 import { IChatDTO } from "../../../types";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { socket } from "../../../utils/socket";
+import { AuthContext, IAuthContext } from "../../../context/Auth";
 
-const Chats = () => {
-  const { setChats, chats, setSelectedChat, selectedChat } = useContext(
-    ChatContext,
-  ) as IChatContext;
-  const {
-    isLoading,
-    isFetched,
-    data: queryChats,
-  } = useQuery({
-    queryKey: [queryKeys.chats],
-    queryFn: () => getMyChats(),
-  });
-
+interface IProps {
+  setRoomId: Dispatch<SetStateAction<string>>;
+}
+const Chats: FC<IProps> = ({ setRoomId }) => {
+  const authCtx = useContext(AuthContext) as IAuthContext;
+  const [loadingThreads, setLoadingThreads] = useState<boolean>(true);
+  const [threads, setThreads] = useState<IChatDTO[]>([]);
   useEffect(() => {
-    if (isFetched && queryChats) {
-      setChats(queryChats);
-    }
-  }, [isFetched, chats, queryChats, setChats]);
+    socket.emit("get-chat-threads", authCtx.user?._id);
+  }, [authCtx]);
 
+  socket.on("retrieved-chat-threads", (data: IChatDTO[]) => {
+    setLoadingThreads(false);
+    setThreads(data);
+  });
   return (
     <>
-      {isLoading && (
-        <div className='h-full w-full flex items-center justify-center'>
-          Loading...
-        </div>
-      )}
-      {chats && (
-        <div className='h-full w-full flex flex-col'>
-          {chats.map((chat: IChatDTO) => (
-            <div
-              className={chat._id == selectedChat?._id ? "bg-gray-100" : ""}
-              onClick={() => setSelectedChat(chat)}
-              key={chat._id}
-            >
-              <Chat chat={chat} />
-            </div>
-          ))}
+      {loadingThreads && !threads[0] && <>Loading.. </>}
+      {threads && (
+        <div className='h-full w-full flex flex-col space-y-2'>
+          {threads.map((chat: IChatDTO) => {
+            return (
+              <div className='' key={chat._id} onClick={() => setRoomId(chat._id)}>
+                <Chat chat={chat} />
+              </div>
+            );
+          })}
         </div>
       )}
     </>

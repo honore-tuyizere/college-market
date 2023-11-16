@@ -15,6 +15,8 @@ export interface IChatContext {
   // sendMessage: (text: string, chatId: string) => void;
   getMessage: (message: IMessage) => void;
   // joinRoom: (room: string) => void;
+  messages: IMessage[];
+  setMessages: (messages: IMessage[]) => void;
 }
 
 export const ChatContext = createContext<IChatContext | null>(null);

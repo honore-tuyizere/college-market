@@ -11,11 +11,7 @@ type IChat = {
 };
 const ChatModel: FC<IChat> = ({ product }) => {
   const { setSelectedChat } = useContext(ChatContext) as IChatContext;
-  const {
-    data: chat,
-    isFetching,
-    isFetched,
-  } = useQuery({
+  const { data: chat, isFetched } = useQuery({
     queryKey: [queryKeys.chat, product._id],
     queryFn: () => getChat(product._id || ""),
   });
@@ -24,7 +20,7 @@ const ChatModel: FC<IChat> = ({ product }) => {
     if (isFetched && chat) {
       setSelectedChat(chat);
     }
-  }, [isFetched, isFetching, setSelectedChat, chat]);
-  return <>{<ChatBox modalLoading={isFetching} />}</>;
+  }, [isFetched, setSelectedChat, chat]);
+  return <>{<ChatBox threadId={chat ? chat._id : ""} />}</>;
 };
 export default ChatModel;
