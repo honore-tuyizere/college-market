@@ -1,54 +1,59 @@
-import { FC, useEffect } from "react";
-import { IChat } from "../../../types";
-import { io } from "socket.io-client";
 import ChatHeader from "./ChatHeader";
 import Messages from "./Messages";
 import ChatForm from "./ChatForm";
+import { useContext, useEffect } from "react";
+import { ChatContext, IChatContext } from "../../../context/Chat";
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "../../../utils/queryKeys";
+import { getChatById } from "../../../apis/chats";
+import { AuthContext } from "../../../context/Auth";
 
-const socket = io("http://localhost:4321");
-socket.on("connect_error", (error) => {
-  console.error("Connection error:", error);
-});
-socket.emit("message", "Hello");
+const ChatBox = () => {
+  const { selectedChat, setSelectedChat, sendMessage, joinRoom } = useContext(
+    ChatContext,
+  ) as IChatContext;
+  const user = useContext(AuthContext)?.user;
 
-type IChatProps = {
-  chat?: IChat;
-};
+  const isOwner = () => {
+    return selectedChat?.owner._id === user?._id;
+  };
+  const {
+    isLoading,
+    isFetched,
+    data: queryChat,
+  } = useQuery({
+    queryKey: [queryKeys.chat, selectedChat?._id],
+    queryFn: () => getChatById(selectedChat?._id || ""),
+    enabled: selectedChat?._id !== undefined,
+  });
 
-const ChatBox: FC<IChatProps> = ({ chat }) => {
-  console.log(chat);
   useEffect(() => {
-    console.log("Joining...");
-    // Join the room on connection
-    socket.emit("join-room", chat?._id);
-
-    // Listen for incoming messages
-    socket.on("message", (data) => {
-      console.log("Received message:", data);
-      // Handle the incoming message in your UI
-    });
-
-    socket.on("connect_error", (error) => {
-      console.error("Connection error:", error);
-    });
-
-    return () => {
-      // Clean up socket connection when component unmounts
-      socket.disconnect();
-    };
-  }, [chat]);
+    if (isFetched && queryChat) {
+      setSelectedChat(queryChat);
+    }
+    joinRoom(selectedChat?._id || "");
+  }, [isFetched, queryChat, setSelectedChat, selectedChat, joinRoom]);
 
   return (
     <>
       <div className='h-[80vh] flex flex-col bg-gray-100'>
         <div className='shadow-xl'>
-          <ChatHeader />
+          <ChatHeader
+            chat={selectedChat}
+            isLoading={isLoading}
+            isOwner={isOwner()}
+          />
         </div>
         <div className='flex-grow shadow-inner overflow-y-auto messages-box'>
-          <Messages />
+          <Messages
+            isLoading={isLoading}
+            messages={selectedChat?.messages}
+            isOwner={isOwner()}
+            userId={user?._id || ""}
+          />
         </div>
         <div className='pb-4 px-6'>
-          <ChatForm />
+          <ChatForm chatId={selectedChat?._id} IOSendMessage={sendMessage} />
         </div>
       </div>
     </>

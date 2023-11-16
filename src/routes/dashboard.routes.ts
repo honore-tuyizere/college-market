@@ -1,4 +1,4 @@
-import AllChats from "../components/chat/AllChats";
+import AllChats from "../components/chat/AllChatsPage";
 import NoticesDashboard from "../components/notices/NoticesDashboard";
 import CategoryPage from "../pages/category/CategoryPage";
 import ConditionPage from "../pages/condition/ConditionPage";

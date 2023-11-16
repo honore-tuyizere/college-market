@@ -1,34 +1,42 @@
-import { IChatDTO } from "../../../types";
-// import { useContext } from "react";
-// import { AuthContext } from "../../context/Auth";
 import Chat from "./Chat";
+import { useContext, useEffect } from "react";
+import { ChatContext, IChatContext } from "../../../context/Chat";
+import { useQuery } from "@tanstack/react-query";
+import { getMyChats } from "../../../apis/chats";
+import { queryKeys } from "../../../utils/queryKeys";
+import { IChatDTO } from "../../../types";
 
-type props = {
-  chats: IChatDTO[];
-};
+const Chats = () => {
+  const { setChats, chats, setSelectedChat } = useContext(
+    ChatContext,
+  ) as IChatContext;
+  const {
+    isLoading,
+    isFetched,
+    data: queryChats,
+  } = useQuery({
+    queryKey: [queryKeys.chats],
+    queryFn: () => getMyChats(),
+  });
 
-const Chats = ({ chats }: props) => {
-  console.log(chats);
-  // const user = useContext(AuthContext)?.user;
-
-  // const isOwner = (owner: string) => {
-  //   return user?._id === owner;
-  // };
-
-  // const name = (user: IUser) => {
-  //   return user.displayName;
-  // };
+  useEffect(() => {
+    if (isFetched && queryChats) {
+      setChats(queryChats);
+    }
+  }, [isFetched, chats, queryChats, setChats]);
 
   return (
     <>
-      <div className='h-full w-full flex flex-col space-y-2'>
-        <Chat key={1} />
-        <Chat key={2} />
-        <Chat key={3} />
-        <Chat key={4} />
-        <Chat key={5} />
-        <Chat key={6} />
-      </div>
+      {isLoading && <>Loading.. </>}
+      {chats && (
+        <div className='h-full w-full flex flex-col space-y-2'>
+          {chats.map((chat: IChatDTO) => (
+            <div className='' onClick={() => setSelectedChat(chat)} key={chat._id}>
+              <Chat chat={chat} />
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 };

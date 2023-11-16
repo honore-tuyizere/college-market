@@ -5,24 +5,15 @@ type props = {
   own?: boolean;
 };
 const Message: FC<props> = ({ message, own = false }) => {
-  console.log(message);
+  // console.log(message);
   return (
-    <div className={`flex my-2 ${own ? "flex-row justify-end" : ""}`}>
+    <div className={`flex my-1.5 ${own ? "flex-row justify-end" : ""}`}>
       <div
-        className={`w-4/5 rounded-md p-3 ${
+        className={` relative w-4/5 rounded-md px-3 py-1.5 ${
           own ? "bg-teal-600 text-white" : "bg-white text-gray-700"
         }`}
       >
-        <div className={`text-sm`}>
-          {own && <>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</>}
-          {!own && (
-            <>
-              {" "}
-              Odit ipsum recusandae non, architecto nulla porro molestiae nobis quis
-              harum dolor
-            </>
-          )}
-        </div>
+        <div className={`text-xs`}>{message?.text}</div>
       </div>
     </div>
   );

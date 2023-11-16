@@ -1,4 +1,4 @@
-import AllChats from "../../components/chat/AllChats";
+import AllChats from "../../components/chat/AllChatsPage";
 
 export const ChatsPage = () => {
   return (

@@ -51,6 +51,7 @@ export interface IProduct {
   category: ICategory;
   college?: ICollege;
   description: string;
+  owner: IUser;
 }
 
 export interface INotice {
@@ -157,14 +158,14 @@ export interface IChatDTO {
 export interface IMessage {
   _id: string;
   chat: IChat;
-  sender: IUser;
+  sender: IUser | string;
   text: string;
   createdAt: string | Date;
   updatedAt: string | Date;
 }
 
 export interface IMessageRequest {
-  _id?: string;
+  chat: string;
   text: string;
 }
 export interface IOrderedProduct extends IOrder {

@@ -7,33 +7,38 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { sendMessage } from "../../../apis/message";
-import { IMessage } from "../../../types";
+// import { IMessage } from "../../../types";
 import TextBox from "../../common/inputs/TextBox";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { IMessage } from "../../../types";
 
 interface Props {
-  item?: string;
+  chatId?: string;
+  IOSendMessage: (message: IMessage) => void;
 }
 
-const ChatForm: FC<Props> = ({ item }) => {
-  console.log(item);
+const ChatForm: FC<Props> = ({ chatId, IOSendMessage }) => {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<messageSchemaType>({
     resolver: zodResolver(messageSchema),
   });
   const messageMutation = useMutation({ mutationFn: sendMessage });
   const submit = (data: messageSchemaType) => {
-    messageMutation.mutate(data, {
-      onSuccess(result: IMessage) {
-        console.log(result);
-        // socket.emit("message", result);
-      },
-    });
-    reset();
+    if (chatId) {
+      messageMutation.mutate(
+        { ...data, chat: chatId },
+        {
+          onSuccess(result: IMessage) {
+            IOSendMessage(result);
+          },
+        },
+      );
+      reset();
+    }
   };
   return (
     <form
@@ -42,7 +47,7 @@ const ChatForm: FC<Props> = ({ item }) => {
     >
       <TextBox
         type='text'
-        error={errors.text?.message}
+        // error={errors.text?.message}
         register={register("text")}
         customStyles={
           "py-3 px-4 w-full rounded-l-md rounded-r-none border-none ring-0 focus:ring-0 bg-white"
