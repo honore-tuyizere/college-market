@@ -1,11 +1,7 @@
 import RentProducts from "../../components/rent/RentProducts";
 
 export const RentProductsPage = () => {
-  return (
-    <>
-      <RentProducts />
-    </>
-  );
+  return <RentProducts />;
 };
 
 export default RentProductsPage;

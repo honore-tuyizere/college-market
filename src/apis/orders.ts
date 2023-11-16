@@ -35,3 +35,7 @@ export const getBuyersOrders = async (
 ): Promise<IOrderedProduct[]> => {
   return (await httpClient.get("/orders/buyer/" + buyerId)).data;
 };
+
+export const getOrderCode = async (orderId: string): Promise<string> => {
+  return (await httpClient.get("/orders/code/" + orderId)).data;
+};

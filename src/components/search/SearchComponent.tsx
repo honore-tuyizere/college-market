@@ -32,7 +32,9 @@ const SearchComponent: React.FC<ISearchComponentProps> = ({ closeMobileMenu }) =
   };
 
   React.useEffect(() => {
-    handleSearch(searchQuery);
+    if (searchQuery) {
+      handleSearch(searchQuery);
+    }
   }, [searchQuery]);
 
   React.useEffect(() => {

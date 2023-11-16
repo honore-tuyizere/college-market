@@ -25,6 +25,7 @@ const ProductsList: FC<ProductListProps> = ({
       )}
       {!isLoading && (
         <div className='w-full'>
+          {title && <div className='py-4'>{title}</div>}
           {filtersComponent && <div className='py-4'>{filtersComponent}</div>}
           <div className='grid grid-cols1 xxs:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4  py-3'>
             {products?.map((product) => (

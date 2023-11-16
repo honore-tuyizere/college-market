@@ -4,16 +4,16 @@ import Container from "../../components/common/Container";
 import ProductsList from "../../components/products/ProductsList";
 import { queryKeys } from "../../utils/queryKeys";
 
-const RentProducts = () => {
+const DonatedProductsPage = () => {
   const { data, isLoading } = useQuery({
-    queryKey: queryKeys.rentProducts,
-    queryFn: () => getProductsByPurpose("RENT"),
+    queryKey: queryKeys.donatedProducts,
+    queryFn: () => getProductsByPurpose("DONATION"),
   });
   return (
     <Container>
-      <ProductsList products={data} isLoading={isLoading} title='Rent Products' />
+      <ProductsList products={data} isLoading={isLoading} title='Donated Products' />
     </Container>
   );
 };
 
-export default RentProducts;
+export default DonatedProductsPage;

@@ -1,7 +1,15 @@
-import { FC } from "react";
+import { FC, Fragment, useContext, useEffect, useState } from "react";
 import { IOrderedProduct, IProduct } from "../../types";
 import { Link } from "react-router-dom";
-import { ChatBubbleLeftIcon, PencilIcon } from "@heroicons/react/24/outline";
+import {
+  ChatBubbleLeftIcon,
+  PencilIcon,
+  HashtagIcon,
+} from "@heroicons/react/24/outline";
+import { AuthContext } from "../../context/Auth";
+import Modal from "../common/Modal";
+import { getOrderCode } from "../../apis/orders";
+import { BeatLoader } from "react-spinners";
 
 interface Props {
   product: IProduct;
@@ -11,6 +19,10 @@ const Productcard: FC<Props> = ({
   product: { thumbnail, name, price, condition, _id },
   order,
 }) => {
+  const [orderCode, setOrderCode] = useState<string>();
+  const [orderDeliveryModalOpen, setOrderDeliveryModalOpen] = useState(false);
+
+  const context = useContext(AuthContext);
   const resizeImage = (imageUrl: string) => {
     const keyword = "upload";
     const keywordIndex = imageUrl.indexOf(keyword);
@@ -18,31 +30,68 @@ const Productcard: FC<Props> = ({
     const afterKeyword = imageUrl.slice(keywordIndex + keyword.length);
     return beforeKeyword + "/h_211,w_211/" + afterKeyword;
   };
+
+  useEffect(() => {
+    if (context?.user?._id == order?.orderer) {
+      getOrderCode(order!._id).then((response) => {
+        setOrderCode(response);
+      });
+    }
+  }, [context, order]);
   return (
-    <Link to={order ? "#" : `/product/${_id}`} target={order ? "" : "_blank"}>
-      <div className='bg-white overflow-auto shadow-md rounded-md'>
-        <img className='w-full' src={resizeImage(thumbnail)} alt='' />
-        <div className='p-4 space-y-3'>
-          <div>
-            <p className=' font-bold text-md line-clamp-1'>{name}</p>
-            <p>${price}</p>
-          </div>
-          <div className='text-sm'>
-            {!order && (
-              <div className='bg-[rgba(0,77,77,0.58)] text-white px-2 py-1 rounded inline-block text-xs mt-1'>
-                {condition?.name}
-              </div>
-            )}
-            {order && (
-              <div className='flex gap-3'>
-                <PencilIcon className='w-5 text-indigo-600' />
-                <ChatBubbleLeftIcon className='w-5 text-action-color-500' />
-              </div>
-            )}
+    <Fragment>
+      <Modal
+        centered
+        isOpen={orderDeliveryModalOpen}
+        onClose={() => setOrderDeliveryModalOpen(false)}
+        title={"Order derivery code"}
+      >
+        <div className=' text-center bg-gray-100 p-4'>
+          <p className=' font-medium text-action-color-500'>
+            <p className='text-red-500 text-sm'>
+              Share the code below if only you've received the product
+            </p>
+            {orderCode ?? <BeatLoader color='rgba(0,77,77,0.58)' />}
+          </p>
+        </div>
+      </Modal>
+      <Link to={order ? "#" : `/product/${_id}`} target={order ? "" : "_blank"}>
+        <div className='bg-white overflow-auto shadow-md rounded-md'>
+          <img className='w-full' src={resizeImage(thumbnail)} alt='' />
+          <div className='p-4 space-y-3'>
+            <div>
+              <p className=' font-bold text-md line-clamp-1'>{name}</p>
+              <p>${price}</p>
+            </div>
+            <div className='text-sm'>
+              {!order && (
+                <div className='bg-[rgba(0,77,77,0.58)] text-white px-2 py-1 rounded inline-block text-xs mt-1'>
+                  {condition?.name}
+                </div>
+              )}
+              {order && (
+                <div className='flex gap-3'>
+                  {order.orderer !== context?.user?._id && (
+                    <PencilIcon className='w-5 text-indigo-600 cursor-pointer' />
+                  )}
+
+                  <ChatBubbleLeftIcon className='w-5 text-action-color-500' />
+
+                  {order.orderer == context?.user?._id && (
+                    <div
+                      className=' cursor-pointer'
+                      onClick={() => setOrderDeliveryModalOpen(true)}
+                    >
+                      <HashtagIcon className='w-5 text-green-700' />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </Fragment>
   );
 };
 

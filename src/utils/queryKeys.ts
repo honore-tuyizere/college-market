@@ -17,4 +17,6 @@ export const queryKeys = {
   chats: ["chats"],
   buyerOrders: ["buyerOrders"],
   productPurposes: ["productPurposes"],
+  rentProducts: ["rentProducts"],
+  donatedProducts: ["donatedProducts"],
 };
