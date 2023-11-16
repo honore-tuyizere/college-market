@@ -8,6 +8,7 @@ export const createProductSchema = z.object({
   thumbnail: z.any(),
   gallery: z.any(),
   price: z.coerce.number().min(1, "Enter price"),
+  isAvailable: z.boolean().optional(),
   description: z.string().min(1, "Description is required"),
 });
 

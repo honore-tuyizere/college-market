@@ -19,6 +19,7 @@ import ProductDetailsSkeleton from "../skeletons/ProductDetailsSkeleton";
 import ChatModel from "../chat/ChatModel";
 import { ChatProvider } from "../../providers/ChatContextProvider";
 import { AuthContext } from "../../context/Auth";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
 SwiperCore.use([Navigation, Pagination]);
 
 export const ProductDetails = () => {
@@ -64,8 +65,14 @@ export const ProductDetails = () => {
 
                 <div className=''>
                   <div className=' space-y-2'>
-                    <div className='font-medium text-md text-gray-500 uppercase'>
-                      {product.category.name}
+                    <div className='font-medium text-md text-gray-500 uppercase flex items-center space-x-2'>
+                      {product.category.name}{" "}
+                      {product?.purpose && (
+                        <>
+                          <ChevronRightIcon className='w-3 h-3 mx-3' />
+                          {product.purpose.name}
+                        </>
+                      )}
                     </div>
                     <div className='font-bold text-3xl capitalize'>
                       {product.name}
@@ -160,19 +167,6 @@ export const ProductDetails = () => {
               </ChatProvider>
             </AuthGuard>
           )}
-
-          {/* Customized Next and Prev buttons with Heroicons */}
-          <style>{`
-        .swiper-button-next,
-        .swiper-button-prev {
-          display:none;
-        }
-
-        .swiper-button-next::after,
-        .swiper-button-prev::after {
-          content: '';
-        }
-      `}</style>
         </>
       )}
     </div>

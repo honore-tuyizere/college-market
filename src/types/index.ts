@@ -53,7 +53,8 @@ export interface IProduct {
   description: string;
   owner: IUser;
   isAvailable: boolean;
-  purpose: string;
+  purpose?: IPurpose;
+  rent_days?: number;
 }
 
 export interface INotice {
@@ -71,6 +72,7 @@ export interface IProductRequest {
   condition: string;
   category: string;
   description: string;
+  isAvailable?: boolean;
 }
 
 export interface ISingleProduct extends IProduct {
@@ -124,11 +126,14 @@ export interface IOrder {
   product: IProduct;
   orderer: IUser;
   phone?: string;
+  days?: number;
+  total: number;
 }
 
 export interface IOrderRequest {
   id?: string;
   product?: string;
+  days?: number;
 }
 
 export interface IProductFilter {
