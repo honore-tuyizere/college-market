@@ -6,6 +6,7 @@ import DashboardPage from "../pages/dashboard/Dashboard";
 import OrdersPage from "../pages/orders/OrdersPage";
 import ProductsPage from "../pages/products/ProductsPage";
 import PurposesPage from "../pages/purpose/PurposesPage";
+import TransactionsPage from "../pages/transactions/TransactionsPage";
 
 import { IRoute } from "../types";
 
@@ -41,6 +42,10 @@ const dashboardRoutes: IRoute[] = [
   {
     path: "/dashboard/chats",
     element: AllChats,
+  },
+  {
+    path: "/dashboard/transactions",
+    element: TransactionsPage,
   },
 ];
 

@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { orderSchema, orderSchemaType } from "../../utils/schemas/order.schema";
 import Button from "../common/Button";
-import toast from "react-hot-toast";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import { queryKeys } from "../../utils/queryKeys";
 import { createOrder } from "../../apis/orders";
@@ -68,6 +67,7 @@ const OrderForm: FC<IOrderForm> = ({ setIsOpen, product }) => {
           queryClient.invalidateQueries({
             queryKey: queryKeys.singleProduct,
           });
+          window.location.href = "/dashboard/orders";
         }
         setIsOpen(false);
         reset();

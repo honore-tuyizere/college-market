@@ -19,4 +19,5 @@ export const queryKeys = {
   productPurposes: ["productPurposes"],
   rentProducts: ["rentProducts"],
   donatedProducts: ["donatedProducts"],
+  transactions: ["transactios"],
 };
