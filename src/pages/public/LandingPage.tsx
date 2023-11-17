@@ -7,6 +7,7 @@ import { queryKeys } from "../../utils/queryKeys";
 import { getAllProducts } from "../../apis/products";
 import { IProduct } from "../../types";
 import { useEffect, useState } from "react";
+import AdsSlider from "../../components/slider/AdsSlider";
 
 const LandingPage = () => {
   const [data, setData] = useState<IProduct[] | undefined>(undefined);
@@ -36,6 +37,7 @@ const LandingPage = () => {
           }
         />
       </Container>
+      <AdsSlider />
     </>
   );
 };
