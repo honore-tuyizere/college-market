@@ -22,13 +22,15 @@ const Messages: FC<props> = ({ isLoading, messages, userId }) => {
       className='flex flex-col w-full h-full overflow-y-auto inset px-6'
     >
       {isLoading && (
-        <div className='flex items-center h-full text-xs'>Loading messages...</div>
+        <div className='flex items-center justify-center h-full text-xs'>
+          Loading messages...
+        </div>
       )}
 
       {!isLoading && (
         <>
           {!messages && (
-            <div className='flex items-center h-full text-xs'>
+            <div className='flex items-center justify-center h-full text-xs'>
               Messages will display here
             </div>
           )}

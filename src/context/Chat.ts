@@ -8,6 +8,7 @@ export interface IChatContext {
   setChats: (chats: IChatDTO[]) => void;
   joinRoom: (room: string) => void;
   sendMessage: (message: IMessage) => void;
+  chatHistory: IChatDTO[] | undefined;
   // isChatsLoading: boolean;
   // setIsChatsLoading: (state: boolean) => void;
   // isChatLoading: boolean;

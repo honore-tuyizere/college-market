@@ -28,7 +28,7 @@ export const AllChatsPage = () => {
           <UserChatHeader leftPanel={setLeftPanel} />
         </div>
         <div className='chats h-full shadow-md overflow-y-auto relative'>
-          <Chats setRoomId={setRoomId} />
+          <Chats setRoomId={setRoomId} currentThread={roomId} />
         </div>
       </div>
       <div className='flex h-full w-max-full w-[30rem] relative'>
@@ -36,7 +36,7 @@ export const AllChatsPage = () => {
           threadId={roomId}
           all={true}
           leftPanelIcon={
-            <div className='py-2 pl-5 pr-0 z-10'>
+            <div className='py-2 pl-5 pr-0 z-10 md:hidden'>
               <Bars3BottomLeftIcon
                 className='w-6 h-6'
                 onClick={() => toggleLeftPanel()}

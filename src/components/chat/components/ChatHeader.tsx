@@ -6,16 +6,32 @@ type props = {
   isLoading: boolean;
   isOwner: boolean;
 };
-const ChatHeader = ({ chat, isOwner }: props) => {
+const ChatHeader = ({ chat, isOwner, isLoading }: props) => {
+  console.log(isLoading);
   return (
     <div className='h-16 bg-white flex items-center px-4 space-x-2 w-full'>
       {!chat && (
         <>
           <div className='flex space-x-2 items-center'>
-            <Skeleton className='flex-1' height={45} width={45} />
+            <Skeleton
+              className='flex-1'
+              height={45}
+              width={45}
+              enableAnimation={false}
+            />
             <div className=''>
-              <Skeleton className='flex-1' height={20} width={200} />
-              <Skeleton className='flex-1' height={16} width={100} />
+              <Skeleton
+                className='flex-1'
+                height={20}
+                width={200}
+                enableAnimation={false}
+              />
+              <Skeleton
+                className='flex-1'
+                height={16}
+                width={100}
+                enableAnimation={false}
+              />
             </div>
           </div>
         </>
