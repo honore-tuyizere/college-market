@@ -12,11 +12,14 @@ import Headroom from "react-headroom";
 import { useEffect } from "react";
 import SearchComponent from "../../search/SearchComponent";
 import MobileSearch from "../../search/MobileSearch";
-import { RentProductsNumber } from "../../badge/RentProductsNumber";
 import { DonateProductsNumber } from "../../badge/DonateProductsNumber";
+import { useAuthUser } from "react-auth-kit";
+import UserProfile from "../../auth/UserProfile";
 
 const Header = () => {
   const location = useLocation();
+  const auth = useAuthUser();
+  const authorized = auth();
   useEffect(() => {
     if (location.pathname.includes("dashboard")) {
       document.querySelector("body")!.style.backgroundColor = "#ddd";
@@ -60,24 +63,34 @@ const Header = () => {
                 <TicketIcon className='text-black w-6' />{" "}
                 <span className='hidden sm:block font-semibold'>
                   <span className='flex'>
-                    <p className='p-1'>Rent</p> <RentProductsNumber />
+                    <p className='p-1'>Rent</p>
                   </span>
                 </span>
               </NavLink>
-              <NavLink
-                to={"/dashboard"}
-                className='flex gap-2 items-center rounded-xl bg-white md:px-4 md:py-2 font-semibold text-gray-900 shadow-md ring-1 ring-inset md:ring-gray-500 hover:bg-gray-50'
-              >
-                <ChatBubbleBottomCenterTextIcon className='w-6 text-black' />{" "}
-                <span className='sr-only'>Chat</span>
-              </NavLink>
-              <NavLink
-                to={"/dashboard"}
-                className='flex gap-2 items-center rounded-xl bg-white md:px-4 md:py-2 font-semibold text-gray-900 shadow-md ring-1 ring-inset md:ring-gray-500 hover:bg-gray-50'
-              >
-                <UserCircleIcon className='w-6 text-black' />{" "}
-                <span className='hidden sm:block font-semibold'>Account</span>
-              </NavLink>
+
+              {!authorized ? (
+                <NavLink
+                  to={"/login"}
+                  className='flex gap-2 items-center rounded-xl bg-white md:px-2 md:py-2 font-semibold text-gray-900 shadow-md  hover:bg-gray-50'
+                >
+                  <UserCircleIcon className='w-6 text-black' />{" "}
+                  <span className='hidden sm:block font-semibold'>Login</span>
+                </NavLink>
+              ) : (
+                <div className='flex'>
+                  <NavLink
+                    to={"/dashboard/chats"}
+                    className='flex gap-2 items-center rounded-xl bg-white md:px-4 md:py-2 font-semibold text-gray-900 shadow-md hover:bg-gray-50'
+                  >
+                    <ChatBubbleBottomCenterTextIcon className='w-6 text-black' />{" "}
+                    <span className='sr-only'>Chat</span>
+                  </NavLink>
+
+                  <NavLink to={"/dashboard"} className='px-2'>
+                    <UserProfile />
+                  </NavLink>
+                </div>
+              )}
             </div>
           </div>
         </nav>
