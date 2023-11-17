@@ -18,7 +18,7 @@ interface Props {
   order?: IOrderedProduct;
 }
 const Productcard: FC<Props> = ({
-  product: { thumbnail, name, price, condition, _id },
+  product: { thumbnail, name, price, _id, purpose, condition },
   order,
 }) => {
   const [chatModal, setChatModal] = useState(false);
@@ -60,19 +60,31 @@ const Productcard: FC<Props> = ({
         </div>
       </Modal>
       <Link to={order ? "#" : `/product/${_id}`} target={order ? "" : "_blank"}>
-        <div className='bg-white overflow-auto shadow-md rounded-md'>
+        <div className='bg-white overflow-auto shadow-md rounded-md relative'>
           <img className='w-full' src={resizeImage(thumbnail)} alt='' />
           <div className='p-4 space-y-3'>
             <div>
               <p className=' font-bold text-md line-clamp-1'>{name}</p>
-              <p>${price}</p>
+              <div className='flex items-center justify-between'>
+                <div>
+                  <div className='text-xs'>
+                    <span className='font-light mr-2'>Condition:</span>
+                    <span className='font-semibold'>{condition.name}</span>
+                  </div>
+                  <div className='text-xs'>
+                    <span className='font-light mr-2'>Purpose:</span>
+                    <span className='font-semibold'>{purpose?.name || "Sales"}</span>
+                  </div>
+                </div>
+
+                {!purpose?.slug.includes("DONAT") && (
+                  <>
+                    <div className='text-xl text-teal-600 font-bold'>${price}</div>
+                  </>
+                )}
+              </div>
             </div>
             <div className='text-sm'>
-              {!order && (
-                <div className='bg-[rgba(0,77,77,0.58)] text-white px-2 py-1 rounded inline-block text-xs mt-1'>
-                  {condition?.name}
-                </div>
-              )}
               {order && (
                 <div className='flex gap-3'>
                   {order.orderer._id !== context?.user?._id && (

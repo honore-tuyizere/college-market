@@ -7,7 +7,7 @@ export const createProductSchema = z.object({
   purpose: z.string().min(24, "Select purpose"),
   thumbnail: z.any(),
   gallery: z.any(),
-  price: z.coerce.number().min(1, "Enter price"),
+  price: z.coerce.number().optional(),
   isAvailable: z.boolean().optional(),
   description: z.string().min(1, "Description is required"),
 });
