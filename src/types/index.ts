@@ -46,13 +46,13 @@ export interface IProduct {
   name: string;
   thumbnail: string;
   gallery: Array<Image>;
-  price: number;
+  price?: number;
   condition: ICondition;
   category: ICategory;
   college?: ICollege;
   description: string;
   owner: IUser;
-  isAvailable: boolean;
+  isAvailable?: boolean;
   purpose?: IPurpose;
   rent_days?: number;
 }
@@ -68,7 +68,7 @@ export interface IProductRequest {
   name: string;
   thumbnail?: string[];
   gallery?: string[];
-  price: number;
+  price?: number;
   condition: string;
   category: string;
   description: string;
@@ -77,6 +77,7 @@ export interface IProductRequest {
 
 export interface ISingleProduct extends IProduct {
   similar: IProduct[];
+  isOrdered?: boolean;
 }
 
 export interface INoticeRequest {

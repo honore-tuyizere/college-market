@@ -14,7 +14,14 @@ import {
 } from "../../utils/schemas/product.schema";
 import Button from "../common/Button";
 import toast from "react-hot-toast";
-import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { queryKeys } from "../../utils/queryKeys";
 import { ICondition, IProduct, ICategory, IPurpose } from "../../types";
 import TextArea from "../common/inputs/TextArea";
@@ -29,6 +36,7 @@ interface IPRoductForm {
 
 const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
   const queryClient = useQueryClient();
+  const [priceRequired, setPriceRequired] = useState<boolean | undefined>();
   const [galleryPreview, setGalleryPreview] = useState<
     { url: string; index: number; img: File }[]
   >([]);
@@ -41,6 +49,7 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
     handleSubmit,
     reset,
     setValue,
+    setError,
     getValues,
     formState: { errors },
   } = useForm<createProductSchemaType>({
@@ -125,53 +134,81 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
   };
 
   const submit = (data: createProductSchemaType) => {
-    const form = document.querySelector("#productForm") as HTMLFormElement,
-      files = galleryImages();
-    if (form) {
-      const thumbnailData = new FormData(),
-        galleryData = new FormData();
-      if (data.thumbnail) {
-        thumbnailData.append("assets", getValues().thumbnail);
-      }
+    const ValidResult = createProductSchema.safeParse(data);
+    if (ValidResult.success) {
+      if (priceRequired && !data.price) {
+        setError("price", {
+          type: "manual",
+          message: "Price is required",
+        });
+      } else {
+        const form = document.querySelector("#productForm") as HTMLFormElement,
+          files = galleryImages();
+        if (form) {
+          const thumbnailData = new FormData(),
+            galleryData = new FormData();
+          if (data.thumbnail) {
+            thumbnailData.append("assets", getValues().thumbnail);
+          }
 
-      if (files.length > 0) {
-        for (let i = 0; i < files.length; i++) {
-          galleryData.append("assets", files[i]);
-        }
-      }
+          if (files.length > 0) {
+            for (let i = 0; i < files.length; i++) {
+              galleryData.append("assets", files[i]);
+            }
+          }
 
-      uploadAssets.mutate(thumbnailData, {
-        onSuccess(thumbnailResult: Array<string>) {
-          uploadAssets.mutate(galleryData, {
-            onSuccess(galleryResult) {
-              const oldGalleryArray = oldGallery.map((img) => img.url);
-              const newGallery = [...new Set(oldGalleryArray.concat(galleryResult))];
-              console.log(
-                (thumbnailResult[0] ? thumbnailResult : oldThumbnail) as string[],
-              );
-              const formData = {
-                ...data,
-                gallery: newGallery,
-                thumbnail: thumbnailResult.length ? thumbnailResult : [oldThumbnail],
-                id: product._id,
-              };
+          uploadAssets.mutate(thumbnailData, {
+            onSuccess(thumbnailResult: Array<string>) {
+              uploadAssets.mutate(galleryData, {
+                onSuccess(galleryResult) {
+                  const oldGalleryArray = oldGallery.map((img) => img.url);
+                  const newGallery = [
+                    ...new Set(oldGalleryArray.concat(galleryResult)),
+                  ];
 
-              productMutation.mutate(formData, {
-                onSuccess() {
-                  toast.success("Product updated!");
-                  queryClient.invalidateQueries({
-                    queryKey: queryKeys.productsInDashboard,
+                  const formData = {
+                    ...data,
+                    gallery: newGallery,
+                    thumbnail: thumbnailResult.length
+                      ? thumbnailResult
+                      : [oldThumbnail],
+                    id: product._id,
+                  };
+
+                  productMutation.mutate(formData, {
+                    onSuccess() {
+                      toast.success("Product updated!");
+                      queryClient.invalidateQueries({
+                        queryKey: queryKeys.productsInDashboard,
+                      });
+                      setIsOpen(false);
+                      reset();
+                    },
                   });
-                  setIsOpen(false);
-                  reset();
                 },
               });
             },
           });
-        },
-      });
+        }
+      }
     }
   };
+
+  const handlePurposeChange = (purposeId: string) => {
+    setValue("purpose", purposeId);
+    const selected = productPurpose?.find((purpose) => purpose._id == purposeId);
+    if (selected?.slug.includes("DONAT")) {
+      setPriceRequired(false);
+    } else {
+      setPriceRequired(true);
+    }
+  };
+
+  useEffect(() => {
+    if (productPurpose && priceRequired == undefined) {
+      handlePurposeChange(product.purpose?._id || "");
+    }
+  }, [priceRequired, productPurpose, product]);
 
   return (
     <form
@@ -187,12 +224,14 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
           error={errors.name?.message}
           register={register("name")}
         />
-        <TextBox
-          label='Product price ($)'
-          type='number'
-          error={errors.price?.message}
-          register={register("price")}
-        />
+        {priceRequired && (
+          <TextBox
+            label='Product price ($)'
+            type='number'
+            error={errors.price?.message}
+            register={register("price")}
+          />
+        )}
       </div>
 
       <div className='w-full space-y-4 sm:space-y-0 sm:flex sm:space-x-5'>

@@ -34,6 +34,7 @@ export const ProductDetails = () => {
   });
 
   const user = useContext(AuthContext)?.user;
+  const isDonation = product?.purpose?.slug.includes("DONAT");
 
   useEffect(() => {
     if (productImages.length == 0 && product) {
@@ -78,7 +79,9 @@ export const ProductDetails = () => {
                       {product.name}
                     </div>
                     <p className='text-gray-500'>{product.description}</p>
-                    <div className=' text-lg font-semibold'>${product.price}</div>
+                    <div className=' text-lg font-bold'>
+                      ${isDonation ? 0 : product.price}
+                    </div>
                   </div>
 
                   <div className='flex w-full  py-3 gap-7'>
@@ -139,7 +142,7 @@ export const ProductDetails = () => {
             />
           </Container>
 
-          {orderForm && (
+          {orderForm && !product.isOrdered && (
             <AuthGuard>
               <Modal
                 centered
@@ -157,7 +160,7 @@ export const ProductDetails = () => {
               <ChatProvider>
                 <Modal
                   centered
-                  title='Make an offer'
+                  title={product.isOrdered ? "Chat with owner" : "Make an offer"}
                   onClose={() => setOfferPage(false)}
                   isOpen={true}
                   modalType='chat'

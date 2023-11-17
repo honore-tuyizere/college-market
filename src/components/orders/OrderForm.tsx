@@ -1,9 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import TextBox from "../common/inputs/TextBox";
-// import SelectOption from "../common/inputs/SelectOption";
-// import FileInput from "../common/inputs/FileInput";
-// import { getCategories } from "../../apis/category";
-// import { createProduct } from "../../apis/products";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { orderSchema, orderSchemaType } from "../../utils/schemas/order.schema";
@@ -15,7 +10,6 @@ import { createOrder } from "../../apis/orders";
 import { IProduct } from "../../types";
 import TextArea from "../common/inputs/TextArea";
 import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
-// import TextBox from "../common/inputs/TextBox";
 
 interface IOrderForm {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -39,6 +33,8 @@ const DaysSelector: FC<DaysProps> = ({ days, onAdd, onMinus }) => {
 };
 
 const OrderForm: FC<IOrderForm> = ({ setIsOpen, product }) => {
+  const isDonation = product.purpose?.slug.includes("DONAT");
+  console.log(product.purpose?.name);
   const [total, setTotal] = useState(product.price);
   const queryClient = useQueryClient();
   const {
@@ -63,18 +59,22 @@ const OrderForm: FC<IOrderForm> = ({ setIsOpen, product }) => {
     };
     orderMutation.mutate(formData, {
       onSuccess(paymentUrl: string) {
-        window.location.href = paymentUrl;
+        if (paymentUrl != "created") {
+          window.location.href = paymentUrl;
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.orders,
+          });
+        } else {
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.singleProduct,
+          });
+        }
         setIsOpen(false);
-        toast.success("Order created!");
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.orders,
-        });
         reset();
       },
     });
   };
   const handleTotalCalculation = (days: number) => {
-    // const days = Number(dayString);
     if (days > 0) {
       setValue("days", days);
       setTotal(days * product.price);
@@ -93,7 +93,7 @@ const OrderForm: FC<IOrderForm> = ({ setIsOpen, product }) => {
         <div>
           <img
             src={product.thumbnail}
-            className='w-30 h-30 rounded-md'
+            className='w-32 h-32 rounded-md'
             alt={product.name}
           />
         </div>
@@ -102,13 +102,27 @@ const OrderForm: FC<IOrderForm> = ({ setIsOpen, product }) => {
           <div className='font-semibold uppercase text-gray-500 mb-4'>
             {product.category.name}
           </div>
-          <div className='font-semibold text-gray-500'>
-            Unit Price:
-            <span className='font-bold text-gray-700'>${product.price}</span>
-          </div>
-          <div className='font-semibold text-gray-500'>
-            Total Price: <span className='font-bold text-gray-700'>${total}</span>
-          </div>
+          {!isDonation && (
+            <>
+              <div className='font-semibold text-gray-500'>
+                Unit Price:
+                <span className='font-bold text-gray-700'>${product.price}</span>
+              </div>
+              <div className='font-semibold text-gray-500'>
+                Total Price:{" "}
+                <span className='font-bold text-gray-700'>${total}</span>
+              </div>
+            </>
+          )}
+          {isDonation && (
+            <>
+              <div className='text-lg font-bold text-gray-800'>Donation</div>
+              <div className='font-semibold text-gray-500'>
+                Unit Price:
+                <span className='font-bold text-gray-700'>${0}</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className='hidden'>

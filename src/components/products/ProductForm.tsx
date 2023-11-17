@@ -14,7 +14,14 @@ import {
 } from "../../utils/schemas/product.schema";
 import Button from "../common/Button";
 import toast from "react-hot-toast";
-import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { queryKeys } from "../../utils/queryKeys";
 import { ICondition, ICategory, IPurpose } from "../../types";
 import TextArea from "../common/inputs/TextArea";
@@ -27,6 +34,7 @@ interface IPRoductForm {
 
 const ProductForm: FC<IPRoductForm> = ({ setIsOpen }) => {
   const queryClient = useQueryClient();
+  const [priceRequired, setPriceRequired] = useState<boolean | undefined>();
   const [galleryPreview, setGalleryPreview] = useState<
     { url: string; index: number; img: File }[]
   >([]);
@@ -103,8 +111,6 @@ const ProductForm: FC<IPRoductForm> = ({ setIsOpen }) => {
       setValue("thumbnail", file);
     }
   };
-  console.log(errors);
-
   const submit = (data: createProductSchemaType) => {
     const ValidResult = createProductSchema.safeParse(data);
 
@@ -113,6 +119,11 @@ const ProductForm: FC<IPRoductForm> = ({ setIsOpen }) => {
         setError("thumbnail", {
           type: "manual",
           message: "Thumbnail is required for a product",
+        });
+      } else if (priceRequired && !data.price) {
+        setError("price", {
+          type: "manual",
+          message: "Price is required",
         });
       } else {
         const form = document.querySelector("#productForm") as HTMLFormElement;
@@ -153,6 +164,21 @@ const ProductForm: FC<IPRoductForm> = ({ setIsOpen }) => {
       }
     }
   };
+  const handlePurposeChange = (purposeId: string) => {
+    setValue("purpose", purposeId);
+    const selected = productPurpose?.find((purpose) => purpose._id == purposeId);
+    if (selected?.slug.includes("DONAT")) {
+      setPriceRequired(false);
+    } else {
+      setPriceRequired(true);
+    }
+  };
+  useEffect(() => {
+    if (productPurpose && priceRequired == undefined) {
+      handlePurposeChange(productPurpose[0]._id);
+    }
+  }, [priceRequired, productPurpose]);
+
   return (
     <form
       onSubmit={handleSubmit(submit)}
@@ -167,12 +193,14 @@ const ProductForm: FC<IPRoductForm> = ({ setIsOpen }) => {
           error={errors.name?.message}
           register={register("name")}
         />
-        <TextBox
-          label='Product price ($)'
-          type='number'
-          error={errors.price?.message}
-          register={register("price")}
-        />
+        {priceRequired && (
+          <TextBox
+            label='Product price ($)'
+            type='number'
+            error={errors.price?.message}
+            register={register("price")}
+          />
+        )}
       </div>
 
       <div className='w-full space-y-4 sm:space-y-0 sm:flex sm:space-x-5'>
@@ -230,7 +258,11 @@ const ProductForm: FC<IPRoductForm> = ({ setIsOpen }) => {
           {productPurpose && (
             <SelectOption
               error={errors.purpose?.message}
-              register={register("purpose")}
+              register={register("purpose", {
+                onChange: (e) => {
+                  handlePurposeChange(e.target.value);
+                },
+              })}
               label='Purpose'
               options={productPurpose.map((purpose: IPurpose) => ({
                 value: purpose._id,
