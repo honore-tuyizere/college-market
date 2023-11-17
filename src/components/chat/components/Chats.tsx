@@ -13,9 +13,11 @@ import { AuthContext, IAuthContext } from "../../../context/Auth";
 
 interface IProps {
   setRoomId: Dispatch<SetStateAction<string>>;
+  currentThread: string;
 }
-const Chats: FC<IProps> = ({ setRoomId }) => {
+const Chats: FC<IProps> = ({ setRoomId, currentThread }) => {
   const authCtx = useContext(AuthContext) as IAuthContext;
+
   const [loadingThreads, setLoadingThreads] = useState<boolean>(true);
   const [threads, setThreads] = useState<IChatDTO[]>([]);
   useEffect(() => {
@@ -28,12 +30,18 @@ const Chats: FC<IProps> = ({ setRoomId }) => {
   });
   return (
     <>
-      {loadingThreads && !threads[0] && <>Loading.. </>}
+      {loadingThreads && !threads[0] && (
+        <div className='flex items-center justify-center h-full'>Loading..</div>
+      )}
       {threads && (
-        <div className='h-full w-full flex flex-col space-y-2'>
+        <div className='h-full w-full flex flex-col'>
           {threads.map((chat: IChatDTO) => {
             return (
-              <div className='' key={chat._id} onClick={() => setRoomId(chat._id)}>
+              <div
+                className={chat._id === currentThread ? "bg-gray-100" : ""}
+                key={chat._id}
+                onClick={() => setRoomId(chat._id)}
+              >
                 <Chat chat={chat} />
               </div>
             );

@@ -25,6 +25,8 @@ const ChatBox: FC<Props> = ({ all = false, leftPanelIcon, threadId }) => {
     if (threadId !== "") {
       socket.emit("join-room", threadId);
       setLoadingChatHistory(true);
+    } else {
+      setLoadingChatHistory(false);
     }
   }, [threadId]);
 
