@@ -12,6 +12,7 @@ import {
   RectangleGroupIcon,
   RectangleStackIcon,
   QueueListIcon,
+  ArrowTrendingUpIcon,
 } from "@heroicons/react/24/outline";
 import { useSignOut } from "react-auth-kit";
 import { useContext } from "react";
@@ -47,17 +48,17 @@ const DashboardSidebarMenu = () => {
               <span className='text-md ml-4 font-medium'>Dashboard</span>
             </Link>
           </li>
-          <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
-            <Link
-              to={"products"}
-              className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
-            >
-              <Square3Stack3DIcon className='w-5 h-5 text-teal-600 stroke-2' />
-              <span className='text-md ml-4 font-medium'>Products</span>
-            </Link>
-          </li>
           {isAdmin && (
             <>
+              <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+                <Link
+                  to={"transactions"}
+                  className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+                >
+                  <ArrowTrendingUpIcon className='w-5 h-5 text-teal-600 stroke-2' />
+                  <span className='text-md ml-4 font-medium'>Transactions</span>
+                </Link>
+              </li>
               <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
                 <Link
                   to={"category"}
@@ -87,6 +88,16 @@ const DashboardSidebarMenu = () => {
               </li>
             </>
           )}
+
+          <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+            <Link
+              to={"products"}
+              className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+            >
+              <Square3Stack3DIcon className='w-5 h-5 text-teal-600 stroke-2' />
+              <span className='text-md ml-4 font-medium'>Products</span>
+            </Link>
+          </li>
           <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
             <Link
               to={"notice"}

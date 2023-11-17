@@ -3,15 +3,19 @@ import { IOrderedProduct, IProduct } from "../../types";
 import { Link } from "react-router-dom";
 import {
   ChatBubbleLeftIcon,
-  PencilIcon,
-  HashtagIcon,
+  TruckIcon,
+  ArchiveBoxArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import { AuthContext } from "../../context/Auth";
 import Modal from "../common/Modal";
-import { getOrderCode } from "../../apis/orders";
+import { confirmOrderDelivery, getOrderCode } from "../../apis/orders";
 import { BeatLoader } from "react-spinners";
 import { ChatProvider } from "../../providers/ChatContextProvider";
 import ChatModel from "../chat/ChatModel";
+import Button from "../common/Button";
+import TextField from "../common/inputs/TextBox";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 interface Props {
   product: IProduct;
@@ -25,6 +29,8 @@ const Productcard: FC<Props> = ({
 
   const [orderCode, setOrderCode] = useState<string>();
   const [orderDeliveryModalOpen, setOrderDeliveryModalOpen] = useState(false);
+  const [orderConfirmationCode, setOrderConfirmationCode] = useState("");
+  const orderMutation = useMutation({ mutationFn: confirmOrderDelivery });
 
   const context = useContext(AuthContext);
   const resizeImage = (imageUrl: string) => {
@@ -42,6 +48,22 @@ const Productcard: FC<Props> = ({
       });
     }
   }, [context, order]);
+  const confirmOrderDeliveryFunc = () => {
+    if (order) {
+      orderMutation.mutate(
+        { orderId: order._id, code: orderConfirmationCode },
+        {
+          onSuccess: () => {
+            toast.success("Order status changed");
+            setOrderDeliveryModalOpen(false);
+          },
+          onError: () => {
+            toast.error("Failed to update");
+          },
+        },
+      );
+    }
+  };
   return (
     <Fragment>
       <Modal
@@ -50,13 +72,33 @@ const Productcard: FC<Props> = ({
         onClose={() => setOrderDeliveryModalOpen(false)}
         title={"Order derivery code"}
       >
-        <div className=' text-center bg-gray-100 p-4'>
-          <p className=' font-medium text-action-color-500'>
-            <p className='text-red-500 text-sm'>
-              Share the code below if only you've received the product
+        <div className='  bg-gray-100 p-4'>
+          {(order?.orderer._id || order?.orderer) == context?.user?._id && (
+            <p className=' font-medium text-action-color-500'>
+              <p className='text-red-500 text-sm'>
+                Share the code below if only you've received the product
+              </p>
+              {orderCode ?? <BeatLoader color='rgba(0,77,77,0.58)' />}
             </p>
-            {orderCode ?? <BeatLoader color='rgba(0,77,77,0.58)' />}
-          </p>
+          )}
+
+          {(order?.orderer._id || order?.orderer) !== context?.user?._id && (
+            <p className=' font-medium text-action-color-500'>
+              <p className='text-red-500 text-sm'>
+                Enter derivery code to confirm that the product has already delivered
+                to the client
+              </p>
+              <div className=' space-y-2 mt-3'>
+                <TextField type='text' onChange={setOrderConfirmationCode} />
+                <Button
+                  label='Confirm'
+                  type='button'
+                  isLoading={orderMutation.isPending}
+                  onClick={confirmOrderDeliveryFunc}
+                />
+              </div>
+            </p>
+          )}
         </div>
       </Modal>
       <Link to={order ? "#" : `/product/${_id}`} target={order ? "" : "_blank"}>
@@ -84,14 +126,12 @@ const Productcard: FC<Props> = ({
             <div className='text-sm'>
               {order && (
                 <div className='flex gap-3'>
-                  {(order.orderer._id || order.orderer) !== context?.user?._id && (
-                    <PencilIcon className='w-5 text-indigo-600 cursor-pointer' />
+                  {(order.orderer._id || order.orderer) == context?.user?._id && (
+                    <ChatBubbleLeftIcon
+                      className='w-5 text-action-color-500'
+                      onClick={() => setChatModal(true)}
+                    />
                   )}
-
-                  <ChatBubbleLeftIcon
-                    className='w-5 text-action-color-500'
-                    onClick={() => setChatModal(true)}
-                  />
                   {chatModal && (
                     <ChatProvider>
                       <Modal
@@ -106,14 +146,16 @@ const Productcard: FC<Props> = ({
                     </ChatProvider>
                   )}
 
-                  {(order.orderer._id || order.orderer) == context?.user?._id && (
-                    <div
-                      className=' cursor-pointer'
-                      onClick={() => setOrderDeliveryModalOpen(true)}
-                    >
-                      <HashtagIcon className='w-5 text-green-700' />
-                    </div>
-                  )}
+                  <div
+                    className=' cursor-pointer'
+                    onClick={() => setOrderDeliveryModalOpen(true)}
+                  >
+                    {(order.orderer._id || order.orderer) == context?.user?._id ? (
+                      <ArchiveBoxArrowDownIcon className='w-5 text-green-700' />
+                    ) : (
+                      <TruckIcon className='w-5 text-green-700' />
+                    )}
+                  </div>
                 </div>
               )}
             </div>

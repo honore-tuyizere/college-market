@@ -130,6 +130,8 @@ export interface IOrder {
   phone?: string;
   days?: number;
   total: number;
+  deliveryStatus?: string;
+  paymentStatus?: string;
 }
 
 export interface IOrderRequest {
@@ -190,4 +192,9 @@ export interface IRentProductNumber {
 export interface IDonateProductNumber {
   message: string;
   number: number;
+}
+
+export interface IOrderConfirm {
+  orderId: string;
+  code: string;
 }

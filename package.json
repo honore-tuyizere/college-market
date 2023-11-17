@@ -24,6 +24,7 @@
     "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-auth-kit": "^2.12.6",
+    "react-data-table-component": "^7.5.4",
     "react-dom": "^18.2.0",
     "react-headroom": "^3.2.1",
     "react-hook-form": "^7.47.0",
@@ -33,6 +34,7 @@
     "react-router-dom": "^6.17.0",
     "react-spinners": "^0.13.8",
     "socket.io-client": "^4.7.2",
+    "styled-components": "^5.3.3",
     "swiper": "^11.0.3",
     "zod": "^3.22.4"
   },
