@@ -36,7 +36,7 @@ const Productcard: FC<Props> = ({
   };
 
   useEffect(() => {
-    if (order && context?.user?._id == order?.orderer) {
+    if (order && context?.user?._id == (order?.orderer?._id ?? order?.orderer)) {
       getOrderCode(order?._id).then((response) => {
         setOrderCode(response);
       });
@@ -76,18 +76,15 @@ const Productcard: FC<Props> = ({
                     <span className='font-semibold'>{purpose?.name || "Sales"}</span>
                   </div>
                 </div>
-
-                {!purpose?.slug.includes("DONAT") && (
-                  <>
-                    <div className='text-xl text-teal-600 font-bold'>${price}</div>
-                  </>
-                )}
+                <div className='text-xl text-teal-600 font-bold'>
+                  ${order ? order.total : price || 0}
+                </div>
               </div>
             </div>
             <div className='text-sm'>
               {order && (
                 <div className='flex gap-3'>
-                  {order.orderer._id !== context?.user?._id && (
+                  {(order.orderer._id || order.orderer) !== context?.user?._id && (
                     <PencilIcon className='w-5 text-indigo-600 cursor-pointer' />
                   )}
 
@@ -109,7 +106,7 @@ const Productcard: FC<Props> = ({
                     </ChatProvider>
                   )}
 
-                  {order.orderer._id == context?.user?._id && (
+                  {(order.orderer._id || order.orderer) == context?.user?._id && (
                     <div
                       className=' cursor-pointer'
                       onClick={() => setOrderDeliveryModalOpen(true)}
