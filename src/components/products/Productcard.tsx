@@ -5,17 +5,23 @@ import {
   ChatBubbleLeftIcon,
   TruckIcon,
   ArchiveBoxArrowDownIcon,
+  ArrowUturnRightIcon,
 } from "@heroicons/react/24/outline";
 import { AuthContext } from "../../context/Auth";
 import Modal from "../common/Modal";
-import { confirmOrderDelivery, getOrderCode } from "../../apis/orders";
+import {
+  confirmOrderDelivery,
+  getOrderCode,
+  setProductReturned,
+} from "../../apis/orders";
 import { BeatLoader } from "react-spinners";
 import { ChatProvider } from "../../providers/ChatContextProvider";
 import ChatModel from "../chat/ChatModel";
 import Button from "../common/Button";
 import TextField from "../common/inputs/TextBox";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { queryKeys } from "../../utils/queryKeys";
 
 interface Props {
   product: IProduct;
@@ -25,12 +31,15 @@ const Productcard: FC<Props> = ({
   product: { thumbnail, name, price, _id, purpose, condition },
   order,
 }) => {
+  const queryClient = useQueryClient();
   const [chatModal, setChatModal] = useState(false);
 
   const [orderCode, setOrderCode] = useState<string>();
   const [orderDeliveryModalOpen, setOrderDeliveryModalOpen] = useState(false);
+  const [orderReturnModalOpen, setOrderReturnModalOpen] = useState(false);
   const [orderConfirmationCode, setOrderConfirmationCode] = useState("");
   const orderMutation = useMutation({ mutationFn: confirmOrderDelivery });
+  const returnMutation = useMutation({ mutationFn: setProductReturned });
 
   const context = useContext(AuthContext);
   const resizeImage = (imageUrl: string) => {
@@ -54,6 +63,9 @@ const Productcard: FC<Props> = ({
         { orderId: order._id, code: orderConfirmationCode },
         {
           onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.sellerOrders,
+            });
             toast.success("Order status changed");
             setOrderDeliveryModalOpen(false);
           },
@@ -64,8 +76,29 @@ const Productcard: FC<Props> = ({
       );
     }
   };
+
+  const setReturned = () => {
+    if (order) {
+      returnMutation.mutate(
+        { orderId: order._id },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.sellerOrders,
+            });
+            toast.success("Order marked as returned");
+            setOrderReturnModalOpen(false);
+          },
+          onError: () => {
+            toast.error("Failed to update");
+          },
+        },
+      );
+    }
+  };
   return (
     <Fragment>
+      {/* Order delivery modal */}
       <Modal
         centered
         isOpen={orderDeliveryModalOpen}
@@ -101,6 +134,34 @@ const Productcard: FC<Props> = ({
           )}
         </div>
       </Modal>
+      {/* End of order delivery modal */}
+
+      {/* Order return modal */}
+      <Modal
+        centered
+        isOpen={orderReturnModalOpen}
+        onClose={() => setOrderReturnModalOpen(false)}
+        title={"Comfirm Product Returned"}
+      >
+        <div className=''>
+          <div className=' font-medium text-action-color-500'>
+            <p className='text-gray-500 text-sm'>
+              This will mark the product as returned and make the product available
+              again.
+            </p>
+            <div className=' space-y-2 mt-5'>
+              <Button
+                label='Confirm'
+                type='button'
+                isLoading={returnMutation.isPending}
+                onClick={setReturned}
+              />
+            </div>
+          </div>
+        </div>
+      </Modal>
+      {/* End of order return modal */}
+
       <Link to={order ? "#" : `/product/${_id}`} target={order ? "" : "_blank"}>
         <div className='bg-white overflow-auto shadow-md rounded-md relative'>
           <img className='w-full' src={resizeImage(thumbnail)} alt='' />
@@ -132,6 +193,15 @@ const Productcard: FC<Props> = ({
                       onClick={() => setChatModal(true)}
                     />
                   )}
+                  {purpose?.slug?.includes("RENT") &&
+                    order.deliveryStatus == "DELIVERED" &&
+                    (order.orderer._id || order.orderer) != context?.user?._id &&
+                    order.returnedDate == undefined && (
+                      <ArrowUturnRightIcon
+                        className='w-5 text-gray-500'
+                        onClick={() => setOrderReturnModalOpen(true)}
+                      />
+                    )}
                   {chatModal && (
                     <ChatProvider>
                       <Modal
@@ -150,10 +220,15 @@ const Productcard: FC<Props> = ({
                     className=' cursor-pointer'
                     onClick={() => setOrderDeliveryModalOpen(true)}
                   >
-                    {(order.orderer._id || order.orderer) == context?.user?._id ? (
-                      <ArchiveBoxArrowDownIcon className='w-5 text-green-700' />
-                    ) : (
-                      <TruckIcon className='w-5 text-green-700' />
+                    {order.deliveryStatus == "NOT_YET_DELIVERED" && (
+                      <>
+                        {(order.orderer._id || order.orderer) ==
+                        context?.user?._id ? (
+                          <ArchiveBoxArrowDownIcon className='w-5 text-green-700' />
+                        ) : (
+                          <TruckIcon className='w-5 text-green-700' />
+                        )}
+                      </>
                     )}
                   </div>
                 </div>

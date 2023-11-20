@@ -59,23 +59,23 @@ export const ProductsTable = () => {
                   <td className='py-3 px-6 font-bold'>{product.price}$</td>
                   <td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
                     <div className='flex w-32 min-w-full'>
-                      {product.gallery.map((img, index) => (
-                        <>
-                          {index < 5 && (
-                            <img
-                              key={index}
-                              src={img.url}
-                              alt={`${product.name} - Gallery ${index + 1}`}
-                              className='w-14 h-14 rounded-md border-2 border-gray-200 shadow shadow-gray-300 shadow-xl -ml-4'
-                            />
-                          )}
-                        </>
+                      {product.gallery.slice(0, 5).map((img, index) => (
+                        <img
+                          key={`${product._id}-${index}`} // Use a unique key based on the product ID and index
+                          src={img.url}
+                          alt={`${product.name} - Gallery ${index + 1}`}
+                          className='w-14 h-14 rounded-md border-2 border-gray-200 shadow shadow-gray-300 shadow-xl -ml-4'
+                        />
                       ))}
                     </div>
                   </td>
                   <td className='py-3 px-6'>
-                    <span className='bg-green-400 text-gray-50 rounded-md px-2'>
-                      {product.isAvailable ? "available" : "not available"}
+                    <span
+                      className={`${
+                        product.isAvailable ? "bg-green-400" : "bg-red-400"
+                      } text-gray-50 rounded-md px-2 text-xs`}
+                    >
+                      {product.isAvailable ? "AV" : "N/AV"}
                     </span>
                   </td>
                   <td className='py-3 px-6 rounded-r-xl'>

@@ -77,7 +77,7 @@ const OrderForm: FC<IOrderForm> = ({ setIsOpen, product }) => {
   const handleTotalCalculation = (days: number) => {
     if (days > 0) {
       setValue("days", days);
-      setTotal(days * product.price);
+      setTotal(days * (product.price || 0));
     } else {
       setValue("days", 1);
     }

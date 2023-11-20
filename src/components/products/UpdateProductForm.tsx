@@ -27,7 +27,6 @@ import { ICondition, IProduct, ICategory, IPurpose } from "../../types";
 import TextArea from "../common/inputs/TextArea";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { getPurposes } from "../../apis/purpose";
-import Checkbox from "../common/inputs/Checkbox";
 
 interface IPRoductForm {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -60,7 +59,6 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
       category: product.category._id,
       condition: product.condition._id,
       description: product.description,
-      isAvailable: product.isAvailable,
     },
   });
 
@@ -104,7 +102,6 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
         previews.push({ url: link, index: imageIndex, img: files[i] });
       }
       setGalleryPreview([...galleryPreview, ...previews]);
-      console.log(galleryPreview);
       galleryImages();
     }
   };
@@ -298,14 +295,6 @@ const UpdateProductForm: FC<IPRoductForm> = ({ setIsOpen, product }) => {
             />
           )}
         </div>
-      </div>
-
-      <div className='flex'>
-        <Checkbox
-          label='Is Product available'
-          value={"0"}
-          register={register("isAvailable")}
-        />
       </div>
 
       <div className='image-previews flex flex-wrap space-x-5 border border-gray-300 border-dashed rounded-xl p-4'>

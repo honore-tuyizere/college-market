@@ -14,7 +14,7 @@ const Button: FC<puttonProps> = (props) => {
       <div>
         <button
           type={props.type ? props.type : "button"}
-          onClick={() => props.onClick && props.onClick()}
+          onClick={() => !props.isLoading && props.onClick && props.onClick()}
           className={`rounded-md px-4 py-2.5 text-sm font-semibold shadow-sm ring-1 ring-inset ${
             props.outline
               ? "ring-teal-800 bg-white hover:bg-teal-900 hover:text-white text-teal-700"
