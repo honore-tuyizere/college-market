@@ -33,7 +33,7 @@ const ProductsList: FC<ProductListProps> = ({
             ))}
           </div>
           {orders && (
-            <div className='grid grid-cols1 xxs:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4  py-3'>
+            <div className='grid xxs:grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4  py-'>
               {orders.map((order) => {
                 return (
                   <Productcard

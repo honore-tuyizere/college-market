@@ -1,5 +1,11 @@
 import httpClient from "../utils/httpClient";
-import { IProduct, IProductFilter, IProductRequest, ISingleProduct } from "../types";
+import {
+  IProduct,
+  IProductFilter,
+  IProductLog,
+  IProductRequest,
+  ISingleProduct,
+} from "../types";
 
 export const createProduct = async (data: IProductRequest): Promise<IProduct> => {
   return (await httpClient.post("/products", data)).data;
@@ -15,6 +21,10 @@ export const deleteProduct = async (id: string): Promise<string> => {
 
 export const getProduct = async (id: string): Promise<ISingleProduct> => {
   return (await httpClient.get(`/products/${id}`)).data;
+};
+
+export const getProductLogs = async (id: string): Promise<IProductLog[]> => {
+  return (await httpClient.get(`/products/${id}/logs`)).data;
 };
 
 export const updateProduct = async (data: IProductRequest): Promise<IProduct> => {

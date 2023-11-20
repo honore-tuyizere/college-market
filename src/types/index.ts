@@ -70,7 +70,7 @@ export interface ISlider {
   photo?: string;
   description?: string;
   type?: string;
-  sliderStatus?: string
+  sliderStatus?: string;
 }
 
 export interface ISliders {
@@ -89,7 +89,6 @@ export interface IProductRequest {
   condition: string;
   category: string;
   description: string;
-  isAvailable?: boolean;
 }
 
 export interface ISingleProduct extends IProduct {
@@ -157,6 +156,7 @@ export interface IOrder {
   total: number;
   deliveryStatus?: string;
   paymentStatus?: string;
+  returnedDate?: Date;
 }
 
 export interface IOrderRequest {
@@ -222,4 +222,15 @@ export interface IDonateProductNumber {
 export interface IOrderConfirm {
   orderId: string;
   code: string;
+}
+
+export interface IProductReturn {
+  orderId: string;
+}
+
+export interface IProductLog {
+  _id: string;
+  text: string;
+  user?: IUser;
+  createdAt: string;
 }

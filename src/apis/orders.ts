@@ -1,5 +1,11 @@
 import httpClient from "../utils/httpClient";
-import { IOrder, IOrderConfirm, IOrderRequest, IOrderedProduct } from "../types";
+import {
+  IOrder,
+  IOrderConfirm,
+  IOrderRequest,
+  IOrderedProduct,
+  IProductReturn,
+} from "../types";
 
 export const createOrder = async (data: IOrderRequest): Promise<string> => {
   return (await httpClient.post("/orders", data)).data;
@@ -44,4 +50,10 @@ export const confirmOrderDelivery = async (
   data: IOrderConfirm,
 ): Promise<IOrderConfirm> => {
   return (await httpClient.post(`/orders/confirm`, data)).data;
+};
+
+export const setProductReturned = async (
+  data: IProductReturn,
+): Promise<IProductReturn> => {
+  return (await httpClient.post(`/orders/return`, data)).data;
 };
