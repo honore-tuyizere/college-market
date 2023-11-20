@@ -37,7 +37,9 @@ export const MyNoticeList = () => {
                     >
                       <div className='flex justify-between'>
                         <div onClick={() => setAction({ show: true, data: notice })}>
-                          <span className='bold text-[18px]'>{notice.name}</span>
+                          <span className='text-[18px] font-bold text-gray-600'>
+                            {notice.name}
+                          </span>
                           <p className='pt-[4px] text-[12px]'>
                             {notice.description.length > 120
                               ? `${notice.description.slice(0, 120)}...`
@@ -71,7 +73,7 @@ export const MyNoticeList = () => {
             <p className='pt-[4px] text-[12px]'>{action.data.description}</p>
           </div>
           <div className='py-2'>
-            {action.data.photo && <img src={action.data.photo} />}
+            {action.data.photo ? <img src={action.data.photo} /> : ""}
           </div>
         </Modal>
       </>

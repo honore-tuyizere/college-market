@@ -21,7 +21,7 @@ const AdsSlider = () => {
   return (
     <div className=''>
       <Swiper
-        slidesPerView={1}
+        slidesPerView={3}
         autoplay={{
           delay: 5000,
         }}
