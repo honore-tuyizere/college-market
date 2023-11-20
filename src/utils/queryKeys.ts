@@ -11,6 +11,7 @@ export const queryKeys = {
   getAllProducts: ["getAllproducts"],
   singleProduct: ["singleProduct"],
   orders: ["orders"],
+  singleOrder: ["singleOrder"],
   purposesInForm: ["purposesInForm"],
   getAllNotices: ["getAllNotices"],
   sellerOrders: ["sellersOrders"],

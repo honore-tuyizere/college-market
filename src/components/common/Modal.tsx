@@ -8,14 +8,18 @@ interface type {
   title: string;
   centered?: boolean;
   desc?: string;
-  modalType?: "chat" | "normal";
+  modalType?: "chat" | "normal" | "orderDetail";
 }
 
 const classNames = {
-  title: { chat: "d-none", normal: "" },
-  body: { chat: "pt-0", normal: "pt-6" },
-  container: { chat: "p-0 w-[30rem]", normal: "p-4 w-[45rem]" },
-  panel: { chat: "p-0", normal: "p-6" },
+  title: { chat: "d-none", normal: "", orderDetail: "" },
+  body: { chat: "pt-0", normal: "pt-6", orderDetail: "pt-6" },
+  container: {
+    chat: "p-0 w-[30rem]",
+    normal: "p-4 w-[45rem]",
+    orderDetail: "p-4 w-[30rem]",
+  },
+  panel: { chat: "p-0", normal: "p-6", orderDetail: "p-6" },
 };
 
 const Modal = (props: PropsWithChildren<type>) => {

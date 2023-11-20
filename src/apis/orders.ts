@@ -19,7 +19,7 @@ export const deleteOrder = async (id: string): Promise<string> => {
   return (await httpClient.delete(`/orders/${id}`)).data;
 };
 
-export const getOrder = async (id: string): Promise<IOrder> => {
+export const getOrder = async (id: string): Promise<IOrderedProduct> => {
   return (await httpClient.get(`/orders/${id}`)).data;
 };
 

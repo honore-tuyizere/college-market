@@ -6,6 +6,7 @@ import {
   TruckIcon,
   ArchiveBoxArrowDownIcon,
   ArrowUturnRightIcon,
+  InformationCircleIcon,
 } from "@heroicons/react/24/outline";
 import { AuthContext } from "../../context/Auth";
 import Modal from "../common/Modal";
@@ -21,6 +22,7 @@ import Button from "../common/Button";
 import TextField from "../common/inputs/TextBox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import OrderDetail from "../orders/OrderDetail";
 import { queryKeys } from "../../utils/queryKeys";
 
 interface Props {
@@ -33,6 +35,7 @@ const Productcard: FC<Props> = ({
 }) => {
   const queryClient = useQueryClient();
   const [chatModal, setChatModal] = useState(false);
+  const [orderDetailsModal, setOrderDetailsModal] = useState(false);
 
   const [orderCode, setOrderCode] = useState<string>();
   const [orderDeliveryModalOpen, setOrderDeliveryModalOpen] = useState(false);
@@ -187,6 +190,21 @@ const Productcard: FC<Props> = ({
             <div className='text-sm'>
               {order && (
                 <div className='flex gap-3'>
+                  <InformationCircleIcon
+                    className='w-5 text-blue-500'
+                    onClick={() => setOrderDetailsModal(true)}
+                  />
+                  {orderDetailsModal && (
+                    <Modal
+                      centered
+                      title='Order details'
+                      onClose={() => setOrderDetailsModal(false)}
+                      isOpen={true}
+                      modalType='orderDetail'
+                    >
+                      <OrderDetail id={order._id} />
+                    </Modal>
+                  )}
                   {(order.orderer._id || order.orderer) == context?.user?._id && (
                     <ChatBubbleLeftIcon
                       className='w-5 text-action-color-500'
