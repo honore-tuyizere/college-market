@@ -120,17 +120,6 @@ export const ProductDetails = () => {
                     </div>
                   </div>
                 </div>
-                {/* <div className='flex flex-wrap space-x-6 rounded-sm w-full xs:px-8 sm:px-0'>
-                {productImages.map((img, index) => (
-                  <img
-                    key={img.url}
-                    src={img.url}
-                    alt={product.name}
-                    className='w-[100px] h-[100px] rounded-md my-6'
-                    onClick={() => handleThumbnailClick(index)}
-                  />
-                ))}
-              </div> */}
               </div>
             </Container>
           </div>
