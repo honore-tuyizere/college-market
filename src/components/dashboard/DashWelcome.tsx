@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/Auth";
 export default function DashWelcome() {
   const context = useContext(AuthContext);
 
-  const photoUrl = context?.user?.photos?.[0].value;
+  const photoUrl = context?.user?.photos?.[0]?.value;
   const name = context?.user?.displayName || "";
   const college = context?.user?.college?.name || "";
   return (

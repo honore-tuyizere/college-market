@@ -1,5 +1,6 @@
 import Container from "../common/Container";
 import GoogleLogo from "../../assets/GoogleLog.png";
+import MicrosoftLogo from "../../assets/MicrosoftLog.png";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
@@ -34,18 +35,32 @@ export const Login = () => {
             </div>
           </>
         )}
-        <div className='max-w-[578px] w-full  p-8 flex flex-col sm:flex-row items-center space-y-3 sm:space-x-12 sm:space-y-0 justify-center  rounded-[10px] '>
+        <div className='max-w-[578px] w-full  p-8  flex-col sm:flex-row items-center space-y-3 sm:space-x-12 sm:space-y-0 justify-center  rounded-[10px] '>
           <Link
             to={`${backedUrl}/auth/signin/google`}
             className='max-w-full w-[20rem]'
           >
-            <div className='border border-gray-300 border-2 p-2 px-5 flex items-center  justify-center gap-4 rounded-full max-w-[20rem] '>
+            <div className=' border-gray-300 border-2 p-2 px-5 flex justify-center items-center gap-4 rounded-full max-w-[20rem] '>
               <img
                 src={GoogleLogo}
                 alt='logo'
                 className='w-[30px] h-[30px] sm:w-[40px] sm:h-[40px]'
               />
               <p className='font-semibold text-gray-600'>Continue with Google</p>
+            </div>
+          </Link>
+
+          <Link
+            to={`${backedUrl}/auth/signin/microsoft`}
+            className='max-w-full w-[20rem]'
+          >
+            <div className=' border-gray-300 border-2 p-2 px-5 flex items-center  justify-center gap-4 rounded-full max-w-[20rem] '>
+              <img
+                src={MicrosoftLogo}
+                alt='logo'
+                className='w-[28px] h-[28px] sm:w-[40px] sm:h-[40px]'
+              />
+              <p className='font-semibold text-gray-600'>Continue with Microsoft</p>
             </div>
           </Link>
         </div>
