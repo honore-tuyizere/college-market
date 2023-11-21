@@ -1,5 +1,6 @@
 import AllChats from "../components/chat/AllChatsPage";
 import NoticesDashboard from "../components/notices/NoticesDashboard";
+import ProfileDashboard from "../components/profile/ProfileDashboard";
 import SliderDashboard from "../components/slider/SliderDashboard";
 import CategoryPage from "../pages/category/CategoryPage";
 import ConditionPage from "../pages/condition/ConditionPage";
@@ -57,6 +58,10 @@ const dashboardRoutes: IRoute[] = [
     path: "/dashboard/users",
     element: DashboardUsers,
   },
+  {
+    path: "/dashboard/profile",
+    element: ProfileDashboard,
+  }
 ];
 
 export default dashboardRoutes;

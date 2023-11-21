@@ -63,7 +63,7 @@ export const NoticeList = () => {
         <div className='mt-[100px]'>
           <Modal
             centered={true}
-            title='Notice details'
+            title={action.data.name}
             onClose={() =>
               setAction({
                 show: false,
@@ -77,7 +77,6 @@ export const NoticeList = () => {
               <p className='pt-[4px] text-[12px]'>{action.data.description}</p>
             </div>
             <div className='py-2'>
-              {" "}
               {action.data.photo ? <img src={action.data.photo} /> : ""}
             </div>
           </Modal>

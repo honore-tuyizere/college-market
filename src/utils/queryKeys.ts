@@ -27,4 +27,5 @@ export const queryKeys = {
   slidersInDashboard: ["slidersInDashboard"],
   statisticOverview: ["statisticOverview"],
   homepageProducts: ["homepageProducts"],
+  userInDashboard: ["userInDashboard"],
 };

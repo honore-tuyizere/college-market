@@ -18,10 +18,19 @@ const AdsSlider = () => {
     show: false,
     data: { title: "", description: "", photo: "" },
   });
+
+  let slideNumber: number = 1;
+
+  if (sliders?.length && sliders.length >= 2) {
+    slideNumber = 3;
+  } else if (sliders?.length && sliders.length >= 1) {
+    slideNumber = 2;
+  }
+
   return (
     <div className=''>
       <Swiper
-        slidesPerView={1}
+        slidesPerView={slideNumber}
         autoplay={{
           delay: 5000,
         }}
@@ -43,7 +52,7 @@ const AdsSlider = () => {
                     <p className='text-[28px] mb-4'>{slider.title}</p>
                     <span className='mb-4'>
                       {" "}
-                      {`${slider?.description?.slice(0, 150)}...`}
+                      {`${slider?.description?.slice(0, 50)}...`}
                     </span>
                     <div className='p-4 my-6'>
                       <button
@@ -57,7 +66,7 @@ const AdsSlider = () => {
                             },
                           })
                         }
-                        className='bg-[#003D29] border-[1px] border-[#003D29] rounded-lg p-2'
+                        className='bg-[#3d9578] border-[1px] border-[#4be9b4] rounded-lg p-2'
                       >
                         More info
                       </button>
@@ -98,7 +107,7 @@ const AdsSlider = () => {
       <div className='mt-[100px]'>
         <Modal
           centered={true}
-          title='Slider details'
+          title={action.data.title}
           onClose={() =>
             setAction({
               show: false,
@@ -108,7 +117,6 @@ const AdsSlider = () => {
           isOpen={action.show}
         >
           <div className='block '>
-            <span className='bold text-[18px]'>{action.data.title}</span>
             <p className='pt-[4px] text-[12px]'>{action.data.description}</p>
           </div>
           <div className='py-2'>
