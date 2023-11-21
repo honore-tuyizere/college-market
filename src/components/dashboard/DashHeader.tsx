@@ -1,6 +1,6 @@
 import DashWelcome from "./DashWelcome";
 import DashOverview from "./DashOverview";
-import DashRecent from "./DashRecent";
+// import DashRecent from "./DashRecent";
 
 export default function DashHeader() {
   return (
@@ -10,7 +10,7 @@ export default function DashHeader() {
         <div>
           <main className='flex-1 pb-8'>
             <DashOverview />
-            <DashRecent />
+            {/* <DashRecent /> */}
           </main>
         </div>
       </div>

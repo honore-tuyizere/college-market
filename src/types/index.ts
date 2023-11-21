@@ -235,3 +235,9 @@ export interface IProductLog {
   user?: IUser;
   createdAt: string;
 }
+
+export interface IStatisticOverview {
+  slug: string;
+  number: number;
+  link?: string;
+}

@@ -25,4 +25,5 @@ export const queryKeys = {
   getAllAdsSliders: ["getAllAdsSliders"],
   getAllHeroSliders: ["getAllHeroSliders"],
   slidersInDashboard: ["slidersInDashboard"],
+  statisticOverview: ["statisticOverview"],
 };
