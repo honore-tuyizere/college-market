@@ -11,6 +11,7 @@ export const queryKeys = {
   getAllProducts: ["getAllproducts"],
   singleProduct: ["singleProduct"],
   orders: ["orders"],
+  singleOrder: ["singleOrder"],
   purposesInForm: ["purposesInForm"],
   getAllNotices: ["getAllNotices"],
   sellerOrders: ["sellersOrders"],
@@ -24,4 +25,5 @@ export const queryKeys = {
   getAllAdsSliders: ["getAllAdsSliders"],
   getAllHeroSliders: ["getAllHeroSliders"],
   slidersInDashboard: ["slidersInDashboard"],
+  statisticOverview: ["statisticOverview"],
 };

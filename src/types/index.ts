@@ -157,6 +157,7 @@ export interface IOrder {
   deliveryStatus?: string;
   paymentStatus?: string;
   returnedDate?: Date;
+  expectedReturnDate: string | Date;
 }
 
 export interface IOrderRequest {
@@ -233,4 +234,10 @@ export interface IProductLog {
   text: string;
   user?: IUser;
   createdAt: string;
+}
+
+export interface IStatisticOverview {
+  slug: string;
+  number: number;
+  link?: string;
 }
