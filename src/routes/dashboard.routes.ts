@@ -4,6 +4,7 @@ import SliderDashboard from "../components/slider/SliderDashboard";
 import CategoryPage from "../pages/category/CategoryPage";
 import ConditionPage from "../pages/condition/ConditionPage";
 import DashboardPage from "../pages/dashboard/Dashboard";
+import DashboardUsers from "../pages/dashboard/DashboardUsers";
 import OrdersPage from "../pages/orders/OrdersPage";
 import ProductsPage from "../pages/products/ProductsPage";
 import PurposesPage from "../pages/purpose/PurposesPage";
@@ -51,7 +52,11 @@ const dashboardRoutes: IRoute[] = [
   {
     path: "/dashboard/slider",
     element: SliderDashboard,
-  }
+  },
+  {
+    path: "/dashboard/users",
+    element: DashboardUsers,
+  },
 ];
 
 export default dashboardRoutes;

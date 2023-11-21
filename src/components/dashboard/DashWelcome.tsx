@@ -4,10 +4,13 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/Auth";
 export default function DashWelcome() {
   const context = useContext(AuthContext);
+console.log(context);
 
   const photoUrl = context?.user?.photos?.[0].value;
   const name = context?.user?.displayName || "";
   const college = context?.user?.college?.name || "";
+  console.log(college);
+
   return (
     <>
       <div className='bg-white shadow mt-4'>
