@@ -5,7 +5,7 @@ import {
   UserCircleIcon,
   ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/outline";
-import Logo from "../../../assets/logo.png";
+// import Logo from "../../../assets/logo.png";
 import { NavLink, useLocation } from "react-router-dom";
 import CategoryHeader from "./CategoryHeader";
 import Headroom from "react-headroom";
@@ -31,9 +31,13 @@ const Header = () => {
     <>
       <Headroom style={{ zIndex: 999 }}>
         <nav className='flex pr-2  py-2 md:py-4 h-14 md:h-20 items-center justify-between border-b z-50 bg-white'>
-          <div className='logo h-full px-6 md:px-12 lg:px-24'>
-            <NavLink to={"/"}>
-              <img src={Logo} alt='logo' className='h-full w-full object-cover' />
+          <div className='logo h-full px-6 md:px-12 lg:px-24 flex items-center'>
+            <NavLink
+              to={"/"}
+              className={"font-bold text-action-color-500 hidden md:block"}
+            >
+              {/* <img src={Logo} alt='logo' className='h-full w-full object-cover' /> */}
+              The college market
             </NavLink>
           </div>
           <div className='hidden md:block'>

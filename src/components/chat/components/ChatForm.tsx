@@ -16,7 +16,7 @@ interface Props {
 }
 
 const ChatForm: FC<Props> = ({ chatId }) => {
-  const { register, handleSubmit, reset } = useForm<messageSchemaType>({
+  const { register, handleSubmit, reset, formState } = useForm<messageSchemaType>({
     resolver: zodResolver(messageSchema),
   });
   const authCtx = useContext(AuthContext);
@@ -45,8 +45,15 @@ const ChatForm: FC<Props> = ({ chatId }) => {
         }
       />
       <div className='self-end'>
-        <button className='bg-teal-700 py-2.5 px-3 rounded-r-md h-full'>
-          <PaperAirplaneIcon className='w-7 h-7 text-white' />
+        <button
+          disabled={formState.isSubmitting}
+          className='bg-teal-700 py-2.5 px-3 rounded-r-md h-full'
+        >
+          {formState.isSubmitting ? (
+            <div className='text-white h-7'>sending..</div>
+          ) : (
+            <PaperAirplaneIcon className='w-7 h-7 text-white' />
+          )}
         </button>
       </div>
     </form>

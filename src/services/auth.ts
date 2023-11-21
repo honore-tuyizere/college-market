@@ -9,6 +9,8 @@ export const getProfile = async (token: string): Promise<IUser> => {
   ).data;
 };
 
-export const setUserCollege = async (college: string): Promise<IUser> => {
-  return (await httpClient.put("/users/college/" + college)).data;
+export const setUserCollege = async (
+  payload: Record<string, string>,
+): Promise<IUser> => {
+  return (await httpClient.put("/users/college/", payload)).data;
 };
