@@ -8,7 +8,7 @@ const UserProfile = () => {
 
   return (
     <div>
-      <img src={photoUrl} alt='' className='w-10 rounded-full' />
+      <img src={photoUrl} alt='' className=' w-7 rounded-full' />
     </div>
   );
 };

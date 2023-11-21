@@ -35,9 +35,6 @@ export const Login = () => {
           </>
         )}
         <div className='max-w-[578px] w-full  p-8 flex flex-col sm:flex-row items-center space-y-3 sm:space-x-12 sm:space-y-0 justify-center  rounded-[10px] '>
-          <Link to={"/"}>
-            <div className='flex text-gray-500 p-2 px-6'>Homepage</div>
-          </Link>
           <Link
             to={`${backedUrl}/auth/signin/google`}
             className='max-w-full w-[20rem]'

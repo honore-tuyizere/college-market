@@ -1,10 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { FC, Fragment, useContext, useState } from "react";
-import { AuthContext } from "../../context/Auth";
+import { FC, Fragment, useState } from "react";
 import CollegeSelector from "./CollegeSelector";
 import { setUserCollege } from "../../services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useSignIn, useAuthHeader } from "react-auth-kit";
+import TextBox from "../common/inputs/TextBox";
+import toast from "react-hot-toast";
 
 interface CollegeModalProps {
   isOpen: boolean;
@@ -12,11 +13,11 @@ interface CollegeModalProps {
 }
 const CollegeModal: FC<CollegeModalProps> = ({ isOpen }) => {
   const [college, setCollege] = useState<string>();
+  const [phone, setPhone] = useState<string>();
   const signIn = useSignIn();
   const header = useAuthHeader();
   const token = header().split(" ")[1];
   const doNothing = () => {};
-  const context = useContext(AuthContext);
   const mutation = useMutation({
     mutationFn: setUserCollege,
     onSuccess(data) {
@@ -32,7 +33,11 @@ const CollegeModal: FC<CollegeModalProps> = ({ isOpen }) => {
     setCollege(selectedCollege);
   };
   const updateCollege = () => {
-    mutation.mutate(college as string);
+    if (!phone || (phone && phone?.length < 10)) {
+      toast.error("Phone number and college is required");
+    } else {
+      mutation.mutate({ college: college!, phone });
+    }
   };
 
   return (
@@ -64,16 +69,16 @@ const CollegeModal: FC<CollegeModalProps> = ({ isOpen }) => {
               <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all '>
                 <Dialog.Title
                   as='h3'
-                  className='text-lg font-medium leading-6 text-gray-900'
+                  className='text-base font-medium leading-6 text-gray-500'
                 >
-                  Nice to have you here!
+                  Nice to have you here! Let's work on your profile
                 </Dialog.Title>
                 <div className='mt-2 relative'>
-                  <p className='text-sm text-gray-500'>
-                    Dear {context?.user?.displayName}, Kindly let us kow your
-                    college.
-                  </p>
+                  <div>
+                    <TextBox label='Phone' type='phone' onChange={setPhone} />
+                  </div>{" "}
                   <div className='mt-2 min-h-[200px]'>
+                    <label htmlFor=''>College</label>
                     <CollegeSelector collegeChanged={collegeChanged} />
                   </div>
                 </div>
