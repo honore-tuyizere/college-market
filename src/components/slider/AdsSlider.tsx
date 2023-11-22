@@ -21,7 +21,7 @@ const AdsSlider = () => {
   return (
     <div className=''>
       <Swiper
-        slidesPerView={3}
+        slidesPerView={4}
         autoplay={{
           delay: 5000,
         }}
@@ -33,7 +33,7 @@ const AdsSlider = () => {
           sliders?.map((slider: ISlider) => (
             <>
               <SwiperSlide>
-                <div className='relative w-full h-52 md:h-96 lg:h-[500px]'>
+                <div className='relative w-full h-80'>
                   <img
                     src={slider.photo}
                     alt=''
@@ -70,7 +70,7 @@ const AdsSlider = () => {
         ) : (
           <>
             <SwiperSlide>
-              <div className='w-full h-52 md:h-96  lg:h-[500px]'>
+              <div className='w-full h-80'>
                 <img
                   src={
                     "https://res.cloudinary.com/umuhire-heritier/image/upload/w_1666,h_400,c_fill/Home-image_1_pvyrks.png"
@@ -81,7 +81,7 @@ const AdsSlider = () => {
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className='w-full h-52 md:h-96  lg:h-[500px]'>
+              <div className='w-full h-80'>
                 <img
                   src={
                     "https://res.cloudinary.com/umuhire-heritier/image/upload/w_1666,h_400,c_fill/v1699449591/e-commerce/bca32ffa-6468-498c-922b-4a360fb56e6c.jpg"

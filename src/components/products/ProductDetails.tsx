@@ -35,6 +35,7 @@ export const ProductDetails = () => {
 
   const user = useContext(AuthContext)?.user;
   const isDonation = product?.purpose?.slug.includes("DONAT");
+  const isRent = product?.purpose?.slug.includes("RENT");
 
   useEffect(() => {
     if (productImages.length == 0 && product) {
@@ -106,12 +107,24 @@ export const ProductDetails = () => {
                       {!(user?._id === product.owner?._id) && (
                         <>
                           <Button
-                            label='Order now'
+                            label={
+                              isRent
+                                ? "Rent now"
+                                : isDonation
+                                ? "Claim now"
+                                : "Order now"
+                            }
                             onClick={() => setOrderForm(true)}
                           />
 
                           <Button
-                            label='Make an offer'
+                            label={
+                              isRent
+                                ? "Ask info"
+                                : isDonation
+                                ? "Ask info"
+                                : "Make an offer"
+                            }
                             outline={true}
                             onClick={() => setOfferPage(true)}
                           />

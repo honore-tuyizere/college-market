@@ -25,7 +25,14 @@ export const NoticeList = () => {
             <p className='p-12 text-center'>Loading...</p>
           </>
         )}
-        {notices && (
+        {notices?.length == 0 && (
+          <>
+            <p className='p-12 text-center rounded-md text-gray-600'>
+              You have no notices!
+            </p>
+          </>
+        )}
+        {notices?.length && (
           <div className='relative overflow-x-auto shadow-sm sm:rounded-lg '>
             <table className='w-full text-sm text-left text-black bg-[#F4F4F4] cursor-pointer '>
               <tbody>

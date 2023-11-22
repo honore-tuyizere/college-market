@@ -27,7 +27,7 @@ const Slider = () => {
           sliders?.map((slider: ISlider) => (
             <>
               <SwiperSlide>
-                <div className='w-full h-52 md:h-96  lg:h-[500px]'>
+                <div className='w-full h-52 xs:h-72  md:h-96  lg:h-[700px] lg:max-h-[600px]'>
                   <img
                     src={slider.photo}
                     alt=''
@@ -40,7 +40,7 @@ const Slider = () => {
         ) : (
           <>
             <SwiperSlide>
-              <div className='w-full h-52 md:h-96  lg:h-[500px]'>
+              <div className='w-full h-52 xs:h-72  md:h-96  lg:h-[700px] lg:max-h-[600px]'>
                 <img
                   src={
                     "https://res.cloudinary.com/umuhire-heritier/image/upload/w_1666,h_400,c_fill/Home-image_1_pvyrks.png"
@@ -51,7 +51,7 @@ const Slider = () => {
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className='w-full h-52 md:h-96  lg:h-[500px]'>
+              <div className='w-full h-52 xs:h-72  md:h-96  lg:h-[700px] lg:max-h-[600px]'>
                 <img
                   src={
                     "https://res.cloudinary.com/umuhire-heritier/image/upload/w_1666,h_400,c_fill/v1699449591/e-commerce/bca32ffa-6468-498c-922b-4a360fb56e6c.jpg"

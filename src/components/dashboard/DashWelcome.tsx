@@ -1,15 +1,18 @@
 import BuildingOfficeIcon from "@heroicons/react/24/outline/BuildingOfficeIcon";
 import CheckCircleIcon from "@heroicons/react/24/outline/CheckCircleIcon";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/Auth";
+import { Link } from "react-router-dom";
+import Modal from "../common/Modal";
+import ProductForm from "../products/ProductForm";
 export default function DashWelcome() {
+  const [productModal, setProductModal] = useState(false);
   const context = useContext(AuthContext);
-console.log(context);
+  console.log(context);
 
   const photoUrl = context?.user?.photos?.[0]?.value;
   const name = context?.user?.displayName || "";
   const college = context?.user?.college?.name || "";
-  console.log(college);
 
   return (
     <>
@@ -56,18 +59,29 @@ console.log(context);
               </div>
             </div>
             <div className='mt-6 flex space-x-3 md:mt-0 md:ml-4'>
+              <Link to={"/"}>
+                <div className='inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2'>
+                  Buy Product
+                </div>
+              </Link>
               <button
                 type='button'
-                className='inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2'
-              >
-                Buy Product
-              </button>
-              <button
-                type='button'
+                onClick={() => setProductModal(true)}
                 className='inline-flex items-center rounded-md border border-transparent bg-cyan-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2'
               >
                 Sell Product
               </button>
+              {productModal && (
+                <>
+                  <Modal
+                    title='New product'
+                    onClose={() => setProductModal(false)}
+                    isOpen={productModal}
+                  >
+                    <ProductForm setIsOpen={setProductModal} />
+                  </Modal>
+                </>
+              )}
             </div>
           </div>
         </div>
