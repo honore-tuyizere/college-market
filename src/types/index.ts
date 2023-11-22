@@ -158,6 +158,7 @@ export interface IOrder {
   paymentStatus?: string;
   returnedDate?: Date;
   expectedReturnDate: string | Date;
+  createdAt: string | Date;
 }
 
 export interface IOrderRequest {
