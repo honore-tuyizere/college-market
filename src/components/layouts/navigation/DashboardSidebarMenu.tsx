@@ -14,6 +14,7 @@ import {
   QueueListIcon,
   ArrowTrendingUpIcon,
   PencilSquareIcon,
+  UsersIcon,
 } from "@heroicons/react/24/outline";
 import { useSignOut } from "react-auth-kit";
 import { useContext } from "react";
@@ -58,6 +59,15 @@ const DashboardSidebarMenu = () => {
                 >
                   <ArrowTrendingUpIcon className='w-5 h-5 text-teal-600 stroke-2' />
                   <span className='text-md ml-4 font-medium'>Transactions</span>
+                </Link>
+              </li>
+              <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+                <Link
+                  to={"users"}
+                  className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+                >
+                  <UsersIcon className='w-5 h-5 text-teal-600 stroke-2' />
+                  <span className='text-md ml-4 font-medium'>Users</span>
                 </Link>
               </li>
               <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>

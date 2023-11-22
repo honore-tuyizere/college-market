@@ -141,6 +141,7 @@ export interface IUser {
     _id: string;
     name: string;
   };
+  isBanned?: boolean;
 }
 export interface ICollege {
   _id: string;
