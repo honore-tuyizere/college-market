@@ -7,14 +7,17 @@ import {
   CurrencyDollarIcon,
   GiftIcon,
   Square3Stack3DIcon,
+  TruckIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryKeys } from "../../utils/queryKeys";
 import { getOverview } from "../../apis/overview";
 import Loading from "../common/Loading";
 import { ReactNode, useEffect, useState } from "react";
 import { IStatisticOverview } from "../../types";
+import TextBox from "../common/inputs/TextBox";
+import { useForm } from "react-hook-form";
 
 const icons: { [key: string]: ReactNode } = {
   PURCHASES: <CreditCardIcon className='h-6 w-6 text-white' aria-hidden='true' />,
@@ -30,60 +33,97 @@ const icons: { [key: string]: ReactNode } = {
   PURCHASE_ORDERS: (
     <ArrowLeftCircleIcon className='h-6 w-6 text-white' aria-hidden='true' />
   ),
+  ONGOING_PURCHASES: (
+    <TruckIcon
+      className='h-6 w-6 text-white transform -scale-x-100'
+      aria-hidden='true'
+    />
+  ),
+  ONGOING_SALES: <TruckIcon className='h-6 w-6 text-white' aria-hidden='true' />,
 };
 
 const DashOverview = () => {
-  // const [startDate, setStartDate] = useState("");
-  // const [endDate, setEndDate] = useState("");
+  const [datesError, setDatesError] = useState<string | undefined>();
+  const { register, handleSubmit, getValues, setValue } = useForm();
   const [stats, setStats] = useState<IStatisticOverview[] | undefined>();
   const { isLoading, data } = useQuery({
     queryKey: [queryKeys.statisticOverview],
     queryFn: () => getOverview(),
   });
 
-  // const filterMutation = useMutation({ mutationFn: getOverview });
+  const filterMutation = useMutation({ mutationFn: getOverview });
 
-  // const filter = () => {
-  //   filterMutation.mutate(`?startDate=${startDate}&endDate=${endDate}`, {
-  //     onSuccess(result) {
-  //       setStats(result);
-  //     },
-  //   });
-  // };
-
-  // const startDateChange = (value: string) => {
-  //   setStartDate(value);
-  //   filter();
-  // };
-
-  // const endDateChange = (value: string) => {
-  //   setEndDate(value);
-  //   filter();
-  // };
+  const filter = () => {
+    const { startDate, endDate } = getValues();
+    if (startDate != "" && startDate != "" && startDate <= endDate) {
+      filterMutation.mutate(`?startDate=${startDate}&endDate=${endDate}`, {
+        onSuccess(result) {
+          setStats(result);
+        },
+      });
+      setDatesError(undefined);
+    } else {
+      if ((startDate === "") !== (endDate == "")) {
+        setDatesError("Select both of them");
+      } else if (!datesError && startDate > endDate) {
+        setDatesError("Invalid dates range");
+      } else {
+        setDatesError(undefined);
+      }
+    }
+  };
+  const changeEndDate = (value: string) => {
+    setValue("endDate", value);
+    filter();
+  };
+  const changeStartDate = (value: string) => {
+    setValue("startDate", value);
+    filter();
+  };
 
   useEffect(() => {
-    if (stats == undefined && data) {
-      setStats(data);
-    }
-  }, [setStats, stats, data]);
+    if (stats == undefined && data) setStats(data);
+  }, [data, setStats, stats]);
 
   return (
     <>
-      {isLoading && (
-        <>
-          <Loading />
-        </>
-      )}
       {stats && (
         <div className='pt-4'>
           <h3 className='text-base font-semibold leading-6 text-gray-900'>
             Statistics
           </h3>
-          {/* <div className='flex space-x-4'>
-            <TextBox label='Start Date' type='date' onChange={startDateChange} />
-            <TextBox label='End Date' type='date' onChange={endDateChange} />
-          </div> */}
-
+          <div className='flex space-y-1 w-full flex-col'>
+            <form
+              action=''
+              className='flex space-x-4 w-full'
+              onSubmit={handleSubmit(filter)}
+            >
+              <TextBox
+                label='Start Date'
+                type='date'
+                onChange={changeStartDate}
+                register={register("startDate")}
+              />
+              <TextBox
+                label='End Date'
+                type='date'
+                onChange={changeEndDate}
+                register={register("endDate")}
+              />
+            </form>
+            {datesError && (
+              <>
+                <span className='text-red-500 text-xs'>{datesError}</span>
+              </>
+            )}
+          </div>
+          {(isLoading || filterMutation.isPending) && (
+            <>
+              <div className='py-6'>
+                <Loading />
+              </div>
+            </>
+          )}
           <dl className='mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
             {stats.map((item, index) => (
               <div
