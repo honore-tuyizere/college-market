@@ -1,5 +1,6 @@
 import httpClient from "../utils/httpClient";
 import {
+  IHomepageProducts,
   IProduct,
   IProductFilter,
   IProductLog,
@@ -33,6 +34,10 @@ export const updateProduct = async (data: IProductRequest): Promise<IProduct> =>
 
 export const getAllProducts = async (): Promise<IProduct[]> => {
   return (await httpClient.get(`/products`)).data;
+};
+
+export const getHomepageProducts = async (): Promise<IHomepageProducts> => {
+  return (await httpClient.get(`/products/homepage`)).data;
 };
 
 export const filterProducts = async (data: IProductFilter): Promise<IProduct[]> => {

@@ -21,7 +21,7 @@ const AdsSlider = () => {
   return (
     <div className=''>
       <Swiper
-        slidesPerView={4}
+        slidesPerView={1}
         autoplay={{
           delay: 5000,
         }}
@@ -33,7 +33,7 @@ const AdsSlider = () => {
           sliders?.map((slider: ISlider) => (
             <>
               <SwiperSlide>
-                <div className='relative w-full h-80'>
+                <div className='relative'>
                   <img
                     src={slider.photo}
                     alt=''

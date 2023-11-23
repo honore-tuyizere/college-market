@@ -18,14 +18,14 @@ const ProductsList: FC<ProductListProps> = ({
     <div className='w-full'>
       {isLoading && (
         <div className='grid  xxs:grid-cols-1 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4  py-3'>
-          {Array.from({ length: 6 }, (_, index) => index).map((item) => (
-            <Skeleton key={item} className=' h-96' />
+          {Array.from({ length: 5 }, (_, index) => index).map((item) => (
+            <Skeleton key={item} className=' h-52' />
           ))}
         </div>
       )}
       {!isLoading && (
         <div className='w-full'>
-          {title && <div className='py-4'>{title}</div>}
+          {title && <div className='py-4 font-bold text-md'>{title}</div>}
           {filtersComponent && <div className='py-4'>{filtersComponent}</div>}
           <div className='grid xxs:grid-cols-2 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4  py-3'>
             {products?.map((product) => (

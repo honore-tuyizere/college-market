@@ -30,32 +30,36 @@ const Header = () => {
   return (
     <>
       <Headroom style={{ zIndex: 999 }}>
-        <nav className='flex pr-2  py-2 md:py-4 h-14 md:h-20 items-center justify-between border-b z-50 bg-white'>
+        <nav className='flex pr-2 justify-between py-2 md:py-4 h-14 md:h-20 items-center justify-between border-b z-50 bg-white'>
           <div className='logo h-full px-6 md:px-12 lg:px-24 flex items-center'>
             <NavLink
               to={"/"}
-              className={"font-bold text-action-color-500 hidden md:block"}
+              className={
+                "font-bold xs:text-md sm:text-lg md:text-xl text-action-color-500"
+              }
             >
               {/* <img src={Logo} alt='logo' className='h-full w-full object-cover' /> */}
               The college market
             </NavLink>
           </div>
-          <div className='hidden md:block'>
-            <SearchComponent />
+          <div className='hidden lg:block md:w-60  overflow-visible relative'>
+            <div className='md:absolute md:top-0 -mt-5 w-full'>
+              <SearchComponent />
+            </div>
           </div>
 
-          <div className='flex gap-3 lg:gap-24 right-0'>
-            <div className='nav-icons flex gap-5 sm:gap-3 lg:gap-7 items-center'>
-              <div>
+          <div className='flex gap-3 lg:gap-24 right-0 text-[13px]'>
+            <div className='nav-icons flex gap-3 sm:gap-3 lg:gap-7 items-center'>
+              <div className='md:hidden'>
                 <MobileSearch />
               </div>
-              <NavLink to={"/notice"} className='flex gap-2'>
-                <MegaphoneIcon className='text-black w-6' />{" "}
+              <NavLink to={"/notice"} className='flex gap-1 items-center'>
+                <MegaphoneIcon className='text-black w-5' />{" "}
                 <span className='hidden sm:block font-semibold'>Notices</span>
               </NavLink>
 
-              <NavLink to={"/donations"} className='flex gap-2'>
-                <GiftIcon className='text-black w-6' />{" "}
+              <NavLink to={"/donations"} className='flex gap-1 items-center'>
+                <GiftIcon className='text-black w-5' />{" "}
                 <span className='hidden sm:block font-semibold'>
                   <span className='flex'>
                     <p className='p-1'>Donate</p> <DonateProductsNumber />
@@ -63,8 +67,8 @@ const Header = () => {
                 </span>
               </NavLink>
 
-              <NavLink to={"/rent-products"} className='flex gap-2'>
-                <TicketIcon className='text-black w-6' />{" "}
+              <NavLink to={"/rent-products"} className='flex gap-1 items-center'>
+                <TicketIcon className='text-black w-5' />{" "}
                 <span className='hidden sm:block font-semibold'>
                   <span className='flex'>
                     <p className='p-1'>Rent</p>
@@ -75,18 +79,18 @@ const Header = () => {
               {!authorized ? (
                 <NavLink
                   to={"/login"}
-                  className='flex gap-2 items-center rounded-xl bg-white md:px-2 md:py-2 font-semibold text-gray-900 shadow-md  hover:bg-gray-50'
+                  className='flex gap-1 items-center items-center rounded-xl bg-white p-1.5 md:px-2 md:py-2 font-semibold text-gray-900 shadow-md  hover:bg-gray-50'
                 >
-                  <UserCircleIcon className='w-6 text-black' />{" "}
+                  <UserCircleIcon className='w-5 text-black' />{" "}
                   <span className='hidden sm:block font-semibold'>Login</span>
                 </NavLink>
               ) : (
                 <div className='flex'>
                   <NavLink
                     to={"/dashboard/chats"}
-                    className='flex gap-2 items-center rounded-xl bg-white md:px-4 md:py-2 font-semibold text-gray-900 shadow-md hover:bg-gray-50'
+                    className='flex gap-1 items-center items-center rounded-xl bg-white md:px-4 md:py-2 font-semibold text-gray-900 shadow-md hover:bg-gray-50'
                   >
-                    <ChatBubbleBottomCenterTextIcon className='w-6 text-black' />{" "}
+                    <ChatBubbleBottomCenterTextIcon className='w-5 text-black' />{" "}
                     <span className='sr-only'>Chat</span>
                   </NavLink>
 

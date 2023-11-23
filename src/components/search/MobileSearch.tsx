@@ -8,7 +8,7 @@ export default function MobileSearch() {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   return (
     <>
-      <div className='flex gap-2 md:hidden'>
+      <div className='flex gap-2 lg:hidden'>
         <div
           onClick={() => setIsMobileSearchOpen(true)}
           className='left-0 right-0 max-w-full flex justify-center items-center'

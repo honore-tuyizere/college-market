@@ -26,4 +26,5 @@ export const queryKeys = {
   getAllHeroSliders: ["getAllHeroSliders"],
   slidersInDashboard: ["slidersInDashboard"],
   statisticOverview: ["statisticOverview"],
+  homepageProducts: ["homepageProducts"],
 };

@@ -243,3 +243,8 @@ export interface IStatisticOverview {
   number: number;
   link?: string;
 }
+
+export interface IHomepageProducts {
+  sale: IProduct[];
+  other: IProduct[];
+}

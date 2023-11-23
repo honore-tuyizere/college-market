@@ -6,6 +6,7 @@ import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { IProduct } from "../../types";
 import { searchProducts } from "../../apis/search";
 import classNames from "classnames";
+import { useMutation } from "@tanstack/react-query";
 
 interface ISearchComponentProps {
   closeMobileMenu?: () => void;
@@ -15,16 +16,28 @@ const SearchComponent: React.FC<ISearchComponentProps> = ({ closeMobileMenu }) =
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState<IProduct[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
-
+  const searchMutation = useMutation({ mutationFn: searchProducts });
   const handleSearch = async (query: string) => {
     try {
-      const results = await searchProducts(query);
-      if (Array.isArray(results)) {
-        setProducts(results);
-      } else {
-        console.error("searchProducts did not return an array");
-        setProducts([]);
-      }
+      searchMutation.mutate(query, {
+        onSuccess(results) {
+          if (Array.isArray(results)) {
+            setProducts(results);
+          } else {
+            setProducts([]);
+          }
+        },
+        onError() {
+          setProducts([]);
+        },
+      });
+      // const results = await searchProducts(query);
+      // if (Array.isArray(results)) {
+      //   setProducts(results);
+      // } else {
+      //   console.error("searchProducts did not return an array");
+      //   setProducts([]);
+      // }
     } catch (error) {
       console.error("Error searching products:", error);
       setProducts([]);
@@ -80,22 +93,22 @@ const SearchComponent: React.FC<ISearchComponentProps> = ({ closeMobileMenu }) =
   useOnClickOutside(ref, () => setSearchQuery(""));
 
   return (
-    <div className='fixed top-4 shadow-inner ' ref={ref}>
-      <div className='mx-auto max-w-xl bg-gray-200 transform border-none overflow-hidden rounded-xl bg-transparent shadow-2xl   transition-all'>
+    <div className='w-full overflow-visible' ref={ref}>
+      <div className='mx-auto w-full bg-gray-200 transform rounded-xl bg-transparent transition-all'>
         <Combobox
           onChange={(value) => {
             const product = products.find((product) => product.name === value);
             setSelectedProduct(product || null);
           }}
         >
-          <div className='flex items-center justify-center'>
+          <div className='flex items-center justify-center w-full'>
             <MagnifyingGlassIcon
-              className='pointer-events-none absolute  right-4 h-8 w-8 text-gray-400'
+              className='pointer-events-none absolute  right-4 h-6 w-6 text-gray-400'
               aria-hidden='true'
             />
             <Combobox.Input
-              className='h-12 border rounded-full border-gray-500  pl-8 pr-4 text-gray-900 placeholder:text-gray-500'
-              placeholder='Search...'
+              className='h-10 border rounded-full w-full border-gray-300  px-4 text-gray-900 placeholder:text-gray-400 text-sm'
+              placeholder='Search Product'
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
             />
@@ -104,7 +117,7 @@ const SearchComponent: React.FC<ISearchComponentProps> = ({ closeMobileMenu }) =
           {filteredProducts.length > 0 && (
             <Combobox.Options
               static
-              className='max-h-96 bg-white scroll-py-3 overflow-y-auto p-3'
+              className='max-h-96 bg-white scroll-py-3 overflow-y-auto p-3 md:absolute w-[400px] top-12 md:left-1/2 md:transform md:-translate-x-1/2 z-[100] md:shadow-xl'
             >
               {filteredProducts.map((product) => (
                 <Combobox.Option
@@ -158,7 +171,8 @@ const SearchComponent: React.FC<ISearchComponentProps> = ({ closeMobileMenu }) =
 
           {searchQuery !== "" &&
             searchQuery.length > 1 &&
-            filteredProducts.length === 0 && (
+            filteredProducts.length === 0 &&
+            !searchMutation.isPending && (
               <div className='px-6 py-14 text-center text-sm sm:px-14'>
                 <ExclamationCircleIcon
                   type='outline'
