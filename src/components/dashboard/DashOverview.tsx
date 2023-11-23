@@ -80,14 +80,20 @@ const DashOverview = () => {
     setValue("startDate", value);
     filter();
   };
-
   useEffect(() => {
     if (stats == undefined && data) setStats(data);
   }, [data, setStats, stats]);
 
   return (
     <>
-      {stats && (
+      {(isLoading || filterMutation.isPending) && (
+        <>
+          <div className='py-6'>
+            <Loading />
+          </div>
+        </>
+      )}
+      {stats && !filterMutation.isPending && (
         <div className='pt-4'>
           <h3 className='text-base font-semibold leading-6 text-gray-900'>
             Statistics
@@ -117,13 +123,7 @@ const DashOverview = () => {
               </>
             )}
           </div>
-          {(isLoading || filterMutation.isPending) && (
-            <>
-              <div className='py-6'>
-                <Loading />
-              </div>
-            </>
-          )}
+
           <dl className='mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
             {stats.map((item, index) => (
               <div

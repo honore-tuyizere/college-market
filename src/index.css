@@ -1,5 +1,39 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;700&family=Roboto:wght@100;300;400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap");
+/* styles.css or styles.scss */
+
+@font-face {
+  font-family: "Sansation";
+  src: url("/fonts/sansation/Sansation_Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sansation";
+  src: url("/fonts/sansation/Sansation_Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sansation";
+  src: url("/fonts/sansation/Sansation_SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sansation";
+  src: url("/fonts/sansation/Sansation_Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sansation";
+  src: url("/fonts/sansation/Sansation_Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
 
 * {
   box-sizing: border-box;
@@ -34,7 +68,7 @@ html {
 }
 
 body {
-  font-family: "Poppins";
+  font-family: "Sansation";
   font-weight: 400;
   height: 100%;
 }

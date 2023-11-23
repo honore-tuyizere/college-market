@@ -35,6 +35,7 @@ export const ProductDetails = () => {
 
   const user = useContext(AuthContext)?.user;
   const isDonation = product?.purpose?.slug.includes("DONAT");
+  const isRent = product?.purpose?.slug.includes("RENT");
 
   useEffect(() => {
     if (productImages.length == 0 && product) {
@@ -57,16 +58,16 @@ export const ProductDetails = () => {
                         <img
                           src={image.url}
                           alt={`Product Image ${index + 1}`}
-                          className='h-full w-full'
+                          className='h-full w-full rounded-xl'
                         />
                       </SwiperSlide>
                     ))}
                   </Swiper>
                 </div>
 
-                <div className=''>
+                <div className='md:max-w-[500px]'>
                   <div className=' space-y-2'>
-                    <div className='font-medium text-md text-gray-500 uppercase flex items-center space-x-2'>
+                    <div className='font-medium text-sm text-gray-500 uppercase flex items-center space-x-2'>
                       {product.category.name}{" "}
                       {product?.purpose && (
                         <>
@@ -75,11 +76,13 @@ export const ProductDetails = () => {
                         </>
                       )}
                     </div>
-                    <div className='font-bold text-3xl capitalize'>
+                    <div className='font-bold text-2xl capitalize'>
                       {product.name}
                     </div>
-                    <p className='text-gray-500'>{product.description}</p>
-                    <div className=' text-lg font-bold'>
+                    <p className='text-gray-500 text-sm py-6'>
+                      {product.description}
+                    </p>
+                    <div className=' text-2xl font-bold '>
                       ${isDonation ? 0 : product.price}
                     </div>
                   </div>
@@ -106,12 +109,24 @@ export const ProductDetails = () => {
                       {!(user?._id === product.owner?._id) && (
                         <>
                           <Button
-                            label='Order now'
+                            label={
+                              isRent
+                                ? "Rent now"
+                                : isDonation
+                                ? "Claim now"
+                                : "Order now"
+                            }
                             onClick={() => setOrderForm(true)}
                           />
 
                           <Button
-                            label='Make an offer'
+                            label={
+                              isRent
+                                ? "Ask info"
+                                : isDonation
+                                ? "Ask info"
+                                : "Make an offer"
+                            }
                             outline={true}
                             onClick={() => setOfferPage(true)}
                           />
