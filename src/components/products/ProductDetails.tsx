@@ -153,6 +153,7 @@ export const ProductDetails = () => {
                 title='Order details'
                 onClose={() => setOrderForm(false)}
                 isOpen={true}
+                modalType={"orderDetail"}
               >
                 <OrderForm setIsOpen={setOrderForm} product={product} />
               </Modal>

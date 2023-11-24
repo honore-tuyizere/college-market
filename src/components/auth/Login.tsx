@@ -35,32 +35,30 @@ export const Login = () => {
             </div>
           </>
         )}
-        <div className='max-w-[578px] w-full  p-8  flex-col sm:flex-row items-center space-y-3 sm:space-x-12 sm:space-y-0 justify-center  rounded-[10px] '>
-          <Link
-            to={`${backedUrl}/auth/signin/google`}
-            className='max-w-full w-[20rem]'
-          >
-            <div className=' border-gray-300 border-2 p-2 px-5 flex justify-center items-center gap-4 rounded-full max-w-[20rem] '>
+        <div className='max-w-[578px] w-fit py-24 px-8 border sm:px-24 sm:py-24  flex-col sm:flex-row items-center space-y-3 sm:space-x-12 sm:space-y-0 justify-center  rounded-[10px] '>
+          <Link to={`${backedUrl}/auth/signin/google`} className='w-full'>
+            <div className=' border-gray-300 border-[1.5px] p-2 px-5 flex items-center gap-4 rounded-full w-full '>
               <img
                 src={GoogleLogo}
                 alt='logo'
-                className='w-[30px] h-[30px] sm:w-[40px] sm:h-[40px]'
+                className='w-[30px] h-[30px] sm:w-[35px] sm:h-[35px]'
               />
-              <p className='font-semibold text-gray-600'>Continue with Google</p>
+              <p className='font-medium text-base text-gray-600'>
+                Continue with Google
+              </p>
             </div>
           </Link>
 
-          <Link
-            to={`${backedUrl}/auth/signin/microsoft`}
-            className='max-w-full w-[20rem]'
-          >
-            <div className=' border-gray-300 border-2 p-2 px-5 flex items-center  justify-center gap-4 rounded-full max-w-[20rem] '>
+          <Link to={`${backedUrl}/auth/signin/microsoft`} className='w-full'>
+            <div className=' border-gray-300 border-[1.5px] p-2 px-5 flex items-center  gap-4 rounded-full w-full '>
               <img
                 src={MicrosoftLogo}
                 alt='logo'
-                className='w-[28px] h-[28px] sm:w-[40px] sm:h-[40px]'
+                className='w-[28px] h-[28px] sm:w-[35px] sm:h-[35px]'
               />
-              <p className='font-semibold text-gray-600'>Continue with Microsoft</p>
+              <p className='font-medium text-base text-gray-600'>
+                Continue with Microsoft
+              </p>
             </div>
           </Link>
         </div>

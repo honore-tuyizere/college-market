@@ -133,17 +133,6 @@ const OrderForm: FC<IOrderForm> = ({ setIsOpen, product }) => {
           register={register("product")}
         />
       </div>
-      {/* {product.purpose?.slug.includes("RENT") && (
-        <div className='flex'>
-          <TextBox
-            type='number'
-            label='Rent Days'
-            error={errors.days?.message}
-            register={register("days")}
-            onChange={handleTotalCalculation}
-          />
-        </div>
-      )} */}
 
       {product.purpose?.slug.includes("RENT") && (
         <div className='flex'>
@@ -162,14 +151,6 @@ const OrderForm: FC<IOrderForm> = ({ setIsOpen, product }) => {
           {errors.days && <span>{errors.days.message}</span>}
         </div>
       )}
-      {/* <div className='w-full space-y-4 sm:space-y-0 sm:flex sm:space-x-5 mt-3 hidden'>
-        <TextArea
-          label='Shipping address'
-          value='any addres'
-          error={errors.address?.message}
-          register={register("address")}
-        />
-      </div> */}
 
       <Button
         label='Submit order'

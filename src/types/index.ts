@@ -244,6 +244,11 @@ export interface IStatisticOverview {
   link?: string;
 }
 
+export interface IStatistic {
+  overview: IStatisticOverview[];
+  transactions: IOrder[];
+}
+
 export interface IHomepageProducts {
   sale: IProduct[];
   other: IProduct[];

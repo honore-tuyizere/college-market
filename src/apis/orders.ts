@@ -30,6 +30,11 @@ export const updateOrder = async (data: IOrderRequest): Promise<IOrder> => {
 export const getAllOrders = async (): Promise<IOrder[]> => {
   return (await httpClient.get(`/orders`)).data;
 };
+
+export const getTransactions = async (): Promise<IOrder[]> => {
+  return (await httpClient.get(`/orders/transactions`)).data;
+};
+
 export const getSellersOrders = async (
   sellerId: string,
 ): Promise<IOrderedProduct[]> => {

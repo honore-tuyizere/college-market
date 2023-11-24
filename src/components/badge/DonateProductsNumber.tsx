@@ -16,11 +16,11 @@ export const DonateProductsNumber: React.FC = () => {
     return null;
   }
 
-  const displayData = data > 10 ? "10+" : data;
+  const displayData = data > 10 ? "9+" : data;
 
   return (
     <div>
-      <p className='inline-flex items-center rounded-full bg-green-100 px-2 py-1 text-sm font-medium text-green-700'>
+      <p className='inline-flex text-[10px] items-center rounded-full bg-action-color-500 px-1.5 py-[2px] font-medium text-white'>
         {displayData}
       </p>
     </div>
