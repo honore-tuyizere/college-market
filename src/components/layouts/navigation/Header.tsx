@@ -5,7 +5,6 @@ import {
   UserCircleIcon,
   ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/outline";
-// import Logo from "../../../assets/logo.png";
 import { NavLink, useLocation } from "react-router-dom";
 import CategoryHeader from "./CategoryHeader";
 import Headroom from "react-headroom";
@@ -49,7 +48,7 @@ const Header = () => {
           </div>
 
           <div className='flex gap-3 lg:gap-24 right-0 text-[13px]'>
-            <div className='nav-icons flex gap-3 sm:gap-3 lg:gap-7 items-center'>
+            <div className='nav-icons flex gap-3 sm:gap-3 lg:gap-4 items-center'>
               <div className='md:hidden'>
                 <MobileSearch />
               </div>
@@ -61,8 +60,8 @@ const Header = () => {
               <NavLink to={"/donations"} className='flex gap-1 items-center'>
                 <GiftIcon className='text-black w-5' />{" "}
                 <span className='hidden sm:block font-semibold'>
-                  <span className='flex'>
-                    <p className='p-1'>Donate</p> <DonateProductsNumber />
+                  <span className='flex items-center'>
+                    <p className='p-1'>Donation</p> <DonateProductsNumber />
                   </span>
                 </span>
               </NavLink>
@@ -85,10 +84,10 @@ const Header = () => {
                   <span className='hidden sm:block font-semibold'>Login</span>
                 </NavLink>
               ) : (
-                <div className='flex'>
+                <div className='flex items-center'>
                   <NavLink
                     to={"/dashboard/chats"}
-                    className='flex gap-1 items-center items-center rounded-xl bg-white md:px-4 md:py-2 font-semibold text-gray-900 shadow-md hover:bg-gray-50'
+                    className='flex gap-1 items-center items-center rounded-xl bg-white  p-1 md:px-4 md:py-2 font-semibold text-gray-900 shadow-md hover:bg-gray-50'
                   >
                     <ChatBubbleBottomCenterTextIcon className='w-5 text-black' />{" "}
                     <span className='sr-only'>Chat</span>

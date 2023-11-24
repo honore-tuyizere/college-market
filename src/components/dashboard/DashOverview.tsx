@@ -15,9 +15,10 @@ import { queryKeys } from "../../utils/queryKeys";
 import { getOverview } from "../../apis/overview";
 import Loading from "../common/Loading";
 import { ReactNode, useEffect, useState } from "react";
-import { IStatisticOverview } from "../../types";
+import { IStatistic } from "../../types";
 import TextBox from "../common/inputs/TextBox";
 import { useForm } from "react-hook-form";
+import DashRecent from "./DashRecent";
 
 const icons: { [key: string]: ReactNode } = {
   PURCHASES: <CreditCardIcon className='h-6 w-6 text-white' aria-hidden='true' />,
@@ -45,7 +46,7 @@ const icons: { [key: string]: ReactNode } = {
 const DashOverview = () => {
   const [datesError, setDatesError] = useState<string | undefined>();
   const { register, handleSubmit, getValues, setValue } = useForm();
-  const [stats, setStats] = useState<IStatisticOverview[] | undefined>();
+  const [stats, setStats] = useState<IStatistic | undefined>();
   const { isLoading, data } = useQuery({
     queryKey: [queryKeys.statisticOverview],
     queryFn: () => getOverview(),
@@ -125,7 +126,7 @@ const DashOverview = () => {
           </div>
 
           <dl className='mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
-            {stats.map((item, index) => (
+            {stats.overview.map((item, index) => (
               <div
                 key={index}
                 className='relative overflow-hidden rounded-lg bg-white px-4 pt-5 shadow sm:px-6 sm:pt-6'
@@ -160,6 +161,7 @@ const DashOverview = () => {
           </dl>
         </div>
       )}
+      <DashRecent transactions={stats?.transactions} isLoading={isLoading} />
     </>
   );
 };

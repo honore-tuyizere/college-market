@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import Logo from "../../../assets/logo.png";
-
 import {
   Cog6ToothIcon,
   SquaresPlusIcon,
@@ -35,9 +33,13 @@ const DashboardSidebarMenu = () => {
     <div className='sidebar transition duration-100 z-10 w-64 -left-64 top-0 md:left-0 fixed bg-white md:h-full flex-col justify-between  overflow-y-auto h-full'>
       <div className='px-4 sm:relative'>
         <div className='h-16 mt-2 mb-8 w-full flex items-center justify-between'>
-          <img src={Logo} alt='logo' className='h-12 w-auto object-cover' />
+          <Link to={"/"}>
+            <div className={"font-bold text-xl text-action-color-500"}>
+              The college Market
+            </div>
+          </Link>
           <span className='rounded-full md:hidden' onClick={() => toggleSidebar()}>
-            <XCircleIcon className='w-8 h-8' />
+            <XCircleIcon className='w-6 h-' />
           </span>
         </div>
         <ul className='mt-6'>
@@ -50,17 +52,17 @@ const DashboardSidebarMenu = () => {
               <span className='text-md ml-4 font-medium'>Dashboard</span>
             </Link>
           </li>
+          <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+            <Link
+              to={"transactions"}
+              className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+            >
+              <ArrowTrendingUpIcon className='w-5 h-5 text-teal-600 stroke-2' />
+              <span className='text-md ml-4 font-medium'>Transactions</span>
+            </Link>
+          </li>
           {isAdmin && (
             <>
-              <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
-                <Link
-                  to={"transactions"}
-                  className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
-                >
-                  <ArrowTrendingUpIcon className='w-5 h-5 text-teal-600 stroke-2' />
-                  <span className='text-md ml-4 font-medium'>Transactions</span>
-                </Link>
-              </li>
               <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
                 <Link
                   to={"users"}
@@ -97,18 +99,18 @@ const DashboardSidebarMenu = () => {
                   <span className='text-md ml-4 font-medium'>Conditions</span>
                 </Link>
               </li>
+              <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
+                <Link
+                  to={"slider"}
+                  className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
+                >
+                  <PencilSquareIcon className='w-5 h-5 text-teal-600 stroke-2' />
+                  <span className='text-md ml-4 font-medium'>Slider</span>
+                </Link>
+              </li>
             </>
           )}
 
-          <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
-            <Link
-              to={"slider"}
-              className='flex items-center focus:outline-none focus:ring-2 focus:ring-white'
-            >
-              <PencilSquareIcon className='w-5 h-5 text-teal-600 stroke-2' />
-              <span className='text-md ml-4 font-medium'>Slider</span>
-            </Link>
-          </li>
           <li className='flex w-full justify-between text-gray-500 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md cursor-pointer items-center mb-1'>
             <Link
               to={"products"}

@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/Auth";
 import { Link } from "react-router-dom";
 import Modal from "../common/Modal";
 import ProductForm from "../products/ProductForm";
+import { UserIcon } from "@heroicons/react/24/outline";
 export default function DashWelcome() {
   const [productModal, setProductModal] = useState(false);
   const context = useContext(AuthContext);
@@ -16,45 +17,45 @@ export default function DashWelcome() {
 
   return (
     <>
-      <div className='bg-white shadow mt-4'>
+      <div className='bg-white shadow mt-4 rounded-md'>
         <div className='p-2 sm:px-6 lg:mx-auto lg:max-w-full'>
-          <div className='py-6 md:flex md:items-center md:justify-between lg:border-t lg:border-gray-200'>
+          <div className='py-6 md:flex md:items-center md:justify-between'>
             <div className='min-w-0 flex-1'>
               <div className='flex items-center'>
-                <img
-                  className='hidden h-16 w-16 rounded-full sm:block'
-                  src={photoUrl}
-                  alt=''
-                />
                 <div>
-                  <div className='flex items-center'>
-                    <img
-                      className='h-16 w-16 rounded-full sm:hidden'
-                      src={photoUrl}
-                      alt=''
-                    />
-                    <h1 className='ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9'>
-                      Welcome, {name}
-                    </h1>
+                  <div className='flex items-center space-x-4'>
+                    <div className='w-16 h-16 rounded-full relative bg-gray-200 flex items-center justify-center'>
+                      <UserIcon className='w-10 h-10 text-gray-600' />
+                      <img
+                        className='absolute top-0 left-0 w-16 rounded-full'
+                        src={photoUrl}
+                        alt=''
+                      />
+                    </div>
+                    <div className='flex flex-col'>
+                      <h1 className='ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9'>
+                        Welcome, {name}
+                      </h1>
+                      <dl className='mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap'>
+                        <dt className='sr-only'>College</dt>
+                        <dd className='flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6'>
+                          <BuildingOfficeIcon
+                            className='mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400'
+                            aria-hidden='true'
+                          />
+                          {college}
+                        </dd>
+                        <dt className='sr-only'>Account status</dt>
+                        <dd className='mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0'>
+                          <CheckCircleIcon
+                            className='mr-1.5 h-5 w-5 flex-shrink-0 text-green-400'
+                            aria-hidden='true'
+                          />
+                          Verified account
+                        </dd>
+                      </dl>
+                    </div>
                   </div>
-                  <dl className='mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap'>
-                    <dt className='sr-only'>College</dt>
-                    <dd className='flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6'>
-                      <BuildingOfficeIcon
-                        className='mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400'
-                        aria-hidden='true'
-                      />
-                      {college}
-                    </dd>
-                    <dt className='sr-only'>Account status</dt>
-                    <dd className='mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0'>
-                      <CheckCircleIcon
-                        className='mr-1.5 h-5 w-5 flex-shrink-0 text-green-400'
-                        aria-hidden='true'
-                      />
-                      Verified account
-                    </dd>
-                  </dl>
                 </div>
               </div>
             </div>
