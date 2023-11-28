@@ -64,6 +64,32 @@ export interface INotice {
   description: string;
 }
 
+export interface IUser {
+  _id: string;
+  id: string;
+  provider: string;
+  displayName: string;
+  isAdmin?: boolean;
+  bankName: string;
+  bankAccount: string;
+  phoneNumber: string;
+  name?: {
+    familyName: string;
+    givenName: string;
+    middleName?: string;
+  };
+  email: string;
+  emails?: Array<string>;
+  photos?: Array<IUserPhotos>;
+  college?: ICollege;
+}
+
+
+export interface IUserPhotos {
+  value: string;
+}
+
+
 export interface ISlider {
   _id?: string;
   title?: string;
@@ -102,6 +128,13 @@ export interface INoticeRequest {
   photo?: string;
   description: string;
 }
+
+export interface IUserRequest {
+  id?: string;
+  bankName?: string;
+  bankAccount?: string;
+  phone?: string;
+}
 export interface ISliderRequest {
   id?: string;
   title?: string;
@@ -136,7 +169,8 @@ export interface IUser {
   };
   email: string;
   emails?: Array<string>;
-  photos?: Array<string>;
+  phone?: string;
+  photos?: Array<IUserPhotos>;
   college?: {
     _id: string;
     name: string;

@@ -59,7 +59,7 @@ export const MyNoticeList = () => {
         )}
 
         <Modal
-          title='Notice details'
+          title={action.data.name}
           onClose={() =>
             setAction({
               show: false,
@@ -69,7 +69,6 @@ export const MyNoticeList = () => {
           isOpen={action.show}
         >
           <div className='block '>
-            <span className='bold text-[18px]'>{action.data.name}</span>
             <p className='pt-[4px] text-[12px]'>{action.data.description}</p>
           </div>
           <div className='py-2'>
