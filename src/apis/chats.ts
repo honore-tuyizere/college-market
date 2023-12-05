@@ -1,5 +1,5 @@
 import httpClient from "../utils/httpClient";
-import { IAcceptPrice, IChat, IChatDTO } from "../types";
+import { IAcceptPrice, IChat, IChatDTO } from "../types/index";
 
 export const getChat = async (productId: string): Promise<IChatDTO> => {
   return (await httpClient.get(`/chats/${productId}`)).data;

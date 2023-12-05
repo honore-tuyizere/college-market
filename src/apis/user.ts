@@ -1,4 +1,4 @@
-import { IUser, IUserRequest } from "../types";
+import { IUser, IUserRequest } from "../types/index";
 import httpClient from "../utils/httpClient";
 
 export const getMyProfile = async (): Promise<IUser> => {

@@ -1,5 +1,5 @@
 import httpClient from "../utils/httpClient";
-import { ICondition, IConditionRequest } from "../types";
+import { ICondition, IConditionRequest } from "../types/index";
 
 export const getConditions = async (): Promise<ICondition[]> => {
     return (await httpClient.get(`/conditions`)).data;

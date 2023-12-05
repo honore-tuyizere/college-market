@@ -1,5 +1,5 @@
 import httpClient from "../utils/httpClient";
-import { IMessageRequest, IMessage } from "../types";
+import { IMessageRequest, IMessage } from "../types/index";
 
 export const getMessage = async (messageId: string): Promise<IMessage> => {
   return (await httpClient.get(`/messages/${messageId}`)).data;

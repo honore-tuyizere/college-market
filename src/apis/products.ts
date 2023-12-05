@@ -6,7 +6,7 @@ import {
   IProductLog,
   IProductRequest,
   ISingleProduct,
-} from "../types";
+} from "../types/index";
 
 export const createProduct = async (data: IProductRequest): Promise<IProduct> => {
   return (await httpClient.post("/products", data)).data;

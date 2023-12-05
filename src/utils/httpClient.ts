@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios from "axios"
+
 const getCookie = (name: string) => {
   const cookie = document.cookie
     .split("; ")

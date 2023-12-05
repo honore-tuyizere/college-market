@@ -5,7 +5,7 @@ import {
   IOrderRequest,
   IOrderedProduct,
   IProductReturn,
-} from "../types";
+} from "../types/index";
 
 export const createOrder = async (data: IOrderRequest): Promise<string> => {
   return (await httpClient.post("/orders", data)).data;

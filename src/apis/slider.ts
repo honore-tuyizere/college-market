@@ -1,5 +1,5 @@
 import httpClient from "../utils/httpClient";
-import { ISlider, ISliderRequest } from "../types";
+import { ISlider, ISliderRequest } from "../types/index";
 
 export const createSliders = async (data: ISliderRequest): Promise<ISlider> => {
     return (await httpClient.post("/sliders", data)).data;

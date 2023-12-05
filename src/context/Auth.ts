@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { IUser } from "../types";
+import { IUser } from "../types/index";
 
 export interface IAuthContext {
   isLoggedIn: boolean;

@@ -1,5 +1,5 @@
 import httpClient from "../utils/httpClient";
-import { IPurpose, IPurposeRequest } from "../types";
+import { IPurpose, IPurposeRequest } from "../types/index";
 
 export const getPurposes = async (): Promise<IPurpose[]> => {
   return (await httpClient.get(`/purpose`)).data;

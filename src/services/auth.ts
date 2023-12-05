@@ -1,4 +1,4 @@
-import { IUser } from "../types";
+import { IUser } from "../types/index";
 import httpClient from "../utils/httpClient";
 
 export const getProfile = async (token: string): Promise<IUser> => {

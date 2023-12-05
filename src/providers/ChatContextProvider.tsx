@@ -1,7 +1,7 @@
 // ChatContext.js
 import { FC, PropsWithChildren, useState, useEffect } from "react";
 import { ChatContext } from "../context/Chat";
-import { IChatDTO, IMessage } from "../types";
+import { IChatDTO, IMessage } from "../types/index";
 import { socket } from "../utils/socket";
 import { messagesMap } from "../utils/messagesMap";
 

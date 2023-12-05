@@ -11,7 +11,7 @@ import ProductsPage from "../pages/products/ProductsPage";
 import PurposesPage from "../pages/purpose/PurposesPage";
 import TransactionsPage from "../pages/transactions/TransactionsPage";
 
-import { IRoute } from "../types";
+import { IRoute } from "../types/index";
 
 const dashboardRoutes: IRoute[] = [
   {

@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { IChatDTO, IMessage } from "../types";
+import { IChatDTO, IMessage } from "../types/index";
 
 export interface IChatContext {
   selectedChat: IChatDTO | undefined;

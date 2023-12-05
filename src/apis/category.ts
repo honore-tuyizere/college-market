@@ -1,5 +1,5 @@
 import httpClient from "../utils/httpClient";
-import {ICategory, ICategoryRequest} from "../types";
+import {ICategory, ICategoryRequest} from "../types/index";
 
 export const getCategories = async (): Promise<ICategory[]> => {
   return (await httpClient.get(`/categories`)).data;

@@ -1,5 +1,5 @@
 import httpClient from "../utils/httpClient";
-import { IRentProductNumber } from "../types";
+import { IRentProductNumber } from "../types/index";
 
 export const getRentProductsNumber = async () => {
   const { data } = await httpClient.get<IRentProductNumber>(`/rent-products`);

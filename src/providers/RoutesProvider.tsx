@@ -8,7 +8,7 @@ import dashboardRoutes from "../routes/dashboard.routes";
 import publicRoutes from "../routes/public.routes";
 import ProcessAuth from "../pages/auth/ProcessAuth";
 import CollegeModal from "../components/auth/CollegeModal";
-import { IUser } from "../types";
+import { IUser } from "../types/index";
 import { AuthContext } from "../context/Auth";
 
 const browserRouter = createBrowserRouter([

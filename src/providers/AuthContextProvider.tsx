@@ -1,6 +1,6 @@
 import { PropsWithChildren, FC, useState, useMemo } from "react";
 import { AuthContext } from "../context/Auth";
-import { IUser } from "../types";
+import { IUser } from "../types/index";
 
 const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [login, setLogin] = useState(false);

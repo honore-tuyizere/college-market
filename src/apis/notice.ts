@@ -1,5 +1,5 @@
 import httpClient from "../utils/httpClient";
-import { INotice, INoticeRequest } from "../types";
+import { INotice, INoticeRequest } from "../types/index";
 
 export const createNotices = async (data: INoticeRequest): Promise<INotice> => {
     return (await httpClient.post("/notices", data)).data;

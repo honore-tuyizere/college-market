@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, ReactNode } from "react";
 import { useAuthUser } from "react-auth-kit";
-import { IUser } from "../types";
+import { IUser } from "../types/index";
 
 interface Props {
   children: ReactNode;
