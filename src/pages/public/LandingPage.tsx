@@ -7,7 +7,7 @@ import { queryKeys } from "../../utils/queryKeys";
 import { getHomepageProducts } from "../../apis/products";
 import { IHomepageProducts, IProduct } from "../../types";
 import { useEffect, useState } from "react";
-import AdsSlider from "../../components/slider/AdsSlider";
+// import AdsSlider from "../../components/slider/AdsSlider";
 
 const LandingPage = () => {
   const [topProducts, setTopProducs] = useState<IProduct[] | undefined>();
@@ -39,7 +39,7 @@ const LandingPage = () => {
           }
         />
       </Container>
-      <AdsSlider />
+      {/* <AdsSlider /> */}
       <Container>
         <ProductsList
           products={data?.other}
